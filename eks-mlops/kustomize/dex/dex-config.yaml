@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  static_email: pedro@datarevenue.com
+  static_password_hash: JDJhJDEwJEdRQU5QeUVNWVd1MlMuTUFZdHR4Zy5KWTRIbWh2QTNjWllyLlFGOVhEZ1A3T081N1J4c25P
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: dex-config

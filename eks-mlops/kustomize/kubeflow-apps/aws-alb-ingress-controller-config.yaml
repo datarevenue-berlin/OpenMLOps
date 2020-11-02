@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  cluster-name: eks-mlops
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: aws-alb-ingress-controller-config
