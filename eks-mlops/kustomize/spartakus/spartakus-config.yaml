@@ -1,7 +1,0 @@
-apiVersion: v1
-data:
-  usageId: "8274070461137381188"
-kind: ConfigMap
-metadata:
-  creationTimestamp: null
-  name: spartakus-config

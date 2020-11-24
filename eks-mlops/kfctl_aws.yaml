@@ -1,6 +1,8 @@
 apiVersion: kfdef.apps.kubeflow.org/v1
 kind: KfDef
 metadata:
+  annotations:
+    kfctl.kubeflow.io/force-delete: "false"
   clusterName: arn:aws:eks:eu-west-1:827659017777:cluster/eks-mlops
   creationTimestamp: null
   name: eks-mlops
@@ -15,23 +17,23 @@ spec:
   - kustomizeConfig:
       repoRef:
         name: manifests
-        path: application/v3
-    name: application
-  - kustomizeConfig:
-      repoRef:
-        name: manifests
-        path: stacks/aws/application/istio-1-3-1-stack
+        path: stacks/aws/application/istio-stack
     name: istio-stack
   - kustomizeConfig:
       repoRef:
         name: manifests
-        path: stacks/aws/application/cluster-local-gateway-1-3-1
+        path: stacks/aws/application/cluster-local-gateway
     name: cluster-local-gateway
   - kustomizeConfig:
       repoRef:
         name: manifests
-        path: istio/istio/base
+        path: stacks/aws/application/istio
     name: istio
+  - kustomizeConfig:
+      repoRef:
+        name: manifests
+        path: application/v3
+    name: application
   - kustomizeConfig:
       repoRef:
         name: manifests
@@ -55,23 +57,13 @@ spec:
   - kustomizeConfig:
       repoRef:
         name: manifests
-        path: stacks/aws/application/oidc-authservice
-    name: oidc-authservice
+        path: admission-webhook/bootstrap/overlays/application
+    name: bootstrap
   - kustomizeConfig:
       repoRef:
         name: manifests
-        path: stacks/aws/application/dex-auth
-    name: dex
-  - kustomizeConfig:
-      repoRef:
-        name: manifests
-        path: stacks/aws
-    name: kubeflow-apps
-  - kustomizeConfig:
-      repoRef:
-        name: manifests
-        path: aws/istio-ingress/base_v3
-    name: istio-ingress
+        path: spark/spark-operator/overlays/application
+    name: spark-operator
   - kustomizeConfig:
       repoRef:
         name: manifests
@@ -82,6 +74,51 @@ spec:
         name: manifests
         path: kfserving/installs/generic
     name: kfserving
+  - kustomizeConfig:
+      parameters:
+      - name: usageId
+        value: "149024799209366271"
+      repoRef:
+        name: manifests
+        path: stacks/aws/application/spartakus
+    name: spartakus
+  - kustomizeConfig:
+      repoRef:
+        name: manifests
+        path: tensorboard/overlays/istio
+    name: tensorboard
+  - kustomizeConfig:
+      repoRef:
+        name: manifests
+        path: stacks/aws
+    name: kubeflow-apps
+  - kustomizeConfig:
+      overlays:
+      - oidc
+      parameters:
+      - name: namespace
+        value: istio-system
+      - name: oidcIssuer
+        value: https://dr-kubeflow.eu.auth0.com/
+      - name: oidcAuthorizationEndpoint
+        value: https://dr-kubeflow.eu.auth0.com/authorize
+      - name: oidcTokenEndpoint
+        value: https://dr-kubeflow.eu.auth0.com/oauth/token
+      - name: oidcUserInfoEndpoint
+        value: https://dr-kubeflow.eu.auth0.com/userinfo
+      - name: certArn
+        value: arn:aws:acm:eu-west-1:827659017777:certificate/c6a47484-85ab-4aa7-af8b-2b5d511b43dd
+      - name: oidcSecretName
+        value: alb-oidc-secret
+      repoRef:
+        name: manifests
+        path: stacks/aws/application/istio-ingress-cognito
+    name: istio-ingress
+  - kustomizeConfig:
+      repoRef:
+        name: manifests
+        path: aws/aws-istio-authz-adaptor/base
+    name: aws-istio-authz-adaptor
   plugins:
   - kind: KfAwsPlugin
     metadata:
@@ -89,11 +126,16 @@ spec:
       name: aws
     spec:
       auth:
-        basicAuth:
-          password: 12341234
-          username: pedro@datarevenue.com
+        oidc:
+          certArn: arn:aws:acm:eu-west-1:827659017777:certificate/2374e2ce-3e25-4a5a-b7a4-95be22618952
+          oAuthClientId: ailoX8UF9RCQEzW4PyZFLoWoi4uqrf52
+          oAuthClientSecret: MZxqATqZkNdmFyax0-nqJGclb_vAvKrD-WugvzBRajRhtgjFw4Clzw_G2bE7temK
+          oidcAuthorizationEndpoint: https://dr-kubeflow.eu.auth0.com/authorize
+          oidcIssuer: https://dr-kubeflow.eu.auth0.com/
+          oidcTokenEndpoint: https://dr-kubeflow.eu.auth0.com/oauth/token
+          oidcUserInfoEndpoint: https://dr-kubeflow.eu.auth0.com/userinfo
       enablePodIamPolicy: true
-      region: us-west-2
+      region: eu-west-1
   repos:
   - name: manifests
     uri: https://github.com/kubeflow/manifests/archive/v1.1-branch.tar.gz
