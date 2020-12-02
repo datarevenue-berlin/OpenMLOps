@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  labels:
-    istio-injection: enabled
-    serving.knative.dev/release: "v0.11.2"
-  name: knative-serving
-
-

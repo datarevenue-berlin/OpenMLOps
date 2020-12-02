@@ -1,4 +1,5 @@
-**/.cache/*
+**/.cache/
+.idea
 # Local .terraform directories
 **/.terraform/*
 

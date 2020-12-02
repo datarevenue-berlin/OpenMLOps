@@ -1,0 +1,17 @@
+apiVersion: "kubeflow.org/v1alpha1"
+kind: PodDefault
+metadata:
+  name: docker-hub-secret
+  namespace: kubeflow
+spec:
+ desc: "Docker Hub pull secret"
+ selector:
+  matchLabels:
+    add-docker-secret: "true"
+ volumeMounts:
+  - name: secrets-store-inline
+    mountPath: "/mnt/secrets-store"
+ volumes:
+ - name: secrets-store-inline
+   secret:
+    secretName: regcred

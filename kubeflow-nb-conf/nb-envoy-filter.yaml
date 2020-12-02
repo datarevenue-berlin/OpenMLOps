@@ -1,0 +1,43 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: add-header
+  namespace: pedro
+spec:
+  filters:
+  - listenerMatch:
+      listenerType: SIDECAR_OUTBOUND
+      listenerProtocol: HTTP
+      address:
+        - ml-pipeline.kubeflow.svc.cluster.local
+      portNumber: 8888
+    filterName: envoy.lua
+    filterType: HTTP
+    filterConfig:
+      inlineCode: |
+        function envoy_on_request(request_handle)
+          request_handle:headers():add("kubeflow-userid", "pedro@datarevenue.com")
+        end
+  workloadLabels:
+      notebook-name: notebook
+
+#  configPatches:
+#    - applyTo: HTTP_FILTER
+#    match:
+#        context: SIDECAR_OUTBOUND
+#      listener:
+#        portNumber: 8888
+#        filterChain:
+#          filter:
+#            name: "envoy.http_connection_manager"
+#            subFilter:
+#              name: "envoy.router"
+#    patch:
+#      operation: INSERT_BEFORE
+#      value: # lua filter specification
+#       name: envoy.lua
+#       config:
+#         inlineCode: |
+#           function envoy_on_request(request_handle)
+#             request_handle:headers():add("kubeflow-userid", "user@example.com")
+#           end

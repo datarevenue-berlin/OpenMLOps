@@ -62,11 +62,6 @@ spec:
   - kustomizeConfig:
       repoRef:
         name: manifests
-        path: spark/spark-operator/overlays/application
-    name: spark-operator
-  - kustomizeConfig:
-      repoRef:
-        name: manifests
         path: knative/installs/generic
     name: knative
   - kustomizeConfig:
@@ -74,14 +69,6 @@ spec:
         name: manifests
         path: kfserving/installs/generic
     name: kfserving
-  - kustomizeConfig:
-      parameters:
-      - name: usageId
-        value: "149024799209366271"
-      repoRef:
-        name: manifests
-        path: stacks/aws/application/spartakus
-    name: spartakus
   - kustomizeConfig:
       repoRef:
         name: manifests
@@ -142,5 +129,7 @@ spec:
   version: v1.1-branch
 status:
   reposCache:
+  - localPath: '".cache/manifests/manifests-1.1-branch"'
+    name: manifests
   - localPath: '".cache/manifests/manifests-1.1-branch"'
     name: manifests
