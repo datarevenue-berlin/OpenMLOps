@@ -1,4 +1,4 @@
-**/eks-mlops/.cache/*
+**/.cache/*
 # Local .terraform directories
 **/.terraform/*
 
