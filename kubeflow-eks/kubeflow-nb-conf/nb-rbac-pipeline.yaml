@@ -1,7 +1,7 @@
 apiVersion: rbac.istio.io/v1alpha1
 kind: ServiceRoleBinding
 metadata:
-  name: bind-ml-pipeline-nb-mynamespace
+  name: bind-ml-pipeline-nb-ns-admin
   namespace: kubeflow
 spec:
   roleRef:
@@ -9,4 +9,4 @@ spec:
     name: ml-pipeline-services
   subjects:
   - properties:
-      source.principal: cluster.local/ns/pedro/sa/default-editor
+      source.principal: cluster.local/ns/admin/sa/default-editor
