@@ -1,0 +1,19 @@
+# Create a conda environment by calling:
+# conda env create -f environment.yml
+name: prefect-py36
+
+channels:
+  - conda-forge
+
+# list dependencies that should be installed by conda
+# versions should match with what's specified in requirements.txt
+dependencies:
+  - python=3.6
+  - pip
+  - prefect
+  - prefect[kubernetes]
+  - botocore
+  - boto3
+  - requests
+  - sqlalchemy
+  - ipykernel
