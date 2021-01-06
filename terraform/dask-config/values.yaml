@@ -62,10 +62,10 @@ worker:
   env:  # Environment variables. See `values.yaml` for example values.
   #  - name: EXTRA_APT_PACKAGES
   #    value: build-essential openssl
-  #  - name: EXTRA_CONDA_PACKAGES
-  #    value: numba xarray -c conda-forge
-  #  - name: EXTRA_PIP_PACKAGES
-  #    value: s3fs dask-ml --upgrade
+    - name: EXTRA_CONDA_PACKAGES
+      value: python==3.7 -c conda-forge
+    - name: EXTRA_PIP_PACKAGES
+      value: prefect==0.14.1 --upgrade
   extraArgs: [] # Extra CLI arguments to be passed to the worker
     # - --preload
     # - worker-setup.py
@@ -95,101 +95,3 @@ worker:
   #  this option overrides "--nthreads" on workers, which defaults to resources.limits.cpu / default_resources.limits.cpu
   #  use it if you need to limit the amount of threads used by multicore workers, or to make workers with non-whole-number cpu limits
   # threads_per_worker: 1
-
-jupyter:
-  name: jupyter  # Jupyter name.
-  defaultUrl: /lab
-  enabled: true  # Enable/disable the bundled Jupyter notebook.
-  rbac: true  # Create RBAC service account and role to allow Jupyter pod to scale worker pods and access logs.
-  image:
-    pullPolicy: IfNotPresent  # Container image pull policy.
-    pullSecrets:  # Container image [pull secrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
-     - name: regcred
-    
-  profileList:
-  - display_name: "Notebook with Prefect (default)"
-    description: "Notebook with prefect installed
-          <br> Image: drtools/prefect:notebook-prefect"
-    kubespawner_override:
-      image: "drtools/prefect:notebook-prefect"
-    default: true
-
-  - display_name: "Dask Notebook"
-    description: "Dask Provided Notebook"
-    kubespawner_override:
-      image: "daskdev/dask-notebook:2.30.0"
-
-  replicas: 1  # Number of notebook servers.
-  serviceType: "ClusterIP" # Scheduler service type. Set to `LoadBalancer` to expose outside of your cluster.
-  # serviceType: "NodePort"
-  # serviceType: "LoadBalancer"
-  servicePort: 80  # Jupyter service internal port.
-  # This hash corresponds to the password 'dask'
-  password: 'sha1:aae8550c0a44:9507d45e087d5ee481a5ce9f4f16f37a0867318c' # Password hash. Default hash corresponds to the password `dask`.
-  env:  # Environment variables. See `values.yaml` for example values.
-  #  - name: EXTRA_CONDA_PACKAGES
-  #    value: "numba xarray -c conda-forge"
-  #  - name: EXTRA_PIP_PACKAGES
-  #    value: "s3fs dask-ml --upgrade"
-  command: null  # Container command.
-  args:  # Container arguments.
-  #  - "start.sh"
-  #  - "jupyter"
-  #  - "lab"
-  extraConfig: |-
-    # Extra Jupyter config goes here
-    # E.g
-    # c.NotebookApp.port = 8888
-  resources: {}  # Jupyter pod resources. See `values.yaml` for example values.
-  #  limits:
-  #    cpu: 2
-  #    memory: 6G
-  #  requests:
-  #    cpu: 2
-  #    memory: 6G
-  mounts: {} # Worker Pod volumes and volume mounts, mounts.volumes follows kuberentes api v1 Volumes spec. mounts.volumeMounts follows kubernetesapi v1 VolumeMount spec
-  #  volumes:
-  #    - name: data
-  #      emptyDir: {}
-  #  volumeMounts:
-  #    - name: data
-  #      mountPath: /data
-  tolerations: []  # Tolerations.
-  affinity: {}  # Container affinity.
-  nodeSelector: {}  # Node Selector.
-  securityContext: {}  # Security Context.
-  serviceAccountName: "dask-jupyter"  # Service account for use with RBAC
-  ingress:
-    enabled: false  # Enable ingress.
-    tls: false  # Ingress should use TLS.
-    # secretName: dask-jupyter-tls
-    hostname: dask-jupyter.example.com  # Ingress hostname.
-    annotations:  # Ingress annotations. See `values.yaml` for example values.
-      # kubernetes.io/ingress.class: "nginx"
-      # secretName: my-tls-cert
-      # kubernetes.io/tls-acme: "true"
-  proxy:
-  https:
-    enabled: true
-    hosts:
-      - lab.datarevenue.com
-    letsencrypt:
-      contactEmail: "alan@datarevenue.com"
-  secretToken: "c98d13315d8d78305e195add8300f86a601181eb2669d8d49fa37140274d129d"
-
-  auth:
-    type: github
-    github:
-      clientId: "20589e5b77475ec0bd6e"
-      clientSecret: "e310dd8b533f88762f23484bfc3241b0d942b6d4"
-      callbackUrl: "https://lab.datarevenue.com/hub/oauth_callback"
-      orgWhiteList:
-        - "datarevenue-berlin"
-    admin:
-      users:
-      - kayibal
-      - pedrocwb
-      - tamaralipows
-
-    scopes:
-      - "read:user"

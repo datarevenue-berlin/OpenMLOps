@@ -28,7 +28,7 @@ auth:
     - "read:user"
   
 singleuser:
-  serviceAccountName: "dask-jupyter"
+  serviceAccountName: "dask-jupyter-sa"
   defaultUrl: /lab
   image:
     pullSecrets:
