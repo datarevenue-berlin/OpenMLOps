@@ -3,6 +3,7 @@ locals {
     jupyterhub_namespace = "jhub"
     prefect_namespace = "prefect"
     dask_namespace = "dask"
+    feast_namespace = "feast"
 }
 
 ############################################
@@ -166,5 +167,38 @@ resource "helm_release" "jupyterhub_lab" {
 
     values = [
         file("${path.module}/jupyterhub-config/config.yaml"),
+    ]
+}
+
+
+##################
+# FEAST #
+##################
+
+resource "kubernetes_namespace" "feast_namespace" {
+  metadata {
+    name = local.feast_namespace
+  }
+}
+
+resource "kubernetes_secret" "feast_postgresql_secret" {
+  metadata {
+    name = "feast-postgresql"
+    namespace = local.feast_namespace
+  }
+  data = {
+    postgresql-password = "password"
+  }
+}
+
+resource "helm_release" "feast" {
+    name = "feast"
+    namespace = local.feast_namespace
+
+    repository = "https://feast-charts.storage.googleapis.com"
+    chart = "feast"
+
+    values = [
+        file("${path.module}/feast-config/values.yaml"),
     ]
 }
