@@ -6,6 +6,12 @@ locals {
     feast_namespace = "feast"
 }
 
+variable "feast_postgresql_password" {
+  description = "The password for Postgresql for Feast to run"
+  type = string
+  sensitive = true
+}
+
 ############################################
 # KUBERNETES SERVICE ACCOUNT, CLUSTER ROLE #
 # AND CLUSTER ROLE BINDING                 #
@@ -187,7 +193,7 @@ resource "kubernetes_secret" "feast_postgresql_secret" {
     namespace = local.feast_namespace
   }
   data = {
-    postgresql-password = "password"
+    postgresql-password = var.feast_postgresql_password
   }
 }
 
