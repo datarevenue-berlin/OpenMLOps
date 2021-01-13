@@ -203,6 +203,7 @@ resource "helm_release" "feast" {
 
     repository = "https://feast-charts.storage.googleapis.com"
     chart = "feast"
+    version = "0.8.2"
 
     values = [
         file("${path.module}/feast-config/values.yaml"),
