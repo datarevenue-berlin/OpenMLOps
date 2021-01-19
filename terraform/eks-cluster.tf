@@ -5,11 +5,11 @@ module "eks" {
   subnets         = module.vpc.private_subnets
 
   tags = {
-    Environment = "development"
+    Environment       = "development"
     "deployment-date" = timestamp()
   }
 
-  vpc_id = module.vpc.vpc_id
+  vpc_id    = module.vpc.vpc_id
   map_users = var.map_users
 
   worker_groups = [
@@ -31,8 +31,8 @@ module "eks" {
       additional_security_group_ids = [aws_security_group.worker_group_mgmt_two.id]
 
       #autoscaling group section
-      asg_max_size                  = "2"
-      asg_desired_capacity          = "2"
+      asg_max_size         = "2"
+      asg_desired_capacity = "2"
 
     },
 

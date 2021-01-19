@@ -14,14 +14,18 @@ variable "map_users" {
 
   default = [
     {
-      userarn = "arn:aws:iam::827659017777:user/Kayibal"
+      userarn  = "arn:aws:iam::827659017777:user/Kayibal"
       username = "Kayibal"
-      groups  = ["system:masters"]
+      groups   = ["system:masters"]
     },
     {
-      userarn = "arn:aws:iam::827659017777:user/tamara"
+      userarn  = "arn:aws:iam::827659017777:user/tamara"
       username = "tamara"
-      groups = ["system:master"]
-   },
+      groups   = ["system:masters"]
+    },
   ]
+}
+
+variable "mlflow_namespace" {
+  default = "mlflow"
 }

@@ -63,10 +63,10 @@ resource "aws_iam_role_policy" "worker_policy" {
 
 resource "aws_iam_role_policy_attachment" "ec2_container_reg_full_access" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
-  role = module.eks.worker_iam_role_name
+  role       = module.eks.worker_iam_role_name
 }
 
 resource "aws_iam_role_policy_attachment" "s3_full_access" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-  role = module.eks.worker_iam_role_name
+  role       = module.eks.worker_iam_role_name
 }
