@@ -40,7 +40,7 @@ variable "db_password" {
 }
 
 variable "db_username" {
-  default = "postgres"  
+  default = "postgres"
 }
 
 variable "mlflow_artifact_root" {
@@ -52,4 +52,9 @@ variable "mlflow_artifact_root" {
 variable "prefect_namespace" {
   default = "prefect"
 }
+
+variable "dask_namespace" {
+  default = "dask"
+}
+
 

@@ -76,30 +76,6 @@ resource "kubernetes_cluster_role_binding" "dask_jupyter_crb" {
 }
 
 
-########
-# DASK #
-########
-
-resource "kubernetes_namespace" "dask_namespace" {
-  metadata {
-    name = local.dask_namespace
-  }
-}
-
-resource "helm_release" "dask" {
-  name      = "dask"
-  namespace = local.dask_namespace
-
-  repository = "https://helm.dask.org"
-  chart      = "dask"
-  version    = "4.5.6"
-
-  values = [
-    file("${path.module}/dask-config/values.yaml"),
-  ]
-}
-
-
 #################
 #  JUPYTER HUB  #
 #################
