@@ -1,4 +1,3 @@
-# Cluster Variables
 variable "region" {
   default     = "eu-west-1"
   description = "AWS region"
@@ -47,3 +46,10 @@ variable "db_username" {
 variable "mlflow_artifact_root" {
   default = "s3://mlops-model-artifact"
 }
+
+## Prefect Server
+
+variable "prefect_namespace" {
+  default = "prefect"
+}
+

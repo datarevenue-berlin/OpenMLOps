@@ -75,40 +75,6 @@ resource "kubernetes_cluster_role_binding" "dask_jupyter_crb" {
   }
 }
 
-##################
-# PREFECT SERVER #
-##################
-
-# There will soon be a helm repository for prefect server
-
-resource "kubernetes_namespace" "prefect_namespace" {
-  metadata {
-    name = local.prefect_namespace
-  }
-}
-
-module "prefect_server" {
-  source = "git::https://github.com/PrefectHQ/server.git"
-}
-
-resource "helm_release" "prefect_server" {
-  name      = "prefect-server"
-  namespace = local.prefect_namespace
-
-  dependency_update = true
-  chart             = ".terraform/modules/prefect_server/helm/prefect-server"
-
-  values = [
-    file("${path.module}/prefect-server-config/values.yaml"),
-  ]
-
-  set {
-    name  = "agent.enabled"
-    value = "true"
-  }
-
-}
-
 
 ########
 # DASK #
