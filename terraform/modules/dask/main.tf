@@ -39,14 +39,22 @@ resource "helm_release" "dask" {
     value = var.worker_image_dask_worker_command
   }
 
-  set {
-    name  = "worker.image.pullSecrets"
-    value = yamlencode(var.worker_image_pull_secret)
-  }
 
-  set {
-    name  = "worker.env"
-    value = yamlencode(var.worker_environment_variables)
-  }
+  values = [
+    yamlencode({
+      "worker" = {
+        "env" = var.worker_environment_variables
+      }
+    }),
+    yamlencode({
+      "worker" = {
+        "image" = {
+          "pullSecrets" = var.worker_image_pull_secret
+        }
+      }
+    })
+  ]
+
+
 
 }

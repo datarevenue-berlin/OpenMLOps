@@ -7,7 +7,7 @@ proxy:
     hosts:
       - lab.datarevenue.com
     letsencrypt:
-      contactEmail: "alan@datarevenue.com"
+      contactEmail: "pedro@datarevenue.com"
   secretToken: "c98d13315d8d78305e195add8300f86a601181eb2669d8d49fa37140274d129d"
 
 auth:

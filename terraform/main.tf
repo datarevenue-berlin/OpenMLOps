@@ -4,18 +4,6 @@ resource "kubernetes_namespace" "mlflow_namespace" {
   }
 }
 
-resource "kubernetes_namespace" "prefect_namespace" {
-  metadata {
-    name = var.prefect_namespace
-  }
-}
-
-resource "kubernetes_namespace" "dask_namespace" {
-  metadata {
-    name = var.dask_namespace
-  }
-}
-
 
 module "postgres" {
   source    = "./modules/postgres"
@@ -36,9 +24,25 @@ module "mlflow" {
   default_artifact_root = var.mlflow_artifact_root
 }
 
+
+
+resource "kubernetes_namespace" "prefect_namespace" {
+  metadata {
+    name = var.prefect_namespace
+  }
+}
+
 module "prefect-server" {
   source    = "./modules/prefect-server"
   namespace = var.prefect_namespace
+}
+
+
+
+resource "kubernetes_namespace" "dask_namespace" {
+  metadata {
+    name = var.dask_namespace
+  }
 }
 
 
@@ -49,7 +53,7 @@ module "dask" {
   worker_image_pull_secret = [
     {
       name = "regcred"
-    },
+    }
   ]
   worker_environment_variables = [
     {
@@ -63,65 +67,11 @@ module "dask" {
   ]
 }
 
-resource "kubernetes_service_account" "dask_jupyter_sa" {
-  metadata {
-    name      = "dask-jupyter-sa"
-    namespace = local.jupyterhub_namespace
-    labels = {
-      app     = module.dask.name
-      release = module.dask.name
-      component : "jupyter"
-    }
-  }
-}
 
-resource "kubernetes_cluster_role" "dask_jupyter_cr" {
-  metadata {
-    name = "dask-jupyter-cr"
-    labels = {
-      app     = module.dask.name
-      release = module.dask.name
-      component : "jupyter"
-    }
-  }
 
-  rule {
-    api_groups = [""]
-    resources  = ["deployments"]
-    verbs      = ["get", "list", "watch", "update", "patch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["pods"]
-    verbs      = ["get", "list", "watch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["pods/logs"]
-    verbs      = ["get", "list", "watch"]
-  }
-
-}
-
-resource "kubernetes_cluster_role_binding" "dask_jupyter_crb" {
-  metadata {
-    name = "dask-jupyter-crb"
-    labels = {
-      app     = module.dask.name
-      release = module.dask.name
-      component : "jupyter"
-    }
-
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = "dask-jupyter-rb"
-  }
-  subject {
-    kind = "ServiceAccount"
-    name = "dask-jupyter-sa"
-  }
-}
+//resource "kubernetes_namespace" "feast_namespace" {
+//  metadata {
+//    name = var.feast_namespace
+//  }
+//}
+//
