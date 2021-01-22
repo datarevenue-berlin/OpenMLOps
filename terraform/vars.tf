@@ -53,11 +53,18 @@ variable "prefect_namespace" {
   default = "prefect"
 }
 
+
+## Dask
+
 variable "dask_namespace" {
   default = "dask"
 }
 
+## Feast
 
-## Dask
+variable "feast_namespace" {
+  default = "feast"
+}
+
 
 
