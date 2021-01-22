@@ -25,7 +25,8 @@ variable "map_users" {
   ]
 }
 
-##
+
+
 ## MLFlow Config
 ##
 variable "mlflow_namespace" {
@@ -62,8 +63,16 @@ variable "dask_namespace" {
 
 ## Feast
 
+variable "install_feast" {
+  default = false
+}
+
 variable "feast_namespace" {
   default = "feast"
+}
+
+variable "feast_postgresql_password" {
+  default = "my-feast-password"
 }
 
 
