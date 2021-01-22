@@ -90,3 +90,9 @@ module "feast" {
 
   feast_postgresql_password = var.feast_postgresql_password
 }
+
+
+module "seldon" {
+  source    = "./modules/seldon"
+  namespace = "seldon-system"
+}
