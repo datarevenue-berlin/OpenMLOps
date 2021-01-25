@@ -1,8 +1,0 @@
-apiVersion: settings.k8s.io/v1alpha1
-kind: PodPreset
-metadata:
-  name: image-pull-secret
-spec:
-  template:
-    imagePullSecrets:
-    - name: regcred
