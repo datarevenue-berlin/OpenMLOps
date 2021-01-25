@@ -7,7 +7,7 @@ proxy:
     hosts:
       - lab.datarevenue.com
     letsencrypt:
-      contactEmail: "alan@datarevenue.com"
+      contactEmail: "pedro@datarevenue.com"
   secretToken: "c98d13315d8d78305e195add8300f86a601181eb2669d8d49fa37140274d129d"
 
 auth:
@@ -35,29 +35,16 @@ singleuser:
       - "regcred"
     pullPolicy: "Always" 
   profileList:
-    # - display_name: "Dask Notebook with Prefect (default)"
-    #   description: "Dask Notebook with prefect installed
-    #         <br> Image: drtools/prefect:notebook-prefect"
-    #   kubespawner_override:
-    #     image: "drtools/prefect:dask-notebook"
-    #   default: true
-
     - display_name: "Notebook with Prefect"
       description: "Notebook with prefect installed
             <br> Image: drtools/prefect:notebook-prefect"
       kubespawner_override:
         image: "drtools/prefect:notebook-prefect"
 
-    # - display_name: "Datascience environment"
+    # - displa y_name: "Datascience environment"
     #   description: "If you want the additional bells and whistles: Python, R, and Julia. \n jupyter/datascience-notebook:2343e33dec46"
     #   kubespawner_override:
     #     image: "jupyter/datascience-notebook:2343e33dec46"
-
-#    - display_name: "Datarevenue custom image"
-#      description: "Image from datarevenue private repository - drtools/notebook-server:cpu-0.0.1"
-#      kubespawner_override:
-#        image: "drtools/notebook-server:cpu-0.0.1"
-#
 
   memory:
     guarantee: 100M

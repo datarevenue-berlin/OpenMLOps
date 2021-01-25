@@ -1,7 +1,0 @@
-setup.py
-aircraftlib.egg-info/PKG-INFO
-aircraftlib.egg-info/SOURCES.txt
-aircraftlib.egg-info/dependency_links.txt
-aircraftlib.egg-info/not-zip-safe
-aircraftlib.egg-info/requires.txt
-aircraftlib.egg-info/top_level.txt
