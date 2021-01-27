@@ -1,0 +1,316 @@
+# prefect-server configuration
+
+# prefectVersionTag configures the default tag for prefect images
+# which are all tagged with the same name on release. To override
+# images for specific components, modify <component>.image.tag
+# NOTE: This notably excludes the hasura image
+prefectVersionTag:  "latest"
+
+# imagePullSecrets provides configuration to reference the k8s Secret
+# resources the Helm chart's pods can get credentials from to pull
+# their images.
+imagePullSecrets: []
+
+# annotations to merge into all object configurations
+# NOTE: These will not apply to the postgresql subchart and must be 
+# defined within `postgresql` as well if that is desired
+annotations: {}
+
+# postgresql configures the backing database
+# NOTE: the variables names must remain as is to match the
+# bitnami subchart even if the bitnami subchart is not being
+# used, these variables are used to create the connection
+# string
+postgresql:
+  postgresqlDatabase: prefect
+
+  # postgresqlUsername defines the username to authenticate
+  # with.
+  # NOTE: If you are using Azure, this will include an '@'
+  # which must be encoded as '%40' for the connection string
+  # to work with both Hasura, the GraphQL server, and the
+  # Alembic migration manager
+  postgresqlUsername: prefect
+
+  # existingSecret configures which secret should be referenced
+  # for access to the database. If null and `useSubChart` is
+  # enabled, the secret will be generated. If using an external
+  # postgres service, this value should be set to a secret
+  # containing the key `postgresql-password`
+  existingSecret: null
+
+  # postgresqlPassword sets the password to be used if
+  # `existingSecret` is not set. This is the password for
+  # `postgresqlUsername` and will be set within the secret at
+  # the key `postgresql-password`
+  # postgresqlPassword: use-a-strong-password
+
+  # servicePort configures the port that the database should be
+  # accessed at
+  servicePort: 5432
+
+  # externalHostname defines the address to contact an externally
+  # managed postgres database instance at. This is not required if
+  # `internalPostgres` is `true`
+  externalHostname: ""
+
+  # useSubChart determines if a this chart should deploy a
+  # user-manager postgres database or use an externally managed
+  # postgres instance. If `useSubChart` is `true`, the
+  # bitnami/postgresql subchart will be deployed
+  useSubChart: true
+
+  # postgresql configuration below here is only used if using
+  # the subchart
+
+  # persistence enables a PVC that stores the database between
+  # deployments. If making changes to the database deployment, this
+  # PVC will need to be deleted for database changes to take effect.
+  # This is especially notable when the authentication password
+  # changes on redeploys.
+  # This is disabled by default because we do not recommend using
+  # the subchart deployment for production deployments.
+  persistence:
+    enabled: false
+    size: 8Gi
+
+  initdbUser: postgres
+
+  initdbScripts:
+    create_pgcrypto.sql: |
+      -- create pgcrypto extension, required for Hasura UUID
+      CREATE EXTENSION IF NOT EXISTS pgcrypto;
+      CREATE EXTENSION IF NOT EXISTS "pg_trgm";
+      SET TIME ZONE 'UTC';
+
+# prefectConfig allows override of prefect_server/config.toml values
+# Values placed here will result in environment variable definitions
+# starting with "PREFECT_SERVER__" and will be passed to relevant
+# services
+prefectConfig:
+  # env: "local"
+  # debug: "false"
+  # queued_runs_returned_limit: "25"
+  # hasura:
+  #   execute_retry_seconds: "10"
+  # logging:
+  #   level: "DEBUG"
+  #   format: "[%(asctime)s] %(levelname)s - %(name)s | %(message)s"
+  # services:
+  #   scheduler:
+  #     scheduler_loop_seconds: "300"
+  #   lazarus:
+  #     resurrection_attempt_limit: "3"
+  # telemetry:
+  #   enabled: "true"
+
+
+# hasura configures the Prefect hasura deployment and service
+# which creates a graphql api from the postgres database
+hasura:
+
+  # hasura.image configures the docker image used for hasura
+  # and is the only image in the chart that is not hosted by
+  # Prefect
+  image:
+    name: hasura/graphql-engine
+    tag: v1.3.0
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+
+  options:
+    queryPlanCacheSize: "100"
+
+  service:
+    # type defines the service type and defaults to ClusterIP
+    # because this service does not need to be exposed outside
+    # the cluster
+    type: ClusterIP
+    port: 3000
+
+  labels: {}
+  annotations: {}
+  replicas: 1
+  strategy: {}
+  podSecurityContext: {}
+  securityContext: {}
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+
+# graphql configures the Prefect graphql deployment and service
+# which provides a python graphql server on starlette
+graphql:
+
+  image:
+    name: prefecthq/server
+    tag: null
+    pullPolicy: Always
+    pullSecrets: []
+
+  service:
+    type: ClusterIP
+    port: 4201
+
+  labels: {}
+  annotations: {}
+  replicas: 1
+  strategy: {}
+  podSecurityContext: {}
+  securityContext: {}
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+
+  init:
+    # init.resources configures resources for the initContainer
+    # which upgrades the database
+    resources: {}
+
+# apollo configures the Prefect apollo deployment and service
+# which provides a unified graphql schema for users and the UI
+# to interact with
+apollo:
+  image:
+    name: prefecthq/apollo
+    tag: null
+    pullPolicy: Always
+    pullSecrets: []
+  options:
+    telemetryEnabled: true
+
+  service:
+    # type defines the service type and defaults to LoadBalancer
+    # to expose the apollo service to users and the UI.
+    type: LoadBalancer
+    port: 4200
+
+  labels: {}
+  annotations: {}
+  replicas: 1
+  strategy: {}
+  podSecurityContext: {}
+  securityContext: {}
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+# ui configures the Prefect ui deployment and service
+ui:
+
+  image:
+    name: prefecthq/ui
+    tag: null
+    pullPolicy: Always
+    pullSecrets: []
+
+  # apolloApiUrl defines the default gateway to the Apollo
+  # GraphQL server. This location must be accessible by the
+  # user of the API because the browser is making requests
+  # (not the ui server)
+  apolloApiUrl: http://localhost:4200/graphql
+
+  service:
+    # type defines the service type and defaults to LoadBalancer
+    # to expose the ui service to users and the UI.
+    type: LoadBalancer
+    port: 8080
+
+  labels: {}
+  annotations: {}
+  replicas: 1
+  strategy: {}
+  podSecurityContext: {}
+  securityContext: {}
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+# towel configures the Prefect towel deployment which provides
+# a group of useful services
+towel:
+  image:
+    name: prefecthq/server
+    tag: null
+    pullPolicy: Always
+    pullSecrets: []
+
+  labels: {}
+  annotations: {}
+  replicas: 1
+  strategy: {}
+  podSecurityContext: {}
+  securityContext: {}
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+
+# agent configures an optional Prefect Kubernetes agent which will
+# schedule flows as jobs in the cluster
+agent:
+
+  # enabled determines if the Prefect Kubernetes agent is deployed
+  enabled: false
+
+  # prefectLabels defines what scheduling labels (not K8s labels) should
+  # be associated with the agent
+  prefectLabels: []
+
+  # image configures the container image for the agent deployment
+  image:
+    name: prefecthq/prefect
+    tag: null
+    pullPolicy: Always
+    pullSecrets: []
+
+  labels: {}
+  annotations: {}
+  replicas: 1
+  strategy: {}
+  podSecurityContext: {}
+  securityContext: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+  # resources defines the computational resources for the Prefect Agent
+  resources: 
+    limits:
+      cpu: 100m
+      memory: 128Mi
+
+  # job configures values associated with jobs the agent launches
+  job:
+    # resources defines the computational resources for flow jobs
+    resources:
+      limits:
+        memory: ""
+        cpu: ""
+      requests:
+        memory: ""
+        cpu: ""
+    
+    # imagePullPolicy configures the image pull policy for the flow job
+    imagePullPolicy: ""
+
+    # imagePullSecrets defines image pull secrets for the flow job
+    # NOTE: These secrets are not merged with the global imagePullSecrets
+    imagePullSecrets: []
+
+serviceAccount:
+  # create specifies whether a service account should be created to be
+  # associated with the prefect-server infrastructure
+  create: true
+
+  # name sets the name of the service account to use
+  # If not set and create is true, a name is generated using the
+  # prefect-server.nameField template
+  name: null

@@ -1,0 +1,97 @@
+---
+# nameOverride: dask
+# fullnameOverride: dask
+
+scheduler:
+  name: scheduler  # Dask scheduler name.
+  image:
+    repository: "daskdev/dask"  # Container image repository.
+    tag: 2.30.0  # Container image tag.
+    pullPolicy: IfNotPresent  # Container image pull policy.
+    pullSecrets:  # Container image [pull secrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
+    #  - name: regcred
+  replicas: 1  # Number of schedulers (should always be 1).
+  serviceType: "ClusterIP" # Scheduler service type. Set to `LoadBalancer` to expose outside of your cluster.
+  # serviceType: "NodePort"
+  # serviceType: "LoadBalancer"
+  loadBalancerIP: null  # Some cloud providers allow you to specify the loadBalancerIP when using the `LoadBalancer` service type. If your cloud does not support it this option will be ignored.
+  servicePort: 8786 # Scheduler service internal port.
+  serviceAnnotations: {} # Scheduler service annotations.
+  extraArgs: [] # Extra CLI arguments to be passed to the scheduler
+    # - --preload
+    # - scheduler-setup.py
+  resources: {}  # Scheduler pod resources. See `values.yaml` for example values.
+  #  limits:
+  #    cpu: 1.8
+  #    memory: 6G
+  #  requests:
+  #    cpu: 1.8
+  #    memory: 6G
+  tolerations: []  # Tolerations.
+  affinity: {}  # Container affinity.
+  nodeSelector: {}  # Node Selector.
+  securityContext: {}  # Security Context.
+  # serviceAccountName: ""
+
+webUI:
+  name: webui  # Dask webui name.
+  servicePort: 80 # webui service internal port.
+  ingress:
+    enabled: false  # Enable ingress.
+    tls: false  # Ingress should use TLS.
+    # secretName: dask-scheduler-tls
+    hostname: dask-ui.example.com  # Ingress hostname.
+    annotations:  # Ingress annotations. See `values.yaml` for example values.
+      # kubernetes.io/ingress.class: "nginx"
+      # secretName: my-tls-cert
+      # kubernetes.io/tls-acme: "true"
+
+worker:
+  name: worker  # Dask worker name.
+  image:
+    repository: "daskdev/dask"  # Container image repository.
+    tag: 2.30.0  # Container image tag.
+    pullPolicy: IfNotPresent  # Container image pull policy.
+    dask_worker: "dask-worker"  # Dask worker command. E.g `dask-cuda-worker` for GPU worker.
+    pullSecrets:  # Container image [pull secrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
+    #  - name: regcred
+  replicas: 3  # Number of workers.
+  default_resources:  # overwritten by resource limits if they exist
+    cpu: 1  # Default CPU (DEPRECATED use `resources`).
+    memory: "4GiB"  # Default memory (DEPRECATED use `resources`).
+  env:  # Environment variables. See `values.yaml` for example values.
+  #  - name: EXTRA_APT_PACKAGES
+  #    value: build-essential openssl
+    - name: EXTRA_CONDA_PACKAGES
+      value: python==3.7 -c conda-forge
+    - name: EXTRA_PIP_PACKAGES
+      value: prefect==0.14.1 --upgrade
+  extraArgs: [] # Extra CLI arguments to be passed to the worker
+    # - --preload
+    # - worker-setup.py
+  resources: {}  # Worker pod resources. See `values.yaml` for example values.
+  #  limits:
+  #    cpu: 1
+  #    memory: 3G
+  #    nvidia.com/gpu: 1
+  #  requests:
+  #    cpu: 1
+  #    memory: 3G
+  #    nvidia.com/gpu: 1
+  mounts: {} # Worker Pod volumes and volume mounts, mounts.volumes follows kuberentes api v1 Volumes spec. mounts.volumeMounts follows kubernetesapi v1 VolumeMount spec
+  #  volumes:
+  #    - name: data
+  #      emptyDir: {}
+  #  volumeMounts:
+  #    - name: data
+  #      mountPath: /data
+  annotations: {}  # Annotations
+  tolerations: []  # Tolerations.
+  affinity: {}  # Container affinity.
+  nodeSelector: {}  # Node Selector.
+  securityContext: {}  # Security Context.
+  # serviceAccountName: ""
+  # port: ""
+  #  this option overrides "--nthreads" on workers, which defaults to resources.limits.cpu / default_resources.limits.cpu
+  #  use it if you need to limit the amount of threads used by multicore workers, or to make workers with non-whole-number cpu limits
+  # threads_per_worker: 1

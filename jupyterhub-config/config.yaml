@@ -1,0 +1,55 @@
+hub:
+  allowNamedServers: false
+
+proxy:
+  https:
+    enabled: true
+    hosts:
+      - lab.datarevenue.com
+    letsencrypt:
+      contactEmail: "pedro@datarevenue.com"
+  secretToken: "c98d13315d8d78305e195add8300f86a601181eb2669d8d49fa37140274d129d"
+
+auth:
+  type: github
+  github:
+    clientId: "20589e5b77475ec0bd6e"
+    clientSecret: "e310dd8b533f88762f23484bfc3241b0d942b6d4"
+    callbackUrl: "https://lab.datarevenue.com/hub/oauth_callback"
+    orgWhiteList:
+      - "datarevenue-berlin"
+  admin:
+    users:
+    - kayibal
+    - pedrocwb
+    - tamaralipows
+
+  scopes:
+    - "read:user"
+  
+singleuser:
+  serviceAccountName: "dask-jupyter-sa"
+  defaultUrl: /lab
+  image:
+    pullSecrets:
+      - "regcred"
+    pullPolicy: "Always" 
+  profileList:
+    - display_name: "Notebook with Prefect"
+      description: "Notebook with prefect installed
+            <br> Image: drtools/prefect:notebook-prefect"
+      kubespawner_override:
+        image: "drtools/prefect:notebook-prefect"
+
+    # - displa y_name: "Datascience environment"
+    #   description: "If you want the additional bells and whistles: Python, R, and Julia. \n jupyter/datascience-notebook:2343e33dec46"
+    #   kubespawner_override:
+    #     image: "jupyter/datascience-notebook:2343e33dec46"
+
+  memory:
+    guarantee: 100M
+  storage:
+    capacity: 1Gi
+    homeMountPath: /home/jovyan/persistent
+  extraEnv:
+    TZ: Europe/Berlin
