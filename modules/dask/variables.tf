@@ -41,7 +41,7 @@ variable "worker_image_pull_secret" {
     })
   )
   default = [{
-      name = ""
+    name = ""
   }]
 }
 
