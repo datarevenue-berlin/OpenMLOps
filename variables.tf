@@ -128,8 +128,8 @@ variable "singleuser_profile_list" {
     },
 
     {
-      display_name = "Datascience environment"
-      description  = "Default data science enviroment"
+      display_name = "Data Science environment"
+      description  = "Default data science environment"
       default      = false
       kubespawner_override = {
         image = "jupyter/datascience-notebook:2343e33dec46"
