@@ -78,49 +78,82 @@ variable "jhub_proxy_https_letsencrypt_contact_email" {
 
 variable "oauth_github_enable" {
   description = "Defines whether the authentication will be handled by github oauth"
-  default = false
+  default     = false
 }
 
 variable "oauth_github_client_id" {
   description = "github client id used on GitHubOAuthenticator"
-  default = ""
+  default     = ""
 }
 variable "oauth_github_client_secret" {
   description = "github secret used to authenticate with github"
-  default = ""
+  default     = ""
 }
 
 variable "oauth_github_admin_users" {
   description = "Github user names to allow as administrator"
-  default = ""
+  default     = ""
 }
 
 variable "oauth_github_callback_url" {
   description = "The URL that people are redirected to after they authorize your GitHub App to act on their behalf"
-  default = ""
+  default     = ""
 }
 
 variable "oauth_github_allowed_organizations" {
   description = "List of Github organization to restrict access to the members"
-  default = [""]
+  default     = [""]
+}
+
+variable "singleuser_profile_list" {
+  description = "List of images which the user can select to spawn a server"
+  type = list(
+    object({
+      display_name = string
+      description  = string
+      default      = bool
+      kubespawner_override = object({
+        image = string
+      })
+  }))
+
+  default = [
+    {
+      display_name = "Notebook with Prefect"
+      description  = "Notebook with prefect installed <br> Image: drtools/prefect:notebook-prefect"
+      default      = true
+      kubespawner_override = {
+        image = "drtools/prefect:notebook-prefect"
+      }
+    },
+
+    {
+      display_name = "Data Science environment"
+      description  = "Default data science environment"
+      default      = false
+      kubespawner_override = {
+        image = "jupyter/datascience-notebook:2343e33dec46"
+      }
+    }
+  ]
 }
 
 
 locals {
   jhub_github_auth = {
-      github = {
-        clientId = var.oauth_github_client_id
-        clientSecret = var.oauth_github_client_secret
-        callbackUrl = var.oauth_github_callback_url
-        orgWhiteList = var.oauth_github_allowed_organizations
-      }
-      scope = ["read:user"]
-      admin = {
-        users = var.oauth_github_admin_users
-      }
-      JupyterHub = {
-        authenticator_class =  "github"
-      }
+    github = {
+      clientId     = var.oauth_github_client_id
+      clientSecret = var.oauth_github_client_secret
+      callbackUrl  = var.oauth_github_callback_url
+      orgWhiteList = var.oauth_github_allowed_organizations
+    }
+    scope = ["read:user"]
+    admin = {
+      users = var.oauth_github_admin_users
+    }
+    JupyterHub = {
+      authenticator_class = "github"
+    }
 
   }
 

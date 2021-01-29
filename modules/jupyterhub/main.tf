@@ -26,11 +26,6 @@ resource "helm_release" "jupyterhub_lab" {
     value = var.hub_allowed_named_servers
   }
 
-//  set {
-//    name = "hub.existingSecret"
-//    value = kubernetes_secret.private_registry_secret.metadata[0].name
-//  }
-
   set {
     name  = "proxy.secretToken"
     value = var.proxy_secret_token
@@ -47,7 +42,7 @@ resource "helm_release" "jupyterhub_lab" {
   }
 
   set {
-    name = "auth.type"
+    name  = "auth.type"
     value = var.authentication_type
   }
 
@@ -71,7 +66,7 @@ resource "helm_release" "jupyterhub_lab" {
           pullPolicy  = var.singleuser_image_pull_policy
         }
 
-        profile_list = var.singleuser_profile_list
+        profileList = var.singleuser_profile_list
         memory = {
           guarantee = var.singleuser_memory_guarantee
         }

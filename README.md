@@ -2,7 +2,7 @@
 
 # Cluster installation
 ## AWS EKS
-...
+....
 
 # Modules
 
@@ -29,7 +29,8 @@ The following table lists the configurable parameters of the jupyter-hub module 
 | `oauth_github_admin_users`| List of github user names to allow as administrator| `[]`|
 | `oauth_github_callback_url`| The URL that people are redirected to after they authorize your GitHub App to act on their behalf | `""`|
 | `oauth_github_allowed_organizations`|List of Github organization to restrict access to the members | `[""]`|
-
+| **Profile user list** | | |
+| `singleuser_profile_list` | List of images which the user can select to spawn a server| `jupyter/datascience-notebook:2343e33dec46`|  
 
 ## Prefect
 ...
