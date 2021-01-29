@@ -35,14 +35,14 @@ variable "worker_image_dask_worker_command" {
 
 variable "worker_image_pull_secret" {
   description = "Container image pull secrets"
-  type = list(object({
-    name = string
-  }))
-  default = [
-    {
-      name = ""
-    },
-  ]
+  type = list(
+    object({
+      name = string
+    })
+  )
+  default = [{
+    name = ""
+  }]
 }
 
 variable "worker_environment_variables" {

@@ -1,5 +1,4 @@
 
-
 resource "kubernetes_secret" "feast_postgresql_secret" {
   metadata {
     name      = "feast-postgresql"

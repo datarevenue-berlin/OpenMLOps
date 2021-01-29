@@ -1,5 +1,3 @@
-provider "helm" {}
-
 
 resource "helm_release" "seldon" {
   name      = "seldon-core"

@@ -1,4 +1,3 @@
-provider "helm" {}
 
 resource "helm_release" "postgres" {
   name      = "postgres"

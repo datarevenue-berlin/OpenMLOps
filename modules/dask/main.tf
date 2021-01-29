@@ -1,5 +1,3 @@
-provider "helm" {}
-
 
 resource "helm_release" "dask" {
   name      = "dask"

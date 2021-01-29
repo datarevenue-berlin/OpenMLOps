@@ -1,5 +1,3 @@
-provider "helm" {}
-provider "kubernetes" {}
 
 resource "helm_release" "mlflow" {
   name      = "mlflow"
