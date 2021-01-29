@@ -41,7 +41,7 @@ variable "proxy_https_enabled" {
 }
 
 variable "proxy_https_hosts" {
-  description = "You domain in list form. Required for automatic HTTPS"
+  description = "You domains in list form. Required for automatic HTTPS"
   default     = [""]
 }
 
