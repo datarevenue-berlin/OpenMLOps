@@ -19,18 +19,21 @@ resource "kubernetes_namespace" "jupyterhub_namespace" {
 }
 
 module "jupyterhub" {
-  source = "./modules/jupyterhub"
+  source    = "./modules/jupyterhub"
   namespace = var.jupyterhub_namespace
 
   # Proxy settings
-  proxy_secret_token = var.jhub_proxy_secret_token
-  proxy_https_enabled = var.jhub_proxy_https_enabled
-  proxy_https_hosts = var.jhub_proxy_https_hosts
+  proxy_secret_token                    = var.jhub_proxy_secret_token
+  proxy_https_enabled                   = var.jhub_proxy_https_enabled
+  proxy_https_hosts                     = var.jhub_proxy_https_hosts
   proxy_https_letsencrypt_contact_email = var.jhub_proxy_https_letsencrypt_contact_email
 
-  #Authentication settings
-  authentication_type = var.oauth_github_enable ? "github" : ""
+  # Authentication settings
+  authentication_type   = var.oauth_github_enable ? "github" : ""
   authentication_config = var.oauth_github_enable ? local.jhub_github_auth : null
+
+  # Profile list configuration
+  singleuser_profile_list = var.singleuser_profile_list
 }
 
 

@@ -15,7 +15,7 @@ variable "hub_allowed_named_servers" {
 
 variable "authentication_type" {
   description = "Configures the authentication type. Default dummy."
-  default = "DummyAuthenticator"
+  default     = "DummyAuthenticator"
 }
 
 variable "authentication_config" {
@@ -72,10 +72,11 @@ variable "singleuser_default_url" {
 }
 
 variable "singleuser_profile_list" {
-  description = ""
+  description = "List of images which the user can select to spawn a server"
   type = list(object({
     display_name = string
     description  = string
+    default      = bool
     kubespawner_override = object({
       image = string
     })
@@ -85,6 +86,7 @@ variable "singleuser_profile_list" {
     {
       display_name = "Datascience environment"
       description  = "Default data science enviroment"
+      default      = true
       kubespawner_override = {
         image = "jupyter/datascience-notebook:2343e33dec46"
       }
