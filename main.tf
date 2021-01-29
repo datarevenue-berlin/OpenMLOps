@@ -12,7 +12,6 @@ module "eks-mlops" {
   source = "./modules/eks"
 }
 
-
 resource "kubernetes_namespace" "jupyterhub_namespace" {
   metadata {
     name = var.jupyterhub_namespace

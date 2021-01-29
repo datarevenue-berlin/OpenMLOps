@@ -96,10 +96,12 @@ variable "oauth_github_admin_users" {
 }
 
 variable "oauth_github_callback_url" {
+  description = "The URL that people are redirected to after they authorize your GitHub App to act on their behalf"
   default = ""
 }
 
 variable "oauth_github_allowed_organizations" {
+  description = "List of Github organization to restrict access to the members"
   default = [""]
 }
 
