@@ -107,30 +107,30 @@ module "dask" {
 }
 
 
-//
-//resource "kubernetes_namespace" "feast_namespace" {
-//  count = var.install_feast ? 1 : 0
-//  metadata {
-//    name = var.feast_namespace
-//  }
-//}
 
-//module "feast" {
-//  count = var.install_feast ? 1 : 0
-//
-//  source    = "./modules/feast"
-//  namespace = var.feast_namespace
-//
-//  feast_core_enabled           = true
-//  feast_online_serving_enabled = true
-//  posgresql_enabled            = true
-//  redis_enabled                = true
-//
-//  feast_postgresql_password = var.feast_postgresql_password
-//}
+resource "kubernetes_namespace" "feast_namespace" {
+  count = var.install_feast ? 1 : 0
+  metadata {
+    name = var.feast_namespace
+  }
+}
 
-//
-//module "seldon" {
-//  source    = "./modules/seldon"
-//  namespace = "seldon-system"
-//}
+module "feast" {
+  count = var.install_feast ? 1 : 0
+
+  source    = "./modules/feast"
+  namespace = var.feast_namespace
+
+  feast_core_enabled           = true
+  feast_online_serving_enabled = true
+  posgresql_enabled            = true
+  redis_enabled                = true
+
+  feast_postgresql_password = var.feast_postgresql_password
+}
+
+
+module "seldon" {
+  source    = "./modules/seldon"
+  namespace = "seldon-system"
+}

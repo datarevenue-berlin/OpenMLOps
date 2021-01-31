@@ -97,11 +97,11 @@ variable "singleuser_profile_list" {
 }
 
 variable "singleuser_memory_guarantee" {
-  default = "100M"
+  default = "1G"
 }
 
 variable "singleuser_storage_capacity" {
-  default = "1Gi"
+  default = "1G"
 }
 
 variable "singleuser_storage_mount_path" {
