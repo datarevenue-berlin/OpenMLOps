@@ -60,6 +60,8 @@ module "mlflow" {
   db_username           = var.db_username
   db_password           = var.db_password
   default_artifact_root = var.mlflow_artifact_root
+
+  service_type = "LoadBalancer"
 }
 
 

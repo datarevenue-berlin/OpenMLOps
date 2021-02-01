@@ -37,10 +37,14 @@ variable "image_pull_policy" {
 
 variable "image_repository" {
   description = "Image repository"
-  default     = "larribas/mlflow"
+  default     = "drtools/mlflow"
 }
 
 variable "image_tag" {
   description = "Image tag"
-  default     = "1.9.1"
+  default     = "1.13.1"
+}
+
+variable "service_type" {
+  default = "NodePort"
 }
