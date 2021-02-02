@@ -5,6 +5,15 @@ variable "provision_eks_cluster" {
   default = false
 }
 
+variable "kubernetes" {
+  description = "If you choose not to provision EKS cluster for you, specify here how Helm should connect to your cluster."
+  type        = map(string)
+  default = {
+    config_path    = "~/.kube/config"
+    config_context = "minikube"
+  }
+}
+
 variable "region" {
   default     = "eu-west-1"
   description = "AWS region"
@@ -69,7 +78,6 @@ variable "install_jupyterhub" {
 variable "jupyterhub_namespace" {
   default = "jhub"
 }
-
 
 variable "jhub_proxy_https_enabled" {
   default = true
