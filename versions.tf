@@ -1,4 +1,3 @@
-
 terraform {
   backend "s3" {
     bucket = "eks-mlops-tf-state"
@@ -35,4 +34,8 @@ terraform {
       source = "hashicorp/template"
     }
   }
+}
+
+provider "aws" {
+  region = var.region
 }
