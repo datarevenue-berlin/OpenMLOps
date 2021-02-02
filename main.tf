@@ -9,6 +9,7 @@ provider "helm" {
 
 
 module "eks-mlops" {
+  count  = var.provision_eks_cluster ? 1 : 0
   source = "./modules/eks"
 }
 
@@ -19,6 +20,7 @@ resource "kubernetes_namespace" "jupyterhub_namespace" {
 }
 
 module "jupyterhub" {
+  count     = var.install_jupyterhub ? 1 : 0
   source    = "./modules/jupyterhub"
   namespace = var.jupyterhub_namespace
 

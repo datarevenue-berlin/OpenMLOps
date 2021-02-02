@@ -1,3 +1,10 @@
+## Kubernetes cluster
+##
+
+variable "provision_eks_cluster" {
+  default = false
+}
+
 variable "region" {
   default     = "eu-west-1"
   description = "AWS region"
@@ -55,6 +62,10 @@ variable "prefect_namespace" {
 }
 
 ## Jupyter Hub
+variable "install_jupyterhub" {
+  default = true
+}
+
 variable "jupyterhub_namespace" {
   default = "jhub"
 }
