@@ -1,9 +1,4 @@
 terraform {
-  backend "s3" {
-    bucket = "eks-mlops-tf-state"
-    key    = "terraform-dev.tfstate"
-    region = "eu-west-1"
-  }
   required_version = ">= 0.13"
   required_providers {
     aws = {
