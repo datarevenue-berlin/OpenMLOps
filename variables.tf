@@ -199,5 +199,13 @@ variable "feast_postgresql_password" {
   default = "my-feast-password"
 }
 
+## Seldon
 
+variable "install_seldon" {
+  default = true
+}
+
+variable "seldon_namespace" {
+  default = "seldon"
+}
 

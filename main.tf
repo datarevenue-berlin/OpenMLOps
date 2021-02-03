@@ -133,7 +133,15 @@ module "feast" {
 }
 
 
+resource "kubernetes_namespace" "seldon_namespace" {
+  count = var.install_seldon ? 1 : 0
+  metadata {
+    name = var.seldon_namespace
+  }
+}
+
 module "seldon" {
+  count = var.install_seldon ? 1 : 0
   source    = "./modules/seldon"
-  namespace = "seldon-system"
+  namespace = var.seldon_namespace
 }
