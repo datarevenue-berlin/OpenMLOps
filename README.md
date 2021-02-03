@@ -8,7 +8,7 @@ The tools we provide are the following:
 - Jupyter Hub for experimenting lab
 - Dask for distributed computing
 - Feast for Feature Store and Serving
-- MLFlow for model registry and experimenting track
+- MLFlow for model registry and experiment tracking
 - Seldon for model deployment
 
 ![GitHub Logo](https://global-uploads.webflow.com/5d3ec351b1eba4332d213004/6001c1daafa02889e5389a59_EE2q1dQqp2fmiaXGX5vuaVVnTPXmKlmD3BC1dp90YrPB2TOiHWSq3RCCmC39MzsmYHUrQFXVK9nmTf4haQ0dIj-vdk_we67e1SR5yqEWPTuEAApuiNOXOgdr7mSefSmlZxSwu0JB.png)
@@ -27,13 +27,14 @@ The tools we provide are the following:
 
 ## Jupyter Hub
 
-With the Jupyter Hub we enabled a multi-user environment in which each of them can spawn it's own jupyter server to make their experiments. Users can work on separate enviroments being able to install any library necessary to meet their needs. 
+With the Jupyter Hub, we enabled a multi-user environment in which each of them can spawn a Jupyter server to do their experiments. Users can work on different environments being able to install any library necessary to meet their needs.
 
-We also provide a default jupyter server image that comes with most of the data science packages installed. 
+We also provide a default Jupyter server image that comes with most of the data science packages installed.
+
 
 ### Configuration
 
-Below we provide a lists the configurable parameters availables and its default values.
+Below we provide a lists the configurable parameters available and its default values.
 
 
 | Parameter (* *required parameter*)       | Description | Default
@@ -43,7 +44,7 @@ Below we provide a lists the configurable parameters availables and its default 
 
 #### Proxy configuration
 
-The proxy receives the requests from the client’s browser and forwards all requests to the Hub. Deeper explanation can be found in the [jupyter hub docs](https://jupyterhub.readthedocs.io/en/stable/getting-started/security-basics.html).
+The proxy receives the requests from the client’s browser and forwards all requests to the Hub. [In the JupyterHub docs](https://jupyterhub.readthedocs.io/en/stable/getting-started/security-basics.html) can find a more in-depth explanation.
 
 *\* Required parameters*
 
@@ -56,11 +57,11 @@ The proxy receives the requests from the client’s browser and forwards all req
 
 #### Authentication configuration
 
-JupyterHub’s oauthenticator has support for enabling your users to authenticate via a third-party OAuth2 identity provider such as GitHub, Google, and CILogon.
+JupyterHub’s OAuthenticator has support for enabling your users to authenticate via a third-party OAuth2 identity provider such as GitHub, Google, and CILogon.
 
 You can configure authentication using GitHub accounts and restrict what users are authorized based on membership of a GitHub organization.
 
-[See details on how to setup a GitHub Oauth here.](https://zero-to-jupyterhub.readthedocs.io/en/stable/administrator/authentication.html#github)
+[See details on how to set up a GitHub Oauth here.](https://zero-to-jupyterhub.readthedocs.io/en/stable/administrator/authentication.html#github)
 
 
 If you choose not to use GitHub to authenticate users, the [DummyAuthenticator](https://tljh.jupyter.org/en/latest/howto/auth/dummy.html) will be used as default. The Dummy Authenticator lets any user log in with the given password.
@@ -84,10 +85,9 @@ The dummy password is: `a-shared-secret-password`.
 
 #### User configuration
 
-Single user configuration refers to the deafult settings for each user logged in the jupyterhub.
+Single user configuration refers to the default settings for each user logged in the JupyterHub.
 
-A user can choose which Docker image will be used to spawn a new jupyter server.  
-The `singleuser_profile_list` paramater receives a list of map describing the image details.
+A user can choose a Docker image to spawn a new Jupyter server. Each Docker image can have different libraries and environments installed. We use the `singleuser_profile_list` parameter to set up a list of default images available to the user. This parameter receives a list of maps that describes the image details such as the image location and description.
 
 See an example:
 ```
@@ -101,8 +101,7 @@ See an example:
 }]
 
 ```
-If you provide an image laid in private repository, the image pull secret must be enabled.
-
+You must pass the image pull secret if you provide an image located in a private container registry. The image pull secret parameter is defined as below:
 ```
 default = [{
     name   name = ""
