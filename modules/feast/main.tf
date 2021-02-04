@@ -51,7 +51,7 @@ resource "helm_release" "feast" {
 
   set {
     name  = "postgresql.enabled"
-    value = var.posgresql_enabled
+    value = var.feast_posgresql_enabled
   }
 
   set {
@@ -61,31 +61,31 @@ resource "helm_release" "feast" {
 
   set {
     name  = "kafka.enabled"
-    value = var.kafka_enabled
+    value = var.feast_kafka_enabled
   }
 
   set {
     name  = "redis.enabled"
-    value = var.redis_enabled
+    value = var.feast_redis_enabled
   }
 
   set {
     name  = "redis.use_password"
-    value = var.redis_use_password
+    value = var.feast_redis_use_password
   }
 
   set {
     name  = "prometheus-statsd-exporter.enabled"
-    value = var.promethues_statsd_exporter_enabled
+    value = var.feast_prometheus_statsd_exporter_enabled
   }
 
   set {
     name  = "prometheus.enabled"
-    value = var.prometheus_enabled
+    value = var.feast_prometheus_enabled
   }
 
   set {
     name  = "grafana.enabled"
-    value = var.grafana_enabled
+    value = var.feast_grafana_enabled
   }
 }
