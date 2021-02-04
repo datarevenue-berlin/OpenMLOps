@@ -225,5 +225,26 @@ allocates resources for them on their respective deployment platforms.
 
 ...
 
+| Parameter               | Description                                                                                                 | Default          |
+|:------------------------|:------------------------------------------------------------------------------------------------------------|:-----------------|
+| `namespace`             | Namespace name to deploy the application                                                                    | `mlflow`         |
+| `db_host`               | Database host address                                                                                       | ``               |
+| `db_username`           | Database username                                                                                           | `mlflow`         |
+| `db_password *`         | Database password                                                                                           | ``               |
+| `database_name`         | Database name                                                                                               | `mlflow`         |
+| `db_port`               | Database port                                                                                               | `5432`           |
+| `default_artifact_root` | local or remote filepath to store model artifacts. It is mandatory when specifying a database backend store | `/tmp`           |
+| `image_pull_policy`     | Docker image pull policy                                                                                    | `IfNotPresent`   |
+| `image_repository`      | Docker image repository                                                                                     | `drtools/mlflow` |
+| `image_tag`             | Docker image tag                                                                                            | `1.13.1`         |
+| `service_type`          | Kubernetes service tyoe                                                                                     | `NodePort`       |
+
 
 ## Seldon
+
+| Parameter               | Description                                    | Default       |
+|:------------------------|:-----------------------------------------------|:--------------|
+| `namespace`             | Namespace name to deploy the application       | `mlflow`      |
+| `istio_enabled`         | Whether to install istio as ingress controller | `true`        |
+| `usage_metrics_enabled` | Whether to enable usage metrics                | `true`        |
+
