@@ -1,6 +1,24 @@
 # Data Revenue - MLOps Reference Architecture
 
 # Cluster installation
+
+## Test locally on minikube
+
+minikube is a small Kubernetes cluster that runs on your local machine. It's perfect for testing
+solutions that you will once deploy in a cloud. 
+
+1. Install minikube as described [here](https://minikube.sigs.k8s.io/docs/start/).
+2. Start your minikube cluster if you haven't already:
+    ```commandline
+    minikube start
+    ```
+3. In a separate terminal window start [minikube tunnel](https://minikube.sigs.k8s.io/docs/handbook/accessing/#using-minikube-tunnel):
+    ```commandline
+    minikube tunnel
+    ```
+4. Proceed to installing tools included in this repository using Terraform. By default, the configuration
+assumes installation on a minikube cluster.
+
 ## AWS EKS
 ....
 
