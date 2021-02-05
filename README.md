@@ -34,8 +34,9 @@ of them can spawn a Jupyter server to do their experiments. Users can
 work on different environments being able to install any library
 necessary to meet their needs.
 
-We also provide a default Jupyter server image that comes with most of
-the data science packages installed.
+We provide a default Jupyter server image that comes with most of
+the data science packages installed. Users can use their own Jupyter 
+server images as well.
 
 
 ### Configuration
@@ -247,4 +248,3 @@ allocates resources for them on their respective deployment platforms.
 | `namespace`             | Namespace name to deploy the application       | `mlflow`      |
 | `istio_enabled`         | Whether to install istio as ingress controller | `true`        |
 | `usage_metrics_enabled` | Whether to enable usage metrics                | `true`        |
-
