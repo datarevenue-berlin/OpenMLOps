@@ -8,7 +8,7 @@ variable "ambassador_namespace" {
   default     = "ambassador"
 }
 
-variable "istio_enabled" {
+variable "ambassador_enabled" {
   default = true
 }
 
