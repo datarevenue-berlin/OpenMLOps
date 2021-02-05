@@ -41,7 +41,7 @@ server images as well.
 
 ### Configuration
 
-Below we provide a lists the configurable parameters available and its
+Below we provide a lists of the configurable parameters available and their
 default values.
 
 
@@ -55,7 +55,7 @@ default values.
 The proxy receives the requests from the client’s browser and forwards
 all requests to the Hub.
 [In the JupyterHub docs](https://jupyterhub.readthedocs.io/en/stable/getting-started/security-basics.html)
-can find a more in-depth explanation.
+you can find a more in-depth explanation.
 
 *\* Required parameters*
 
@@ -69,11 +69,10 @@ can find a more in-depth explanation.
 #### Authentication configuration
 
 JupyterHub’s OAuthenticator has support for enabling your users to
-authenticate via a third-party OAuth2 identity provider such as GitHub,
-Google, and CILogon.
+authenticate via a third-party OAuth2 identity provider such as GitHub.
 
 You can configure authentication using GitHub accounts and restrict what
-users are authorized based on membership of a GitHub organization.
+users are authorized based on membership in a GitHub organization.
 
 [See details on how to set up a GitHub Oauth here.](https://zero-to-jupyterhub.readthedocs.io/en/stable/administrator/authentication.html#github)
 
@@ -131,7 +130,7 @@ as below:
 
 ```
 default = [{
-    name   name = ""
+    name = ""
 }]
 ```
 
@@ -142,7 +141,7 @@ default = [{
 | `singleuser_image_pull_secrets` | List of image secrets                                      | nil                       |
 | `singleuser_image_pull_policy`  | Image pull policy                                          | `Always`                  |
 | `singleuser_memory_guarantee`   | How much memory will be guarateed to the user              | `1G`                      |
-| `singleuser_storage_capacity`   | `How much storage capacity a user will have`               | `1G`                      |
+| `singleuser_storage_capacity`   | How much storage capacity a user will have                 | `1G`                      |
 | `singleuser_storage_mount_path` | Storage mount path                                         | `/home/jovyan/persistent` |
 
 
@@ -157,7 +156,7 @@ default = [{
 
 #### Agent
 
-In the Prefect docs, Agents are lightweight processes for orchestrating
+According to Prefect docs, Agents are lightweight processes for orchestrating
 flow runs. Agents run inside a user's architecture, and are responsible
 for starting and monitoring flow runs. During operation the agent
 process queries the Prefect API for any scheduled flow runs, and
