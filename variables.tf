@@ -2,7 +2,7 @@
 ##
 
 variable "provision_eks_cluster" {
-  default = false
+  default = true
 }
 
 variable "kubernetes" {

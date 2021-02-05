@@ -14,10 +14,10 @@
 // Seel related issue: https://github.com/hashicorp/terraform/issues/16627
 
 terraform {
-//  backend "s3" {
-//    bucket = "eks-mlops-tf-state"
-//    key = "terraform-dev.tfstate"
-//    region = "eu-west-1"
-//  }
-  backend "local" {}
+  backend "s3" {
+    bucket = "eks-mlops-tf-state"
+    key = "mlops-dev.tfstate"
+    region = "eu-west-1"
+  }
+//  backend "local" {}
 }
