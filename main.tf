@@ -1,14 +1,14 @@
-
-provider "helm" {
-  kubernetes {
-    host                   = module.eks-mlops.cluster_endpoint
-    token                  = module.eks-mlops.cluster_auth_token
-    cluster_ca_certificate = base64decode(module.eks-mlops.cluster_certificate)
-  }
+locals {
+  kubernetes = var.provision_eks_cluster ? {
+    host                   = module.eks-mlops[0].cluster_endpoint
+    token                  = module.eks-mlops[0].cluster_auth_token
+    cluster_ca_certificate = base64decode(module.eks-mlops[0].cluster_certificate)
+  } : var.kubernetes
 }
 
 
 module "eks-mlops" {
+  count  = var.provision_eks_cluster ? 1 : 0
   source = "./modules/eks"
 }
 
@@ -19,6 +19,7 @@ resource "kubernetes_namespace" "jupyterhub_namespace" {
 }
 
 module "jupyterhub" {
+  count     = var.install_jupyterhub ? 1 : 0
   source    = "./modules/jupyterhub"
   namespace = var.jupyterhub_namespace
 
@@ -132,7 +133,15 @@ module "feast" {
 }
 
 
+resource "kubernetes_namespace" "seldon_namespace" {
+  count = var.install_seldon ? 1 : 0
+  metadata {
+    name = var.seldon_namespace
+  }
+}
+
 module "seldon" {
+  count = var.install_seldon ? 1 : 0
   source    = "./modules/seldon"
-  namespace = "seldon-system"
+  namespace = var.seldon_namespace
 }
