@@ -1,46 +1,19 @@
 ## Kubernetes cluster
 ##
 
-variable "provision_eks_cluster" {
-  default = false
-}
-
 variable "kubernetes" {
-  description = "If you choose not to provision EKS cluster for you, specify here how Helm should connect to your cluster."
+  description = <<-EOF
+    Specify here how to connect to your cluster. Provided default is just an example - you can use different keys,
+    or even an empty object. Please refer to https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs#authentication
+    for the details.
+    Alternatively, you can modify `kuberenetes` and `helm` provider definitions in file versions.tf.
+  EOF
   type        = map(string)
   default = {
     config_path    = "~/.kube/config"
     config_context = "minikube"
   }
 }
-
-variable "region" {
-  default     = "eu-west-1"
-  description = "AWS region"
-}
-
-variable "map_users" {
-  description = "Additional IAM users to add to the aws-auth configmap."
-  type = list(object({
-    userarn  = string
-    username = string
-    groups   = list(string)
-  }))
-
-  default = [
-    {
-      userarn  = "arn:aws:iam::827659017777:user/Kayibal"
-      username = "Kayibal"
-      groups   = ["system:masters"]
-    },
-    {
-      userarn  = "arn:aws:iam::827659017777:user/tamara"
-      username = "tamara"
-      groups   = ["system:masters"]
-    },
-  ]
-}
-
 
 
 ## MLFlow Config

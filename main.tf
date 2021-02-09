@@ -1,17 +1,3 @@
-locals {
-  kubernetes = var.provision_eks_cluster ? {
-    host                   = module.eks-mlops[0].cluster_endpoint
-    token                  = module.eks-mlops[0].cluster_auth_token
-    cluster_ca_certificate = base64decode(module.eks-mlops[0].cluster_certificate)
-  } : var.kubernetes
-}
-
-
-module "eks-mlops" {
-  count  = var.provision_eks_cluster ? 1 : 0
-  source = "./modules/eks"
-}
-
 resource "kubernetes_namespace" "jupyterhub_namespace" {
   metadata {
     name = var.jupyterhub_namespace
