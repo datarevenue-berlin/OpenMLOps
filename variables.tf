@@ -1,3 +1,19 @@
+## Kubernetes cluster
+##
+
+variable "provision_eks_cluster" {
+  default = false
+}
+
+variable "kubernetes" {
+  description = "If you choose not to provision EKS cluster for you, specify here how Helm should connect to your cluster."
+  type        = map(string)
+  default = {
+    config_path    = "~/.kube/config"
+    config_context = "minikube"
+  }
+}
+
 variable "region" {
   default     = "eu-west-1"
   description = "AWS region"
@@ -55,10 +71,13 @@ variable "prefect_namespace" {
 }
 
 ## Jupyter Hub
+variable "install_jupyterhub" {
+  default = true
+}
+
 variable "jupyterhub_namespace" {
   default = "jhub"
 }
-
 
 variable "jhub_proxy_https_enabled" {
   default = true
@@ -180,5 +199,13 @@ variable "feast_postgresql_password" {
   default = "my-feast-password"
 }
 
+## Seldon
 
+variable "install_seldon" {
+  default = true
+}
+
+variable "seldon_namespace" {
+  default = "seldon"
+}
 

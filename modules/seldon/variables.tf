@@ -3,7 +3,12 @@ variable "namespace" {
   default     = "default"
 }
 
-variable "istio_enabled" {
+variable "ambassador_namespace" {
+  description = "Namespace name to deploy Ambassador"
+  default     = "ambassador"
+}
+
+variable "ambassador_enabled" {
   default = true
 }
 
