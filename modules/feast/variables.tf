@@ -24,30 +24,30 @@ variable "feast_jobservice_enabled" {
   default = true
 }
 
-variable "posgresql_enabled" {
+variable "feast_posgresql_enabled" {
   default = true
 }
 
-variable "kafka_enabled" {
+variable "feast_kafka_enabled" {
   default = false
 }
 
-variable "redis_enabled" {
+variable "feast_redis_enabled" {
   default = true
 }
 
-variable "redis_use_password" {
+variable "feast_redis_use_password" {
   default = false
 }
 
-variable "promethues_statsd_exporter_enabled" {
+variable "feast_prometheus_enabled" {
   default = false
 }
 
-variable "prometheus_enabled" {
+variable "feast_prometheus_statsd_exporter_enabled" {
   default = false
 }
 
-variable "grafana_enabled" {
+variable "feast_grafana_enabled" {
   default = false
 }

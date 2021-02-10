@@ -26,7 +26,7 @@ variable "database_name" {
   default = "mlflow"
 }
 variable "db_password" {
-  default = "my-secret-password"
+  description = "Database password"
 }
 
 variable "db_username" {

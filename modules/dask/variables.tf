@@ -9,7 +9,7 @@ variable "worker_name" {
 }
 
 variable "worker_replicas" {
-  description = "Default number of worker"
+  description = "Default number of workers"
   default     = 3
 }
 
