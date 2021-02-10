@@ -68,7 +68,7 @@ variable "postgresql_use_subchart" {
 }
 
 variable "postgresql_persistence_enabled" {
-  description = " Enables a PVC that stores the database between deployments. If making changes to the database deployment, this PVC will need to be deleted for database changes to take effect. This is especially notable when the authentication password changes on redeploys."
+  description = "Enables a PVC that stores the database between deployments. If making changes to the database deployment, this PVC will need to be deleted for database changes to take effect. This is especially notable when the authentication password changes on redeploys."
   default     = false
 }
 
