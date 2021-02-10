@@ -7,7 +7,7 @@ resource "kubernetes_namespace" "jupyterhub_namespace" {
 module "jupyterhub" {
   count     = var.install_jupyterhub ? 1 : 0
   source    = "./modules/jupyterhub"
-  namespace = var.jupyterhub_namespace
+  namespace = kubernetes_namespace.jupyterhub_namespace.metadata[0].name
 
   # Proxy settings
   proxy_secret_token                    = var.jhub_proxy_secret_token
@@ -32,7 +32,7 @@ resource "kubernetes_namespace" "mlflow_namespace" {
 
 module "postgres" {
   source    = "./modules/postgres"
-  namespace = var.mlflow_namespace
+  namespace = kubernetes_namespace.mlflow_namespace.metadata[0].name
 
   db_username   = var.db_username
   db_password   = var.db_password
@@ -41,7 +41,7 @@ module "postgres" {
 
 module "mlflow" {
   source    = "./modules/mlflow"
-  namespace = var.mlflow_namespace
+  namespace = kubernetes_namespace.mlflow_namespace.metadata[0].name
 
   db_host               = module.postgres.db_host
   db_username           = var.db_username
@@ -61,7 +61,7 @@ resource "kubernetes_namespace" "prefect_namespace" {
 
 module "prefect-server" {
   source    = "./modules/prefect-server"
-  namespace = var.prefect_namespace
+  namespace = kubernetes_namespace.prefect_namespace.metadata[0].name
 }
 
 
@@ -76,7 +76,7 @@ resource "kubernetes_namespace" "dask_namespace" {
 module "dask" {
 
   source    = "./modules/dask"
-  namespace = var.dask_namespace
+  namespace = kubernetes_namespace.dask_namespace.metadata[0].name
 
   worker_image_pull_secret = [
     {
@@ -108,12 +108,12 @@ module "feast" {
   count = var.install_feast ? 1 : 0
 
   source    = "./modules/feast"
-  namespace = var.feast_namespace
+  namespace = kubernetes_namespace.feast_namespace[0].metadata[0].name
 
   feast_core_enabled           = true
   feast_online_serving_enabled = true
-  posgresql_enabled            = true
-  redis_enabled                = true
+  feast_posgresql_enabled      = true
+  feast_redis_enabled          = true
 
   feast_postgresql_password = var.feast_postgresql_password
 }
@@ -129,5 +129,5 @@ resource "kubernetes_namespace" "seldon_namespace" {
 module "seldon" {
   count = var.install_seldon ? 1 : 0
   source    = "./modules/seldon"
-  namespace = var.seldon_namespace
+  namespace = kubernetes_namespace.seldon_namespace[0].metadata[0].name
 }
