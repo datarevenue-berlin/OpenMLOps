@@ -16,7 +16,7 @@ module "jupyterhub" {
   proxy_https_letsencrypt_contact_email = var.jhub_proxy_https_letsencrypt_contact_email
 
   # Authentication settings
-  authentication_type   = var.oauth_github_enable ? "github" : ""
+  authentication_type   = var.oauth_github_enable ? "github" : "DummyAuthenticator"
   authentication_config = var.oauth_github_enable ? local.jhub_github_auth : null
 
   # Profile list configuration
