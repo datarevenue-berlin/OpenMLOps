@@ -1,23 +1,5 @@
-## Kubernetes cluster
-##
+## MLFlow
 
-variable "kubernetes" {
-  description = <<-EOF
-    Specify here how to connect to your cluster. Provided default is just an example - you can use different keys,
-    or even an empty object. Please refer to https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs#authentication
-    for the details.
-    Alternatively, you can modify `kuberenetes` and `helm` provider definitions in file versions.tf.
-  EOF
-  type        = map(string)
-  default = {
-    config_path    = "~/.kube/config"
-    config_context = "minikube"
-  }
-}
-
-
-## MLFlow Config
-##
 variable "mlflow_namespace" {
   default = "mlflow"
 }
@@ -44,6 +26,7 @@ variable "prefect_namespace" {
 }
 
 ## Jupyter Hub
+
 variable "install_jupyterhub" {
   default = true
 }

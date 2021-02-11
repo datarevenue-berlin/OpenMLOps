@@ -26,21 +26,3 @@ terraform {
     }
   }
 }
-
-provider "helm" {
-  kubernetes {
-    host                   = lookup(var.kubernetes, "host", null)
-    token                  = lookup(var.kubernetes, "token", null)
-    cluster_ca_certificate = lookup(var.kubernetes, "cluster_ca_certificate", null)
-    config_path            = lookup(var.kubernetes, "config_path", null)
-    config_context         = lookup(var.kubernetes, "config_context", null)
-  }
-}
-
-provider "kubernetes" {
-  host                   = lookup(var.kubernetes, "host", null)
-  token                  = lookup(var.kubernetes, "token", null)
-  cluster_ca_certificate = lookup(var.kubernetes, "cluster_ca_certificate", null)
-  config_path            = lookup(var.kubernetes, "config_path", null)
-  config_context         = lookup(var.kubernetes, "config_context", null)
-}
