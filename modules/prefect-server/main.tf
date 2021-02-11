@@ -11,6 +11,11 @@ resource "helm_release" "prefect-server" {
   chart             = ".terraform/modules/prefect-server.prefect-server/helm/prefect-server"
 
   set {
+    name = "jobs.createTenant.enabled"
+    value = "true"
+  }
+
+  set {
     name  = "agent.enabled"
     value = var.agent_enabled
   }
