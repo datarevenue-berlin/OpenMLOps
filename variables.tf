@@ -67,7 +67,7 @@ variable "oauth_github_client_secret" {
 
 variable "oauth_github_admin_users" {
   description = "Github user names to allow as administrator"
-  default     = ""
+  default     = []
 }
 
 variable "oauth_github_callback_url" {
@@ -115,7 +115,10 @@ variable "singleuser_profile_list" {
 
 
 locals {
-  jhub_github_auth = {
+  jhub_auth_config = {
+    dummy = {
+      password = "a-shared-secret-password"
+    }
     github = {
       clientId     = var.oauth_github_client_id
       clientSecret = var.oauth_github_client_secret
@@ -126,12 +129,7 @@ locals {
     admin = {
       users = var.oauth_github_admin_users
     }
-    JupyterHub = {
-      authenticator_class = "github"
-    }
-
   }
-
 }
 
 

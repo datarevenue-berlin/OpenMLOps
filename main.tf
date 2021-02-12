@@ -16,8 +16,13 @@ module "jupyterhub" {
   proxy_https_letsencrypt_contact_email = var.jhub_proxy_https_letsencrypt_contact_email
 
   # Authentication settings
-  authentication_type   = var.oauth_github_enable ? "github" : "DummyAuthenticator"
-  authentication_config = var.oauth_github_enable ? local.jhub_github_auth : null
+  # Following values should be `null` if oauth_github is disabled. However we need to pass submodule's defaults here
+  # explicitly because of this Terraform bug: https://github.com/hashicorp/terraform/issues/21702
+  authentication_type   = var.oauth_github_enable ? "github" : "dummy"
+  authentication_config = merge(
+    local.jhub_auth_config,
+    {JupyterHub = {authenticator_class = var.oauth_github_enable ? "github" : "dummy"}}
+  )
 
   # Profile list configuration
   singleuser_profile_list = var.singleuser_profile_list
