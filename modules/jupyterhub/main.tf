@@ -21,51 +21,37 @@ resource "helm_release" "jupyterhub_lab" {
   chart      = "jupyterhub"
   version    = "0.10.6"
 
-  set {
-    name  = "hub.allowNamedServers"
-    value = var.hub_allowed_named_servers
-  }
-
-  set {
-    name  = "proxy.secretToken"
-    value = var.proxy_secret_token
-  }
-
-  set {
-    name  = "proxy.https.enabled"
-    value = var.proxy_https_enabled
-  }
-
-  set {
-    name  = "proxy.https.letsencrypt.contactEmail"
-    value = var.proxy_https_letsencrypt_contact_email
-  }
-
-  set {
-    name  = "auth.type"
-    value = var.authentication_type
-  }
-
   values = [
     yamlencode({
+      hub = {
+        allowNamedServers = var.hub_allowed_named_servers
+      }
+
       custom = {
         a = "workaround to the issue https://github.com/jupyterhub/zero-to-jupyterhub-k8s/issues/1998"
       }
-      auth = var.authentication_config
+
+      auth = merge(var.authentication_config, {type=var.authentication_type})
+
       proxy = {
         https = {
+          enabled = var.proxy_https_enabled
           hosts = var.proxy_https_hosts
+          letsencrypt = {
+            contactEmail = var.proxy_https_letsencrypt_contact_email
+          }
         }
+        secretToken = var.proxy_secret_token
       }
 
       singleuser = {
         serserviceAccountName = kubernetes_service_account.dask_jupyter_sa.metadata[0].name
         defaultUrl            = var.singleuser_default_url
         image = {
+          name        = "jupyterhub/k8s-network-tools"
           pullSecrets = var.singleuser_image_pull_secrets
           pullPolicy  = var.singleuser_image_pull_policy
         }
-
         profileList = var.singleuser_profile_list
         memory = {
           guarantee = var.singleuser_memory_guarantee
@@ -81,7 +67,6 @@ resource "helm_release" "jupyterhub_lab" {
       }
     )
   ]
-
 }
 
 
