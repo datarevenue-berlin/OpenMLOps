@@ -58,9 +58,7 @@ variable "singleuser_image_pull_secrets" {
       name = string
     })
   )
-  default = [{
-    name = ""
-  }]
+  default = []
 }
 
 variable "singleuser_image_pull_policy" {
