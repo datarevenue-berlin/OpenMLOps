@@ -36,7 +36,7 @@ variable "jupyterhub_namespace" {
 }
 
 variable "jhub_proxy_https_enabled" {
-  default = true
+  default = false
 }
 
 variable "jhub_proxy_https_hosts" {
