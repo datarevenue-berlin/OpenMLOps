@@ -1,5 +1,6 @@
-
-module "prefect-server" {
+// This is a hack. We're just making Terraform download the Prefect repository. Then we refer to its location
+// in helm_release resource. This is necessary until Prefect starts hosting its Helm chart in a Helm repository.
+module "github-repo" {
   source = "git::https://github.com/PrefectHQ/server.git"
 }
 
@@ -8,7 +9,12 @@ resource "helm_release" "prefect-server" {
   namespace = var.namespace
 
   dependency_update = true
-  chart             = ".terraform/modules/prefect-server.prefect-server/helm/prefect-server"
+  chart             = "${path.root}/.terraform/modules/${var.parent_module_name}.prefect-server.github-repo/helm/prefect-server"
+
+  set {
+    name = "jobs.createTenant.enabled"
+    value = "true"
+  }
 
   set {
     name  = "agent.enabled"

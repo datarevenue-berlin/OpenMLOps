@@ -1,50 +1,5 @@
-## Kubernetes cluster
-##
+## MLFlow
 
-variable "provision_eks_cluster" {
-  default = false
-}
-
-variable "kubernetes" {
-  description = "If you choose not to provision EKS cluster for you, specify here how Helm should connect to your cluster."
-  type        = map(string)
-  default = {
-    config_path    = "~/.kube/config"
-    config_context = "minikube"
-  }
-}
-
-variable "region" {
-  default     = "eu-west-1"
-  description = "AWS region"
-}
-
-variable "map_users" {
-  description = "Additional IAM users to add to the aws-auth configmap."
-  type = list(object({
-    userarn  = string
-    username = string
-    groups   = list(string)
-  }))
-
-  default = [
-    {
-      userarn  = "arn:aws:iam::827659017777:user/Kayibal"
-      username = "Kayibal"
-      groups   = ["system:masters"]
-    },
-    {
-      userarn  = "arn:aws:iam::827659017777:user/tamara"
-      username = "tamara"
-      groups   = ["system:masters"]
-    },
-  ]
-}
-
-
-
-## MLFlow Config
-##
 variable "mlflow_namespace" {
   default = "mlflow"
 }
@@ -71,6 +26,7 @@ variable "prefect_namespace" {
 }
 
 ## Jupyter Hub
+
 variable "install_jupyterhub" {
   default = true
 }
@@ -80,7 +36,7 @@ variable "jupyterhub_namespace" {
 }
 
 variable "jhub_proxy_https_enabled" {
-  default = true
+  default = false
 }
 
 variable "jhub_proxy_https_hosts" {
@@ -111,7 +67,7 @@ variable "oauth_github_client_secret" {
 
 variable "oauth_github_admin_users" {
   description = "Github user names to allow as administrator"
-  default     = ""
+  default     = []
 }
 
 variable "oauth_github_callback_url" {
@@ -159,7 +115,10 @@ variable "singleuser_profile_list" {
 
 
 locals {
-  jhub_github_auth = {
+  jhub_auth_config = {
+    dummy = {
+      password = "a-shared-secret-password"
+    }
     github = {
       clientId     = var.oauth_github_client_id
       clientSecret = var.oauth_github_client_secret
@@ -170,12 +129,7 @@ locals {
     admin = {
       users = var.oauth_github_admin_users
     }
-    JupyterHub = {
-      authenticator_class = "github"
-    }
-
   }
-
 }
 
 

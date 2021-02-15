@@ -1,3 +1,8 @@
+variable "parent_module_name" {
+  description = "Name of the calling module. Needed for a hack of downloading the Helm chart."
+  type = string
+}
+
 variable "namespace" {
   description = "Namespace name to deploy the application"
   default     = "default"

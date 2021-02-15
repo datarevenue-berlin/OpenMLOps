@@ -31,18 +31,19 @@ variable "authentication_config" {
 
 }
 
-variable "proxy_secret_token" {
-  description = "A 32-byte cryptographically secure randomly generated string used to secure communications between the hub and the configurable-http-proxy"
-}
-
 variable "proxy_https_enabled" {
   description = "Indicator to set whether HTTPS should be enabled or not on the proxy"
   default     = false
 }
 
+variable "proxy_secret_token" {
+  description = "A 32-byte cryptographically secure randomly generated string used to secure communications between the hub and the configurable-http-proxy"
+  default = null
+}
+
 variable "proxy_https_hosts" {
   description = "You domains in list form. Required for automatic HTTPS"
-  default     = [""]
+  default     = null
 }
 
 variable "proxy_https_letsencrypt_contact_email" {
@@ -57,9 +58,7 @@ variable "singleuser_image_pull_secrets" {
       name = string
     })
   )
-  default = [{
-    name = ""
-  }]
+  default = []
 }
 
 variable "singleuser_image_pull_policy" {
