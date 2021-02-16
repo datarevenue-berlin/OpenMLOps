@@ -14,11 +14,13 @@ cluster. The tools we provide are the following:
 - MLFlow for model registry and experiment tracking
 - Seldon for model deployment
 
-![GitHub Logo](https://global-uploads.webflow.com/5d3ec351b1eba4332d213004/6001c1daafa02889e5389a59_EE2q1dQqp2fmiaXGX5vuaVVnTPXmKlmD3BC1dp90YrPB2TOiHWSq3RCCmC39MzsmYHUrQFXVK9nmTf4haQ0dIj-vdk_we67e1SR5yqEWPTuEAApuiNOXOgdr7mSefSmlZxSwu0JB.png)
+![Architecture diagram](https://global-uploads.webflow.com/5d3ec351b1eba4332d213004/6001c1daafa02889e5389a59_EE2q1dQqp2fmiaXGX5vuaVVnTPXmKlmD3BC1dp90YrPB2TOiHWSq3RCCmC39MzsmYHUrQFXVK9nmTf4haQ0dIj-vdk_we67e1SR5yqEWPTuEAApuiNOXOgdr7mSefSmlZxSwu0JB.png)
 
-# Cluster installation
+# Other repositories
 
-## Test locally on minikube
+![Repositories diagram](http://www.plantuml.com/plantuml/svg/fT91Qpen40NmUpx5mtlS-v__GIaz55jQiD23U8ZPqHtCJfRCn1vAltkn8aZP2iLhO38_tfkPMYXM--HY2ggOF3q-3ufvYHqRHQk5a0Npj-K47mvuAVd0obaK0J5LDIe8qe95BQIaE7rWEIUTEc2rwim6_TSqExQkRgOnzqqRB1Gwa5Jo6og9fUbJ7jI7Yxq-Ym_lYiIonthjFjtlnXFkOSG05WGiweQAa96UqRVPBb2IZP1eQ-wrOqMX8JkI5iVtAsBSBvQuErb-HZiAHbMMtVUOKZbm9EJjiPWRKwQz-lEAYwYl7S9_xqTB-CFGU0xETTmI8fUOoCr8sjgdBm00)
+
+# Test locally on minikube
 
 minikube is a small Kubernetes cluster that runs on your local machine. It's perfect for testing
 solutions that you will once deploy in a cloud. 
@@ -35,6 +37,8 @@ solutions that you will once deploy in a cloud.
 4. Proceed to installing tools included in this repository using Terraform. By default, the configuration
 assumes installation on a minikube cluster.
 
+Alternatively, check out links in [Other repositories](#other-repositories) section to see how to install 
+using a cloud-provisioned cluster.
 
 # Modules
 
