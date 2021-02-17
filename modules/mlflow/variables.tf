@@ -51,7 +51,6 @@ variable "service_type" {
 
 variable "docker_registry_server" {
   description = "Docker Registry Server where the image should be found"
-  sensitive = true
   type = string
 }
 
