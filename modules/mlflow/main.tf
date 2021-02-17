@@ -77,9 +77,9 @@ resource "helm_release" "mlflow" {
 
   values = [
     yamlencode({
-      imagePullSecrets = [{
+      imagePullSecrets = (var.docker_private_repo == true ? [{
         name = kubernetes_secret.private_registry_secret.metadata[0].name
-      }]
+      }] : [])
     }),
   ]
 }
