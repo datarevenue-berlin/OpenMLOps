@@ -48,3 +48,15 @@ variable "image_tag" {
 variable "service_type" {
   default = "NodePort"
 }
+
+variable "docker_registry_server" {
+  description = "Docker Registry Server where the image should be found"
+  sensitive = true
+  type = string
+}
+
+variable "docker_auth_key" {
+  description = "Base64 encoded auth key for the registry server"
+  sensitive = true
+  type = string
+}

@@ -1,11 +1,18 @@
-
 resource "kubernetes_secret" "private_registry_secret" {
   metadata {
     name      = "regcred"
     namespace = var.namespace
   }
   data = {
-    ".dockerconfigjson" = file(pathexpand("~/.docker/config.json"))
+    ".dockerconfigjson" = <<DOCKER
+          {
+            "auths": {
+              "${var.docker_registry_server}": {
+                "auth": "${var.docker_auth_key}"
+              }
+            }
+          }
+          DOCKER
   }
 
   type = "kubernetes.io/dockerconfigjson"
