@@ -4,7 +4,7 @@ resource "kubernetes_secret" "private_registry_secret" {
     namespace = var.namespace
   }
   data = {
-    ".dockerconfigjson" = <<DOCKER
+    ".dockerconfigjson" = <<-DOCKER
           {
             "auths": {
               "${var.docker_registry_server}": {
