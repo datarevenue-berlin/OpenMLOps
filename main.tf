@@ -52,6 +52,9 @@ module "mlflow" {
   db_username           = var.db_username
   db_password           = var.db_password
   default_artifact_root = var.mlflow_artifact_root
+  docker_private_repo   = var.mlflow_docker_private_repo
+  docker_registry_server = var.mlflow_docker_registry_server
+  docker_auth_key       = var.mlflow_docker_auth_key
 
   service_type = "LoadBalancer"
 }

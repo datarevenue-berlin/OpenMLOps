@@ -48,3 +48,22 @@ variable "image_tag" {
 variable "service_type" {
   default = "NodePort"
 }
+
+variable "docker_private_repo" {
+  description = "Whether the MLFlow's image comes from a private repository or not. If true, docker_registry_server and docker_auth_key will be required"
+  type = bool
+  default = false
+}
+
+variable "docker_registry_server" {
+  description = "Docker Registry Server where the image should be found"
+  type = string
+  default = ""
+}
+
+variable "docker_auth_key" {
+  description = "Base64 encoded auth key for the registry server"
+  sensitive = true
+  type = string
+  default = ""
+}

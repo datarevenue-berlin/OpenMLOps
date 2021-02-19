@@ -19,6 +19,22 @@ variable "mlflow_artifact_root" {
   default = "s3://mlops-model-artifact"
 }
 
+variable "mlflow_docker_private_repo" {
+  description = "Whether the MLFlow's image comes from a private repository or not. If true, mlflow_docker_registry_server and mlflow_docker_auth_key will be required"
+  type = bool
+  default = false
+}
+variable "mlflow_docker_registry_server" {
+  description = "Docker Registry Server where the MLFlow image should be found"
+  type = string
+  default = ""
+}
+variable "mlflow_docker_auth_key" {
+  description = "Base64 encoded auth key for the registry server"
+  type = string
+  default = ""
+}
+
 ## Prefect Server
 
 variable "prefect_namespace" {

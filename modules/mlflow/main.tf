@@ -1,11 +1,19 @@
-
 resource "kubernetes_secret" "private_registry_secret" {
+  count = var.docker_private_repo ? 1 : 0
   metadata {
     name      = "regcred"
     namespace = var.namespace
   }
   data = {
-    ".dockerconfigjson" = file(pathexpand("~/.docker/config.json"))
+    ".dockerconfigjson" = <<-DOCKER
+          {
+            "auths": {
+              "${var.docker_registry_server}": {
+                "auth": "${var.docker_auth_key}"
+              }
+            }
+          }
+          DOCKER
   }
 
   type = "kubernetes.io/dockerconfigjson"
@@ -70,9 +78,9 @@ resource "helm_release" "mlflow" {
 
   values = [
     yamlencode({
-      imagePullSecrets = [{
-        name = kubernetes_secret.private_registry_secret.metadata[0].name
-      }]
+      imagePullSecrets = (var.docker_private_repo == true ? [{
+        name = kubernetes_secret.private_registry_secret[0].metadata[0].name
+      }] : [])
     }),
   ]
 }
