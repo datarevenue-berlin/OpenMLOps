@@ -21,6 +21,9 @@ resource "helm_release" "jupyterhub_lab" {
   chart      = "jupyterhub"
   version    = "0.10.6"
 
+  // It takes some time to pull all the necessary images.
+  timeout = 15 * 60  // [s]
+
   values = [
     yamlencode({
       hub = {

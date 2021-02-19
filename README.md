@@ -14,26 +14,12 @@ cluster. The tools we provide are the following:
 - MLFlow for model registry and experiment tracking
 - Seldon for model deployment
 
-![GitHub Logo](https://global-uploads.webflow.com/5d3ec351b1eba4332d213004/6001c1daafa02889e5389a59_EE2q1dQqp2fmiaXGX5vuaVVnTPXmKlmD3BC1dp90YrPB2TOiHWSq3RCCmC39MzsmYHUrQFXVK9nmTf4haQ0dIj-vdk_we67e1SR5yqEWPTuEAApuiNOXOgdr7mSefSmlZxSwu0JB.png)
+![Architecture diagram](https://global-uploads.webflow.com/5d3ec351b1eba4332d213004/6001c1daafa02889e5389a59_EE2q1dQqp2fmiaXGX5vuaVVnTPXmKlmD3BC1dp90YrPB2TOiHWSq3RCCmC39MzsmYHUrQFXVK9nmTf4haQ0dIj-vdk_we67e1SR5yqEWPTuEAApuiNOXOgdr7mSefSmlZxSwu0JB.png)
 
-# Cluster installation
 
-## Test locally on minikube
+# Other repositories
 
-minikube is a small Kubernetes cluster that runs on your local machine. It's perfect for testing
-solutions that you will once deploy in a cloud. 
-
-1. Install minikube as described [here](https://minikube.sigs.k8s.io/docs/start/).
-2. Start your minikube cluster if you haven't already:
-    ```commandline
-    minikube start
-    ```
-3. In a separate terminal window start [minikube tunnel](https://minikube.sigs.k8s.io/docs/handbook/accessing/#using-minikube-tunnel):
-    ```commandline
-    minikube tunnel
-    ```
-4. Proceed to installing tools included in this repository using Terraform. By default, the configuration
-assumes installation on a minikube cluster.
+![Repositories diagram](http://www.plantuml.com/plantuml/svg/fP91Qpen4CNl-HI3ztNlV_u7fVHGR6d1GW_Y8IQZEvYTMJA9HKg_UwEY29MriBTaU8_vpPkPQB8nvJOO5wmgZ5wUNpk5QNGD9NGfHmHXQ8bfcrSuWYy3yCJ55OB2IPn4ofiOx4K7BcHD6A6eFNP1zkWXY2kk_RZK5eicfKx_rVM6KfDNOoTjxMrXmHroncg5CH3NRP1EAtj5KmbNbov5ieNbqdoRVlpfn_n4_XPbHqh22lR2I4T1-Khs1s3B7kZ6YCF1xQV-XVbkpBDSsZ0crFCGmzYke5XI-U8wcVU6529sOf0z7EfzAJ_Evl1mOhaHzMzWo4gyETeKuuuSWgmFUnYOCcwrEhUuYlhkNV-lgfkRC7qdDS3Kdw0n3Na4Hz45D1Dadzlm0m00)
 
 
 # Modules
