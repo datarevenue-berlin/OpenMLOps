@@ -1,4 +1,5 @@
 resource "kubernetes_secret" "private_registry_secret" {
+  count = var.docker_private_repo ? 1 : 0
   metadata {
     name      = "regcred"
     namespace = var.namespace
