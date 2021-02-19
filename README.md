@@ -256,7 +256,7 @@ allocates resources for them on their respective deployment platforms.
 | `image_pull_policy`     | Docker image pull policy                                                                                                                       | `IfNotPresent`   |
 | `image_repository`      | Docker image repository                                                                                                                        | `drtools/mlflow` |
 | `image_tag`             | Docker image tag                                                                                                                               | `1.13.1`         |
-| `service_type`          | Kubernetes service tyoe                                                                                                                        | `NodePort`       |
+| `service_type`          | Kubernetes service type                                                                                                                        | `NodePort`       |
 | `docker_registry_server`| Docker Registry Server                                                                                                                         | ``               |
 | `docker_auth_key`       | Base64 Enconded combination of {registry_username}:{registry_password}. Can be found in ~/.docker/config.json                                  | ``               |
 | `docker_private_repo`   | Whether the MLFlow's image comes from a private repository or not. If `true`, `docker_registry_server` and `docker_auth_key` will be required  | `false`               |
