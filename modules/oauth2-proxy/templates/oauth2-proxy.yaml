@@ -1,0 +1,51 @@
+fullnameOverride: oauth2-proxy
+ 
+image:
+  repository: ${oauth_image_repository}
+  tag: ${oauth_image_tag}
+ 
+config:
+  clientID: "${oauth_client_id}"
+  clientSecret: "${oauth_client_secret}"
+  cookieSecret: "${oauth_cookie_secret}"
+  configFile: |
+    provider = "${oauth_provider}"
+    email_domains = "*"
+    redirect-url = "${redirect_url}"
+    http-address = 0.0.0.0:4180
+    pass-authorization-header = false
+    cookie-secure = false
+    cookie-domain = "${domain}"
+    whitelist-domain = "${domain}"
+    reverse-proxy = true
+
+ingress:
+  enabled: false
+
+service:
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: getambassador.io/v2
+      kind: AuthService
+      name: authentication
+      auth_service: "http://oauth2-proxy.oauth2-proxy:4180"
+      path_prefix: "/oauth2/start?rd="
+      proto: http
+      ---
+      apiVersion: getambassador.io/v2
+      kind:  Mapping
+      name:  oauth2_proxy_mapping
+      prefix: "/oauth2/"
+      service: http://oauth2-proxy.oauth2-proxy:4180/
+      rewrite: "/oauth2/"
+      bypass_auth: true
+  port: 4180
+ 
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 200m
+    memory: 128Mi

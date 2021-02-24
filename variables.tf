@@ -179,3 +179,25 @@ variable "seldon_namespace" {
   default = "seldon"
 }
 
+## OAuth-2-Proxy
+variable "install_oauth2_proxy" {
+  default = false
+}
+variable "oauth_client_id" {
+  description = "OAuth 2 Client ID"
+}
+variable "oauth_client_secret" {
+  description = "OAuth 2 Client Secret"
+}
+variable "oauth_provider" {
+  description = "OAuth 2 Provider"
+}
+variable "redirect_url" {
+  description = "OAuth 2 Redirect URL"
+}
+variable "domain" {
+  description = "Application domain"
+}
+variable "oauth_cookie_secret" {
+  description = "Secret for issuing cookies by oauth2_proxy"
+}

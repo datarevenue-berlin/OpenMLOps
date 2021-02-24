@@ -140,3 +140,22 @@ module "seldon" {
   source    = "./modules/seldon"
   namespace = kubernetes_namespace.seldon_namespace[0].metadata[0].name
 }
+
+resource "kubernetes_namespace" "oauth2-proxy-namespace" {
+  count = var.install_oauth2_proxy ? 1 : 0
+  metadata {
+    name = "oauth2-proxy"
+  }
+}
+
+module "oauth2-proxy" {
+  count = var.install_oauth2_proxy ? 1 : 0
+  source = "./modules/oauth2-proxy"
+  namespace = kubernetes_namespace.oauth2-proxy-namespace.metadata[0].name
+  domain = ""
+  oauth_client_id = ""
+  oauth_client_secret = ""
+  oauth_cookie_secret = ""
+  oauth_provider = ""
+  redirect_url = ""
+}
