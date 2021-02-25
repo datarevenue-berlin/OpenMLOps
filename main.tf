@@ -140,3 +140,15 @@ module "seldon" {
   source    = "./modules/seldon"
   namespace = kubernetes_namespace.seldon_namespace[0].metadata[0].name
 }
+
+resource "kubernetes_namespace" "ory_namespace" {
+  count = var.install_ory ? 1 : 0
+  metadata {
+    name = var.ory_namespace
+  }
+}
+
+module "ory" {
+  source = "./modules/ory"
+  namespace = kubernetes_namespace.ory_namespace[0].metadata[0].name
+}

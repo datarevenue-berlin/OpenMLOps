@@ -179,3 +179,9 @@ variable "seldon_namespace" {
   default = "seldon"
 }
 
+variable "install_ory" {
+  default = true
+}
+variable "ory_namespace" {
+  default = "ory"
+}

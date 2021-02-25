@@ -1,0 +1,14 @@
+authenticators:
+  anonymous:
+    # Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
+    enabled: true
+    config:
+      subject: guest
+authorizers:
+  allow:
+    # Set enabled to "true" to enable the authenticator, and "false" to disable the authenticator. Defaults to "false".
+    enabled: true
+mutators:
+  noop:
+    # Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
+    enabled: true

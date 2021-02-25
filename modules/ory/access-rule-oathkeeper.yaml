@@ -1,0 +1,28 @@
+---
+- id: oathkeeper-access-rule
+  match:
+    url: <https|http>://${hostname}/ory-oathkeeper/<.*>
+    methods:
+      - GET
+  authenticators:
+    - handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
+  credentials_issuer:
+    handler: noop
+- id: httpbin-access-rule
+  match:
+    url: <https|http>://${hostname}/httpbin/<.*>
+    methods:
+      - GET
+  authenticators:
+    - handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
+  credentials_issuer:
+    handler: noop
+---
