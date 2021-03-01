@@ -9,14 +9,23 @@ data "template_file" "oathkeeper-access-rules"{
   }
 }
 
-resource "kubernetes_config_map" "oathkeeper-access-rules" {
+data "template_file" "oathkeeper-config"{
+  template = file("${path.module}/config-oathkeeper.yaml")
+  vars = {
+    hostname = var.hostname
+    protocol = var.protocol
+    config_path = local.config_mount_path
+  }
+}
+
+resource "kubernetes_config_map" "oathkeeper-configs" {
   metadata {
-    name = "oathkeeper-access-rules"
+    name = "oathkeeper-config"
     namespace = var.namespace
   }
   data = {
     "access-rule-oathkeeper.yaml" = data.template_file.oathkeeper-access-rules.rendered
-    "config-oathkeeper.yaml" = file("${path.module}/config-oathkeeper.yaml")
+    "config-oathkeeper.yaml" = data.template_file.oathkeeper-config.rendered
   }
 }
 
@@ -138,10 +147,15 @@ resource "kubernetes_deployment" "ory-oathkeeper" {
         volume {
           name = "oathkeeper-access-rule-vol"
           config_map {
-            name = kubernetes_config_map.oathkeeper-access-rules.metadata[0].name
+            name = kubernetes_config_map.oathkeeper-configs.metadata[0].name
           }
         }
       }
     }
   }
+}
+
+module "ory-kratos" {
+  source = "./kratos"
+  namespace = var.namespace
 }

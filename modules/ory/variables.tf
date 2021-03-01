@@ -10,3 +10,7 @@ variable "hostname" {
   description = "Hostname"
   default = "myambassador.com"
 }
+variable "protocol" {
+  description = "Default protocol (HTTP/HTTPS)"
+  default = "http"
+}

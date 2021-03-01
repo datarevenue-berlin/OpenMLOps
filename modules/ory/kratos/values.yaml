@@ -1,0 +1,120 @@
+service:
+  public:
+    annotations:
+      "getambassador.io/config": |
+          ---
+          apiVersion: getambassador.io/v2
+          kind: Mapping
+          name: ory-kratos-public-mapping
+          service: ory-kratos-public.ory
+          prefix: /.ory/kratos/public/
+
+kratos:
+  automigrate: true
+  development: true
+  config:
+
+    identity:
+      default_schema_url: file:///etc/config/identity.traits.schema.json
+
+    selfservice:
+      default_browser_return_url: http://ory-kratos-ui.ory.svc.cluster.local/
+      #TODO: Move this to variables
+      whitelisted_return_urls:
+        - http://myambassador.com
+
+      methods:
+        password:
+          enabled: true
+
+      flows:
+        settings:
+          privileged_session_max_age: 1m
+          after:
+            profile:
+              hooks:
+                - hook: verify
+          ui_url: http://ory-kratos-ui.ory.svc.cluster.local/settings
+
+        verification:
+          ui_url: http://ory-kratos-ui.ory.svc.cluster.local/verify
+
+        logout:
+          after:
+            default_browser_return_url: http://ory-kratos-ui.ory.svc.cluster.local/auth/login
+
+        login:
+          lifespan: 10m
+          ui_url: http://ory-kratos-ui.ory.svc.cluster.local/auth/login
+
+        error:
+          ui_url: http://ory-kratos-ui.ory.svc.cluster.local/error
+
+        registration:
+          lifespan: 10m
+          after:
+            password:
+              hooks:
+                - hook: session
+          ui_url: http://ory-kratos-ui.ory.svc.cluster.local/auth/registration
+
+    log:
+      level: debug
+
+    secrets:
+      session:
+        - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
+
+    serve:
+      public:
+        base_url: http://ory-kratos-public.ory.svc.cluster.local/.ory/kratos/public/
+        port: 4433
+
+      admin:
+        base_url: http://ory-kratos-admin.ory.svc.cluster.local:4434/
+
+
+    hashers:
+      argon2:
+        parallelism: 1
+        memory: 131072
+        iterations: 2
+        salt_length: 16
+        key_length: 16
+
+    courier:
+      smtp:
+        connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
+
+  identitySchemas:
+    "identity.traits.schema.json": |
+      {
+        "$id": "https://schemas.ory.sh/presets/kratos/quickstart/email-password/identity.schema.json",
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Person",
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "E-Mail",
+            "minLength": 3,
+            "ory.sh/kratos": {
+              "credentials": {
+                "password": {
+                  "identifier": true
+                }
+              },
+              "verification": {
+                "via": "email"
+              }
+            }
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "additionalProperties": false
+      }
+secret:
+  enabled: true
