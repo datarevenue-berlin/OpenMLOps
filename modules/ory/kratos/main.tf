@@ -1,6 +1,7 @@
 locals {
   ui_deployment_name = "ory-kratos-ui"
   ui_url = "${var.domain}/"
+  dashboard_url = "${var.domain}/dashboard"
   registration_url = "${var.domain}/auth/registration"
   login_url = "${var.domain}/auth/login"
   settings_url = "${var.domain}/settings"
@@ -25,7 +26,7 @@ resource "helm_release" "ory-kratos" {
   }
   set {
     name = "kratos.config.selfservice.default_browser_return_url"
-    value = local.ui_url
+    value = local.dashboard_url
   }
   set {
     name = "kratos.config.selfservice.flows.settings.ui_url"
@@ -55,11 +56,22 @@ resource "helm_release" "ory-kratos" {
     name = "kratos.config.serve.public.port"
     value = 4433
   }
-  # TODO: Fix this
-//  set {
-//    name = "kratos.config.selfservice.flows.logout.after.default_browser_return_url"
-//    value = local.login_url
-//  }
+  set {
+    name = "kratos.config.secrets.cookie"
+    value = var.cookie-secret
+  }
+  set {
+    name = "kratos.config.selfservice.flows.logout.after.default_browser_return_url"
+    value = local.login_url
+  }
+  set {
+    name = "kratos.config.selfservice.methods.oidc.config.providers[0].client_id"
+    value = var.oauth_client_id
+  }
+  set {
+    name = "kratos.config.selfservice.methods.oidc.config.providers.0.client_secret"
+    value = var.oauth_client_secret
+  }
 }
 
 resource "kubernetes_deployment" "ory-kratos-ui" {

@@ -1,5 +1,6 @@
 locals {
   config_mount_path = "/etc/config"
+  secrets_mount_path = "/etc/secrets"
 }
 
 data "template_file" "oathkeeper-access-rules"{
@@ -15,6 +16,7 @@ data "template_file" "oathkeeper-config"{
     hostname = var.hostname
     protocol = var.protocol
     config_path = local.config_mount_path
+    secret_path = local.secrets_mount_path
   }
 }
 
@@ -73,7 +75,7 @@ resource "kubernetes_secret" "ory-authkeeper-issuer-secret" {
     namespace = var.namespace
   }
   data = {
-    credentials_issuer_id = var.credentials_issuer_id
+    "id_token.jwks.json" = file("${path.module}/../../secrets/jwks.json")
   }
 }
 resource "kubernetes_deployment" "ory-oathkeeper" {
@@ -109,21 +111,8 @@ resource "kubernetes_deployment" "ory-oathkeeper" {
             value = "memory"
           }
           env {
-            name = "CREDENTIALS_ISSUER_ID_TOKEN_ALGORITHM"
-            value = "HS256"
-          }
-          env {
             name = "PORT"
             value = "4456"
-          }
-          env {
-            name = "CREDENTIALS_ISSUER_ID_TOKEN_HS256_SECRET"
-            value_from {
-              secret_key_ref {
-                name = kubernetes_secret.ory-authkeeper-issuer-secret.metadata[0].name
-                key = "credentials_issuer_id"
-              }
-            }
           }
           env {
             name = "ACCESS_RULES_REPOSITORIES"
@@ -143,11 +132,21 @@ resource "kubernetes_deployment" "ory-oathkeeper" {
             name = "oathkeeper-access-rule-vol"
             mount_path = local.config_mount_path
           }
+          volume_mount {
+            name = "oathkeeper-secrets"
+            mount_path = local.secrets_mount_path
+          }
         }
         volume {
           name = "oathkeeper-access-rule-vol"
           config_map {
             name = kubernetes_config_map.oathkeeper-configs.metadata[0].name
+          }
+        }
+        volume {
+          name = "oathkeeper-secrets"
+          secret {
+            secret_name = kubernetes_secret.ory-authkeeper-issuer-secret.metadata[0].name
           }
         }
       }

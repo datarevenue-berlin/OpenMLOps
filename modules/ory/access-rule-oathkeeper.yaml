@@ -18,13 +18,23 @@
     methods:
       - GET
   authenticators:
-    - handler: anonymous
+    - handler: cookie_session
   authorizer:
     handler: allow
   mutators:
-    - handler: noop
+    - handler: id_token
   credentials_issuer:
     handler: noop
+  errors:
+    - handler: redirect
+      config:
+        to: http://${hostname}/auth/login
+        when:
+          - request:
+              header:
+                accept:
+                  - text/*
+                  - application/xhtml+xml
 - id: ory-kratos-public
   upstream:
     preserve_host: true
@@ -48,7 +58,7 @@
     preserve_host: true
     url: "http://ory-kratos-ui.ory.svc.cluster.local"
   match:
-    url: <{http,https}>://${hostname}/<{error,recovery,verify,auth/*,**.css,**.js}{/,}>
+    url: <{http,https}>://${hostname}/<{error,recovery,verify,auth/*,**.css,**.js,**.ico}{/,}>
     methods:
       - GET
   authenticators:

@@ -28,22 +28,19 @@ serve:
 
 errors:
   fallback:
+    - redirect
     - json
-
   handlers:
     redirect:
       enabled: true
       config:
         to: ${protocol}://${hostname}/auth/login
         when:
-          -
-            error:
-              - unauthorized
-              - forbidden
-            request:
+          - request:
               header:
                 accept:
-                  - text/html
+                  - text/*
+                  - application/xhtml+xml
     json:
       enabled: true
       config:
@@ -83,7 +80,7 @@ mutators:
     enabled: true
     config:
       issuer_url: ${protocol}://${hostname}
-      jwks_url: file:///etc/config/oathkeeper/id_token.jwks.json
+      jwks_url: file://${secret_path}/id_token.jwks.json
       claims: |
         {
           "session": {{ .Extra | toJson }}
