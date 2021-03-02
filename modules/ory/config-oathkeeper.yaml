@@ -1,9 +1,11 @@
 ---
 log:
+  # Set a lower level when running in production
   level: debug
   format: json
 
 access_rules:
+  # Defaults to regexp
   matching_strategy: glob
 
 serve:

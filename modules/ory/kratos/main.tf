@@ -8,6 +8,25 @@ locals {
   verify_url = "${var.domain}/verify"
   error_url = "${var.domain}/error"
   api_url = "${var.domain}/.ory/kratos/public"
+
+  provider_paths = {
+    "github" = "file:///etc/config/oidc.github.jsonnet"
+    "google" = "file:///etc/config/oidc.github.jsonnet"
+    "microsoft" = "file:///etc/config/oidc.github.jsonnet"
+  }
+}
+
+data template_file "oidc-providers" {
+  template = "${path.module}/oidc_providers.tmpl"
+  for_each = { for pv in var.oauth2_providers : pv.provider => pv }
+
+  vars = {
+    provider = each.key
+    client_id = each.value.client_id
+    client_secret = each.value.client_secret
+    tenant = each.value.tenant
+  }
+
 }
 resource "helm_release" "ory-kratos" {
   name = "ory-kratos"
@@ -27,6 +46,10 @@ resource "helm_release" "ory-kratos" {
   set {
     name = "kratos.config.selfservice.default_browser_return_url"
     value = local.dashboard_url
+  }
+  set {
+    name = "kratos.config.selfservice.flows.logout.after.default_browser_return_url"
+    value = local.login_url
   }
   set {
     name = "kratos.config.selfservice.flows.settings.ui_url"
@@ -60,18 +83,15 @@ resource "helm_release" "ory-kratos" {
     name = "kratos.config.secrets.cookie"
     value = var.cookie-secret
   }
-  set {
-    name = "kratos.config.selfservice.flows.logout.after.default_browser_return_url"
-    value = local.login_url
-  }
-  set {
-    name = "kratos.config.selfservice.methods.oidc.config.providers[0].client_id"
-    value = var.oauth_client_id
-  }
-  set {
-    name = "kratos.config.selfservice.methods.oidc.config.providers.0.client_secret"
-    value = var.oauth_client_secret
-  }
+
+//  set {
+//    name = "kratos.config.selfservice.methods.oidc.config.providers[0].client_id"
+//    value = var.oauth_client_id
+//  }
+//  set {
+//    name = "kratos.config.selfservice.methods.oidc.config.providers.0.client_secret"
+//    value = var.oauth_client_secret
+//  }
 }
 
 resource "kubernetes_deployment" "ory-kratos-ui" {

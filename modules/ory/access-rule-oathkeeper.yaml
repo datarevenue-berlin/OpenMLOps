@@ -12,6 +12,7 @@
     - handler: noop
   credentials_issuer:
     handler: noop
+
 - id: httpbin-access-rule
   match:
     url: <{http,https}>://${hostname}/httpbin/<**>
@@ -35,6 +36,7 @@
                 accept:
                   - text/*
                   - application/xhtml+xml
+
 - id: ory-kratos-public
   upstream:
     preserve_host: true
@@ -53,6 +55,7 @@
     handler: allow
   mutators:
     - handler: noop
+
 - id: ory-kratos-ui:anonymous
   upstream:
     preserve_host: true
@@ -67,6 +70,7 @@
     handler: allow
   mutators:
     - handler: noop
+
 - id: ory-kratos-ui:protected
   upstream:
     preserve_host: true
