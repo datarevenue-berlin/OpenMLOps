@@ -19,24 +19,12 @@ kratos:
 
     selfservice:
       default_browser_return_url: http://ory-kratos-ui.ory.svc.cluster.local/
-      #TODO: Move this to variables
-      whitelisted_return_urls:
-        - http://myambassador.com
 
       methods:
         password:
           enabled: true
         oidc:
           enabled: true
-          config:
-            providers:
-              - id: github
-                provider: github
-                mapper_url: file:///etc/config/oidc.github.jsonnet
-                client_id: e12a17b54c9b985f60ef
-                client_secret: d8984b61b593e939accf330be21632dfefe3600e
-                scope:
-                  - user:email
 
       flows:
         settings:
@@ -148,6 +136,23 @@ kratos:
             // Therefore we only return the email if it (a) exists and (b) is marked verified
             // by GitHub.
             [if "email" in claims && claims.email_verified then "email" else null]: claims.email,
+          },
+        },
+      }
+    "oidc.microsoft.jsonnet": |
+      local claims = std.extVar('claims');
+      {
+        identity: {
+          traits: {
+            // Allowing unverified email addresses enables account
+            // enumeration attacks, especially if the value is used for
+            // e.g. verification or as a password login identifier.
+            //
+            // If connecting only to your organization (one tenant), claims.email is safe to use if you have not actively disabled e-mail verification during signup.
+            //
+            // The email might be empty if the account is not linked to an email address.
+            // For a human readable identifier, consider using the "preferred_username" claim.
+            [if "email" in claims then "email" else null]: claims.email,
           },
         },
       }

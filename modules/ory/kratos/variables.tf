@@ -1,29 +1,34 @@
 variable "namespace" {
   default = "ory"
+  type = string
 }
 
 variable "database_name" {
   default = "kratos"
   description = "PostgreSQL Database Name"
+  type = string
 }
 
 variable "db_username" {
   default = "kratos"
   description = "PostgreSQL Database Username"
+  type = string
 }
 
 variable "db_password"{
   description = "PostgreSQL Database Password"
+  type = string
 }
 
 variable "domain" {
-  description = "Your application domain"
-  default = "http://myambassador.com"
+  description = "Your application domain. Ex.: http://my-mlops.com"
+  type = string
 }
 
 variable "cookie-secret" {
   description = "Session Cookie Generation secret"
   sensitive = true
+  type = string
 }
 
 variable "oauth2_providers" {
@@ -45,21 +50,3 @@ variable "oauth2_providers" {
   }))
   description = "OAuth2 Providers credentials"
 }
-
-//variable "github_oauth" {
-//  description = "Accept GitHub as OAuth2 Provider"
-//  default = true
-//  type = bool
-//}
-//variable "github_oauth_credentials" {
-//  description = "Oauth2 Client ID used for GitHub"
-//  default = ""
-//  sensitive = true
-//  type = object({})
-//}
-//
-//variable "github_client_secret" {
-//  description = "Oauth2 Client Secret used for Github"
-//  default = ""
-//  sensitive = true
-//}

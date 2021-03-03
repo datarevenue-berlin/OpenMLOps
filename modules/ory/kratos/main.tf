@@ -14,20 +14,34 @@ locals {
     "google" = "file:///etc/config/oidc.github.jsonnet"
     "microsoft" = "file:///etc/config/oidc.github.jsonnet"
   }
+  schemas_path = "${path.module}/schemas"
+  scopes = {
+    "github" = ["user:email"]
+    "google" = ["user:email"]
+    "microsoft" = ["profile", "email"]
+  }
+
+  identity_schemas = {
+    "identity.traits.schema.json" = file("${local.schemas_path}/identity.traits.schema.json")
+    "oidc.github.jsonnet" = file("${local.schemas_path}/oidc.github.jsonnet")
+    "oidc.microsoft.jsonnet" = file("${local.schemas_path}/oidc.microsoft.jsonnet")
+  }
 }
 
 data template_file "oidc-providers" {
-  template = "${path.module}/oidc_providers.tmpl"
-  for_each = { for pv in var.oauth2_providers : pv.provider => pv }
+  template = file("${path.module}/oidc_providers.json.tmpl")
 
+  count = length(var.oauth2_providers)
   vars = {
-    provider = each.key
-    client_id = each.value.client_id
-    client_secret = each.value.client_secret
-    tenant = each.value.tenant
+    provider = var.oauth2_providers[count.index].provider
+    client_id = var.oauth2_providers[count.index].client_id
+    client_secret = var.oauth2_providers[count.index].client_secret
+    tenant = var.oauth2_providers[count.index].tenant
+    mapper_url = local.provider_paths[var.oauth2_providers[count.index].provider]
+    scope = join(",", local.scopes[var.oauth2_providers[count.index].provider])
   }
-
 }
+
 resource "helm_release" "ory-kratos" {
   name = "ory-kratos"
   namespace = var.namespace
@@ -46,6 +60,10 @@ resource "helm_release" "ory-kratos" {
   set {
     name = "kratos.config.selfservice.default_browser_return_url"
     value = local.dashboard_url
+  }
+  set {
+    name = "kratos.config.selfservice.whitelisted_return_urls"
+    value = yamlencode(list(var.domain))
   }
   set {
     name = "kratos.config.selfservice.flows.logout.after.default_browser_return_url"
@@ -81,20 +99,18 @@ resource "helm_release" "ory-kratos" {
   }
   set {
     name = "kratos.config.secrets.cookie"
-    value = var.cookie-secret
+    value = yamlencode(list(var.cookie-secret))
   }
   set {
     name = "kratos.config.selfservice.methods.oidc.config.providers"
-    value = yamlencode(data.template_file.oidc-providers[*])
+    value = yamlencode(jsondecode(join(",", data.template_file.oidc-providers.*.rendered)))
   }
+  # TODO: Make terraform render these schemas properly
 //  set {
-//    name = "kratos.config.selfservice.methods.oidc.config.providers[0].client_id"
-//    value = var.oauth_client_id
+//    name = "kratos.identitySchemas"
+//    value = yamlencode(local.identity_schemas)
 //  }
-//  set {
-//    name = "kratos.config.selfservice.methods.oidc.config.providers.0.client_secret"
-//    value = var.oauth_client_secret
-//  }
+
 }
 
 resource "kubernetes_deployment" "ory-kratos-ui" {
@@ -186,6 +202,5 @@ module "kratos-postgres" {
 
   database_name = var.database_name
   db_username = var.db_username
-  #TODO: Change password
   db_password = var.db_password
 }

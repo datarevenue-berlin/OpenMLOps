@@ -1,3 +1,13 @@
+## General variables
+variable "hostname" {
+  description = "Hostname of the deployed cluster. Ex.: my_mlops.com"
+}
+
+variable "protocol" {
+  default = "http"
+  description = "Preferred connection protocol (HTTPS not configured yet)"
+}
+
 ## MLFlow
 
 variable "mlflow_namespace" {

@@ -154,4 +154,7 @@ module "ory" {
   cookie-secret = var.ory_kratos_cookie-secret
   db_password = var.ory_kratos_db_password
   oauth2_providers = var.oauth2_providers
+
+  hostname = var.hostname
+  protocol = var.protocol
 }
