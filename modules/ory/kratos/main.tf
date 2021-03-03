@@ -83,7 +83,10 @@ resource "helm_release" "ory-kratos" {
     name = "kratos.config.secrets.cookie"
     value = var.cookie-secret
   }
-
+  set {
+    name = "kratos.config.selfservice.methods.oidc.config.providers"
+    value = yamlencode(data.template_file.oidc-providers.rendered)
+  }
 //  set {
 //    name = "kratos.config.selfservice.methods.oidc.config.providers[0].client_id"
 //    value = var.oauth_client_id

@@ -1,7 +1,8 @@
-- id: ${provider}
-  provider: ${provider}
-  mapper_url: ${mapper_url}
-  client_id: {client_id}
-  client_secrret: {client_secret}
+- id: ${ provider }
+  provider: ${ provider }
+  mapper_url: ${ mapper_url }
+  client_id: ${ client_id }
+  client_secrret: ${ client_secret }
+  tenant: ${ tenant }
   scope:
     - user:email
