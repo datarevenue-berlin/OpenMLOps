@@ -151,4 +151,7 @@ resource "kubernetes_namespace" "ory_namespace" {
 module "ory" {
   source = "./modules/ory"
   namespace = kubernetes_namespace.ory_namespace[0].metadata[0].name
+  cookie-secret = var.ory_kratos_cookie-secret
+  db_password = var.ory_kratos_db_password
+  oauth2_providers = var.oauth2_providers
 }

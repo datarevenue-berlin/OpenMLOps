@@ -41,7 +41,7 @@ variable "oauth2_providers" {
     provider = string
     client_id = string
     client_secret = string
-    tentant = string
+    tenant = string
   }))
   description = "OAuth2 Providers credentials"
 }

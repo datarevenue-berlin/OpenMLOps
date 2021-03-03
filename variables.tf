@@ -179,9 +179,40 @@ variable "seldon_namespace" {
   default = "seldon"
 }
 
+## ORY
+
 variable "install_ory" {
   default = true
 }
 variable "ory_namespace" {
   default = "ory"
+}
+
+variable "ory_kratos_db_password"{
+  description = "PostgreSQL Database Password"
+}
+
+variable "ory_kratos_cookie-secret" {
+  description = "Session Cookie Generation secret"
+  sensitive = true
+}
+
+variable "oauth2_providers" {
+  //  Configure multiple Oauth2 providers.
+  //  example:
+  //  [{
+  //    provider = github
+  //    client_id = change_me
+  //    client_secret = change_me
+  //    tenant = null
+  //  }]
+  //  If you're using GitHub, Google or Facebook, tenant won't be needed, so please set
+  //  it as null or an empty string. It is required for AzureAd
+  type = list(object({
+    provider = string
+    client_id = string
+    client_secret = string
+    tenant = string
+  }))
+  description = "OAuth2 Providers credentials"
 }

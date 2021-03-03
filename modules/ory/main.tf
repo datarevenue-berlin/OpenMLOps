@@ -157,4 +157,8 @@ resource "kubernetes_deployment" "ory-oathkeeper" {
 module "ory-kratos" {
   source = "./kratos"
   namespace = var.namespace
+
+  cookie-secret = var.cookie-secret
+  db_password = var.db_password
+  oauth2_providers = var.oauth2_providers
 }

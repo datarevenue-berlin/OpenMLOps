@@ -85,7 +85,7 @@ resource "helm_release" "ory-kratos" {
   }
   set {
     name = "kratos.config.selfservice.methods.oidc.config.providers"
-    value = yamlencode(data.template_file.oidc-providers.rendered)
+    value = yamlencode(data.template_file.oidc-providers[*])
   }
 //  set {
 //    name = "kratos.config.selfservice.methods.oidc.config.providers[0].client_id"
