@@ -15,27 +15,17 @@
 
 - id: httpbin-access-rule
   match:
-    url: <{http,https}>://${hostname}/httpbin/<**>
+    url: <{http,https}>://${hostname}/seldon/<**>
     methods:
       - GET
   authenticators:
-    - handler: cookie_session
+    - handler: anonymous
   authorizer:
     handler: allow
   mutators:
-    - handler: id_token
+    - handler: noop
   credentials_issuer:
     handler: noop
-  errors:
-    - handler: redirect
-      config:
-        to: http://${hostname}/auth/login
-        when:
-          - request:
-              header:
-                accept:
-                  - text/*
-                  - application/xhtml+xml
 
 - id: ory-kratos-public
   upstream:

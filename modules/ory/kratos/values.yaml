@@ -10,6 +10,8 @@ service:
           prefix: /.ory/kratos/public/
 
 kratos:
+  # autoMigrate is relying on a simple initContainer mechanism
+  # Do not turn it on if the replicaCount > 1
   automigrate: true
   development: true
   config:
