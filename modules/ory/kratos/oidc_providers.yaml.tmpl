@@ -1,7 +1,9 @@
-- id: ${ provider }
-  provider: ${ provider }
-  client_id: ${ client_id }
-  client_secret: ${ client_secret }
-  mapper_url: ${ mapper_url }
+%{ for provider in oauth2_providers ~}
+- id: ${ provider.provider }
+  provider: ${ provider.provider }
+  client_id: ${ provider.client_id }
+  client_secret: ${ provider.client_secret }
+  mapper_url: ${ provider_paths[provider.provider] }
   scope:
     - user:email
+%{ endfor ~}

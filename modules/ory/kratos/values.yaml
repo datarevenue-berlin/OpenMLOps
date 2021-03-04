@@ -28,7 +28,7 @@ kratos:
           enabled: true
           config:
             providers:
-              ${yamlencode(indent(6, oidc_providers_config))}
+              ${indent(14, oidc_providers_config)}
 
       flows:
         settings:
