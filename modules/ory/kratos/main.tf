@@ -43,6 +43,7 @@ resource "helm_release" "ory-kratos" {
       oidc_providers_config = templatefile("${path.module}/oidc_providers.yaml.tmpl", {
         oauth2_providers = var.oauth2_providers
         provider_paths = local.provider_paths
+        scopes = local.scopes
       })
       cookie_secret = var.cookie_secret,
     })
