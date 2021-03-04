@@ -28,20 +28,6 @@ locals {
   }
 }
 
-data template_file "oidc-providers" {
-  template = file("${path.module}/oidc_providers.yaml.tmpl")
-
-  count = length(var.oauth2_providers)
-  vars = {
-    provider = var.oauth2_providers[count.index].provider
-    client_id = var.oauth2_providers[count.index].client_id
-    client_secret = var.oauth2_providers[count.index].client_secret
-//    tenant = var.oauth2_providers[count.index].tenant
-    mapper_url = local.provider_paths[var.oauth2_providers[count.index].provider]
-    scope = join(",", local.scopes[var.oauth2_providers[count.index].provider])
-  }
-}
-
 resource "helm_release" "ory-kratos" {
   name = "ory-kratos"
   namespace = var.namespace
@@ -54,70 +40,14 @@ resource "helm_release" "ory-kratos" {
     templatefile("${path.module}/values.yaml", {
       dsn = "postgres://${var.db_username}:${var.db_password}@${module.kratos-postgres.db_host}:5432/${var.database_name}",
       domain = var.domain,
-      oidc_providers_config = join("\n", data.template_file.oidc-providers.*.rendered)
+      oidc_providers_config = templatefile("${path.module}/oidc_providers.yaml.tmpl", {
+        oauth2_providers = var.oauth2_providers
+        provider_paths = local.provider_paths
+      })
       cookie_secret = var.cookie_secret,
-//      identity_schema_json = local.identity_schemas["identity.traits.schema.json"],
-//      oidc_github_config = local.identity_schemas["oidc.github.jsonnet"],
-//      oidc_microsoft_config = local.identity_schemas["oidc.microsoft.jsonnet"]
     })
   ]
-//  set {
-//    name = "kratos.config.dsn"
-//    value = "postgres://${var.db_username}:${var.db_password}@${module.kratos-postgres.db_host}:5432/${var.database_name}"
-//  }
-//  set {
-//    name = "kratos.config.selfservice.default_browser_return_url"
-//    value = local.dashboard_url
-//  }
-//  set {
-//    name = "kratos.config.selfservice.whitelisted_return_urls"
-//    value = toset([(var.domain)])
-//  }
-//  set {
-//    name = "kratos.config.selfservice.flows.logout.after.default_browser_return_url"
-//    value = local.login_url
-//  }
-//  set {
-//    name = "kratos.config.selfservice.flows.settings.ui_url"
-//    value = local.settings_url
-//  }
-//  set {
-//    name = "kratos.config.selfservice.flows.verification.ui_url"
-//    value = local.verify_url
-//  }
-//  set {
-//    name = "kratos.config.selfservice.flows.login.ui_url"
-//    value = local.login_url
-//  }
-//  set {
-//    name = "kratos.config.selfservice.flows.error.ui_url"
-//    value = local.error_url
-//  }
-//  set {
-//    name = "kratos.config.selfservice.flows.registration.ui_url"
-//    value = local.registration_url
-//  }
-//  set {
-//    name = "kratos.config.serve.public.base_url"
-//    value = local.api_url
-//  }
-//  set {
-//    name = "kratos.config.serve.public.port"
-//    value = 4433
-//  }
-//  set {
-//    name = "kratos.config.secrets.cookie"
-//    value = yamlencode(list(var.cookie-secret))
-//  }
-//  set {
-//    name = "kratos.config.selfservice.methods.oidc.config.providers"
-//    value = yamlencode(jsondecode(join(",", data.template_file.oidc-providers.*.rendered)))
-//  }
   # TODO: Make terraform render these schemas properly
-//  set {
-//    name = "kratos.identitySchemas"
-//    value = yamlencode(local.identity_schemas)
-//  }
 
 }
 
