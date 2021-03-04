@@ -25,7 +25,7 @@ variable "domain" {
   type = string
 }
 
-variable "cookie-secret" {
+variable "cookie_secret" {
   description = "Session Cookie Generation secret"
   sensitive = true
   type = string

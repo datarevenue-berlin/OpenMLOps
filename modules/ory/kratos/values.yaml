@@ -13,18 +13,22 @@ kratos:
   automigrate: true
   development: true
   config:
-
+    dsn: ${dsn}
     identity:
       default_schema_url: file:///etc/config/identity.traits.schema.json
 
     selfservice:
-      default_browser_return_url: http://ory-kratos-ui.ory.svc.cluster.local/
-
+      default_browser_return_url: "${domain}/dashboard"
+      whitelisted_return_urls:
+        - ${domain}
       methods:
         password:
           enabled: true
         oidc:
           enabled: true
+          config:
+            providers:
+              ${yamlencode(indent(6, oidc_providers_config))}
 
       flows:
         settings:
@@ -33,21 +37,22 @@ kratos:
             profile:
               hooks:
                 - hook: verify
-          ui_url: http://ory-kratos-ui.ory.svc.cluster.local/settings
+          ui_url: ${domain}/settings
 
         verification:
           enabled: false
+          ui_url: ${domain}/verify
 
         logout:
           after:
-            default_browser_return_url: http://ory-kratos-ui.ory.svc.cluster.local/auth/login
+            default_browser_return_url: ${domain}/auth/login
 
         login:
           lifespan: 10m
-          ui_url: http://ory-kratos-ui.ory.svc.cluster.local/auth/login
+          ui_url: ${domain}/auth/login
 
         error:
-          ui_url: http://ory-kratos-ui.ory.svc.cluster.local/error
+          ui_url: ${domain}/error
 
         registration:
           lifespan: 10m
@@ -59,18 +64,18 @@ kratos:
               hooks:
                 - hook: session
 
-          ui_url: http://ory-kratos-ui.ory.svc.cluster.local/auth/registration
+          ui_url: ${domain}/auth/registration
 
     log:
       level: debug
 
     secrets:
       cookie:
-        - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
+        - {cookie_secret}
 
     serve:
       public:
-        base_url: http://ory-kratos-public.ory.svc.cluster.local/.ory/kratos/public/
+        base_url: ${domain}/.ory/kratos/public/
         port: 4433
 
       admin:
