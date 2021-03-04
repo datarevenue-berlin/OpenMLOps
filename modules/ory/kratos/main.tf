@@ -38,7 +38,7 @@ resource "helm_release" "ory-kratos" {
 
   values = [
     templatefile("${path.module}/values.yaml", {
-      dsn = "postgres://${var.db_username}:${var.db_password}@${module.kratos-postgres.db_host}:5432/${var.database_name}",
+      dsn = "postgres://${var.db_username}:${urlencode(var.db_password)}@${module.kratos-postgres.db_host}:5432/${var.database_name}",
       domain = var.domain,
       oidc_providers_config = templatefile("${path.module}/oidc_providers.yaml.tmpl", {
         oauth2_providers = var.oauth2_providers
@@ -136,9 +136,12 @@ YAML
 
 module "kratos-postgres" {
   source = "../../postgres"
-  namespace = "ory"
+  namespace = var.namespace
 
   database_name = var.database_name
   db_username = var.db_username
   db_password = var.db_password
+}
+output "db_connection_string" {
+  value = "postgres://${var.db_username}:${urlencode(var.db_password)}@${module.kratos-postgres.db_host}:5432/${var.database_name}"
 }
