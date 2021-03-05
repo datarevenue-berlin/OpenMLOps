@@ -4,9 +4,12 @@
   client_id: ${ provider.client_id }
   client_secret: ${ provider.client_secret }
   mapper_url: ${ provider_paths[provider.provider] }
-  tenant:  ${ provider.tenant != "" ? provider.tenant : "not_used"}
+
   scope:
-    %{ for scope in scopes[provider.provider] ~}
-    - ${scope}
-    %{ endfor ~}
+  %{ for scope in scopes[provider.provider] ~}
+  - ${scope}
+  %{ endfor ~}
+
+  %{ if provider.provider == "microsoft" }tenant: ${provider.tenant}
+  %{ endif }
 %{ endfor ~}
