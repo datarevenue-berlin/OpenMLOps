@@ -39,4 +39,18 @@ resource "helm_release" "ambassador" {
     name = "enableAES"
     value = "false"
   }
+  set {
+    name = "service.annotations"
+    value = {
+          annotations = {
+      "getambassador.io/config" = <<YAML
+---
+apiVersion: getambassador.io/v2
+kind:  Module
+name:  ambassador
+config:
+  use_proxy_proto: true
+  use_remote_address: false
+    }
+  }
 }
