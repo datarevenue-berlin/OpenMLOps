@@ -257,3 +257,123 @@ should only be used when pulling MLFlow's image from a private repository.
 | `namespace`             | Namespace name to deploy the application       | `mlflow`      |
 | `istio_enabled`         | Whether to install istio as ingress controller | `true`        |
 | `usage_metrics_enabled` | Whether to enable usage metrics                | `true`        |
+
+
+## Exposing Services
+In order to access the services from outside the cluster, we need to expose them.
+Usually, this is done through Kubernetes Ingress resources. In this project, since we 
+rely on Seldon to expose our prediction endpoints, we use Ambassador API Gateway as our 
+ingress controller. 
+Seldon Core works well with Ambassador, allowing a single ingress to be used to expose 
+ambassador and running machine learning deployments can then be dynamically exposed 
+through seldon-created ambassador configurations.
+### Ambassador
+Ambassador is a Kubernetes-native API Gateway built on the Envoy Proxy. In addition to
+the classical routing capabilities of an ingress, it can perform sophisticated traffic
+management functions, such as load balancing, circuit breakers, rate limits, and automatic retries.
+Also, it has support for independent authentication systems, such as the ORY ecosystem. 
+#### Exposing a service in Ambassador
+Ambassador is designed around a declarative, self-service management model. 
+The core resource used to support application development teams who need to manage the 
+edge with Ambassador is the Mapping resource. This resource allows us to define custom
+routing rules to our services.
+This routing configuration can achieved by applying a custom Kubernetes Resource like 
+the following
+```yaml
+# mapping.yaml
+---
+apiVersion: getambassador.io/v2
+kind:  Mapping
+metadata:
+  name:  httpbin-mapping
+spec:
+  prefix: /httpbin/
+  service: httpbin.httpbin_namespace
+```
+By applying this configuration with `kubectl apply -f httpbin-mapping.yaml`.
+### Terraform
+Since this project uses Terraform to manage resources and, with the current version, it's
+still not possible to apply custom Kubernetes resource definitions, we need to add this 
+YAML file inside the services annotation.
+One way to do this is by using Service's Metadata field 
+```terraform
+resource "kubernetes_service" "httpbin" {
+  metadata {
+    ...
+    annotations = {
+      "getambassador.io/config" = <<YAML
+---
+apiVersion: getambassador.io/v2
+kind: Mapping
+name: httpbin-mapping
+service: httpbin.httpbin_namespace
+prefix: /httpbin/
+YAML
+    }
+  }
+}
+```
+This will produce the same behaviour as applying the custom yaml file described above.
+## Authentication
+Since we're exposing our services in the Internet, we need an Authentication and 
+Authorization system to prevent unwanted users to accessing our services.
+Ambassador API Gateway can control the access by using an External Authentication Service 
+resource (AuthService).
+An AuthService is an API that has a verification endpoint, which determines if the user 
+can access this resource (returning `200` or not, `401`).
+In this project, we rely on ORY ecosystem to enable authentication.
+ORY is an open-source ecosystem of services with clear boundaries that solve 
+authentication and authorization.
+### ORY Oathkeeper
+ORY Oathkeeper is an Identity and Access Proxy. It functions as a centralized way to 
+manage different Authentication and Authorization methods, and inform the gateway, whether
+the HTTP request is allowed or not. 
+The Oathkeeper serves perfectly as an Ambassador's External AuthService. 
+### Zero-Trust and Unauthorized Resources
+Oathkeeper is rooted in the principle of "never trust, always verify,". This means that
+if no additional configuration is provided, the Oathkeeper will always block the incoming
+request. In practice, all endpoints exposed in Ambassador will be blocked by external 
+requests, until further configuration is made.
+### Access Rules
+To configure an access rule to ORY Oathkeeper, the file `access-rule-oathkeeper.yaml` is
+used. Example:
+#### Allow all incoming requests
+```yaml
+- id: oathkeeper-access-rule
+  match:
+    url: <{http,https}>://${hostname}/allowed-service/<**>
+    methods:
+      - GET
+  authenticators:
+    - handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
+  credentials_issuer:
+    handler: noop
+```
+This configuration will register all the incoming requests as a `guest` user, thus, not
+performing any credentials validation. 
+#### Authorize on KRATOS
+```yaml
+- id: httpbin-access-rule
+  match:
+    url: <{http,https}>://${hostname}/blocked-service/<**>
+    methods:
+      - GET
+  authenticators:
+    - handler: cookie_session
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: id_token
+  credentials_issuer:
+    handler: noop
+  errors:
+    - handler: redirect
+      config:
+        to: http://${hostname}/auth/login
+```
+This configuration will force authenticating all incoming requests by checking a cookie_session,
+which configuration is specified in `config-oathkeeper.yaml`
