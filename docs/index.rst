@@ -1,8 +1,18 @@
+**********************************
+MLOps Architecture by Data Revenue
+**********************************
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Contents:
+
+    components/index
+
 Architecture Overview
 *************************
 
 
-The MLOps reference architecture is a set of open-source tools carefullychosen to ease user experience of experimenting and deploying machinelearning models. The tools consist of the following:
+The MLOps reference architecture is a set of open-source tools carefully chosen to ease user experience of experimenting and deploying machine learning models. The tools consist of the following:
 
 * **Prefect** for data flow automation
 * **Jupyter Hub** for experimenting lab

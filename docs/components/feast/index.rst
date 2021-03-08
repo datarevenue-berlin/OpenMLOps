@@ -1,0 +1,8 @@
+*****
+Feast
+*****
+
+.. toctree::
+
+    usage
+    technical

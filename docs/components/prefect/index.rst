@@ -1,0 +1,8 @@
+*******
+Prefect
+*******
+
+.. toctree::
+
+    usage
+    technical
