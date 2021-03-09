@@ -189,6 +189,14 @@ variable "seldon_namespace" {
   default = "seldon"
 }
 
+variable "aws" {
+  description = "If the deployment is being made in an AWS Cluster"
+}
+
+variable "tls_certificate_arn" {
+  description = "TLS Certificate ARN"
+  default = ""
+}
 ## ORY
 
 variable "install_ory" {

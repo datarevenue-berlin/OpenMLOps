@@ -111,16 +111,6 @@ resource "kubernetes_service" "ory-kratos-ui" {
   metadata {
     name = "ory-kratos-ui"
     namespace = var.namespace
-    annotations = {
-      "getambassador.io/config" = <<YAML
----
-apiVersion: getambassador.io/v2
-kind: Mapping
-name: ory-kratos-ui_mapping
-service: ory-kratos-ui.ory
-prefix: /
-YAML
-    }
   }
   spec {
     type = "ClusterIP"

@@ -1,14 +1,3 @@
-service:
-  public:
-    annotations:
-      "getambassador.io/config": |
-          ---
-          apiVersion: getambassador.io/v2
-          kind: Mapping
-          name: ory-kratos-public-mapping
-          service: ory-kratos-public.ory
-          prefix: /.ory/kratos/public/
-
 kratos:
   # autoMigrate is relying on a simple initContainer mechanism
   # Do not turn it on if the replicaCount > 1

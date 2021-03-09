@@ -27,6 +27,10 @@ resource "helm_release" "ambassador" {
   name = "ambassador"
   namespace = var.ambassador_namespace
 
+  values = [templatefile("${path.module}/values.yaml", {
+    tls_certificate_arn = var.tls_certificate_arn,
+    aws = var.aws
+  })]
   set {
     name = "image.repository"
     value = "docker.io/datawire/ambassador"
@@ -38,19 +42,5 @@ resource "helm_release" "ambassador" {
   set {
     name = "enableAES"
     value = "false"
-  }
-  set {
-    name = "service.annotations"
-    value = {
-          annotations = {
-      "getambassador.io/config" = <<YAML
----
-apiVersion: getambassador.io/v2
-kind:  Module
-name:  ambassador
-config:
-  use_proxy_proto: true
-  use_remote_address: false
-    }
   }
 }

@@ -139,6 +139,10 @@ module "seldon" {
   count = var.install_seldon ? 1 : 0
   source    = "./modules/seldon"
   namespace = kubernetes_namespace.seldon_namespace[0].metadata[0].name
+
+  aws = var.aws
+  tls_certificate_arn = var.tls_certificate_arn
+
 }
 
 resource "kubernetes_namespace" "ory_namespace" {

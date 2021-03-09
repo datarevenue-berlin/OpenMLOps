@@ -35,26 +35,6 @@ resource "kubernetes_service" "ory-oathkeeper" {
   metadata {
     name = "ory-oathkeeper"
     namespace = var.namespace
-    annotations = {
-      "getambassador.io/config" = <<YAML
----
-apiVersion: getambassador.io/v2
-kind: Mapping
-name: ory-oathkeeper_mapping
-service: ory-oathkeeper.ory
-prefix: /ory-oathkeeper/
----
-apiVersion: getambassador.io/v2
-kind: AuthService
-name: authentication
-auth_service: ory-oathkeeper.ory
-path_prefix: /decisions
-allowed_request_headers:
-  - Authorization
-allowed_authorization_headers:
-  - Authorization
-YAML
-    }
   }
   spec {
     type = "ClusterIP"

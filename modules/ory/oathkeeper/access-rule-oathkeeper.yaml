@@ -13,11 +13,29 @@
   credentials_issuer:
     handler: noop
 
-- id: httpbin-access-rule
+- id: seldon-access-rule
   match:
     url: <{http,https}>://${hostname}/seldon/<**>
     methods:
       - GET
+  authenticators:
+    - handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
+  credentials_issuer:
+    handler: noop
+
+- id: mlflow-access-rule
+  match:
+    url: <{http,https}>://${hostname}/mlflow/<**>
+    methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - PATCH
   authenticators:
     - handler: anonymous
   authorizer:
