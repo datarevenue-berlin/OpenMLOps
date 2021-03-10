@@ -42,6 +42,18 @@ service:
       name: mlflow_mapping
       service: mlflow.mlflow:5000
       prefix: /mlflow/
+      ---
+      apiVersion: getambassador.io/v2
+      kind: Mapping
+      name: jhub_mapping
+      service: proxy-public.jhub:80
+      prefix: /jhub/
+      ---
+      apiVersion: getambassador.io/v2
+      kind: Mapping
+      name: prefect_mapping
+      service: prefect-server-ui.prefect:8080
+      prefix: /prefect/
     %{ if aws }
     "service.beta.kubernetes.io/aws-load-balancer-ssl-cert": ${tls_certificate_arn}
     "service.beta.kubernetes.io/aws-load-balancer-ssl-ports": "443"
