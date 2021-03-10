@@ -9,7 +9,7 @@ kratos:
       default_schema_url: file:///etc/config/identity.traits.schema.json
 
     selfservice:
-      default_browser_return_url: "${domain}/dashboard"
+      default_browser_return_url: "${ui_path}/dashboard"
       whitelisted_return_urls:
         - ${domain}
       methods:
@@ -28,22 +28,22 @@ kratos:
             profile:
               hooks:
                 - hook: verify
-          ui_url: ${domain}/settings
+          ui_url: ${ui_path}/settings
 
         verification:
           enabled: false
-          ui_url: ${domain}/verify
+          ui_url: ${ui_path}/verify
 
         logout:
           after:
-            default_browser_return_url: ${domain}/auth/login
+            default_browser_return_url: ${ui_path}/auth/login
 
         login:
           lifespan: 10m
-          ui_url: ${domain}/auth/login
+          ui_url: ${ui_path}/auth/login
 
         error:
-          ui_url: ${domain}/error
+          ui_url: ${ui_path}/error
 
         registration:
           lifespan: 10m
@@ -55,7 +55,7 @@ kratos:
               hooks:
                 - hook: session
 
-          ui_url: ${domain}/auth/registration
+          ui_url: ${ui_path}/auth/registration
 
     log:
       level: debug

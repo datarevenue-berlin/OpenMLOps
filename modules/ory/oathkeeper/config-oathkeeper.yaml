@@ -36,7 +36,7 @@ errors:
     redirect:
       enabled: true
       config:
-        to: ${protocol}://${hostname}/auth/login
+        to: ${protocol}://${hostname}/profile/auth/login
         when:
           - request:
               header:

@@ -45,7 +45,7 @@
   credentials_issuer:
     handler: noop
 
-- id: ory-kratos-public
+- id: ory:kratos:public
   upstream:
     preserve_host: true
     url: "http://ory-kratos-public.ory.svc.cluster.local"
@@ -69,7 +69,7 @@
     preserve_host: true
     url: "http://ory-kratos-ui.ory.svc.cluster.local"
   match:
-    url: <{http,https}>://${hostname}/<{error,recovery,verify,auth/*,**.css,**.js,**.ico}{/,}>
+    url: <{http,https}>://${hostname}/profile/<{error,recovery,verify,auth/*,**.css,**.js,**.ico}{/,}>
     methods:
       - GET
   authenticators:
@@ -84,7 +84,7 @@
     preserve_host: true
     url: "http://ory-kratos-ui.ory.svc.cluster.local"
   match:
-    url: <{http,https}>://${hostname}/<{,debug,dashboard,settings}{/,}>
+    url: <{http,https}>://${hostname}/profile/<{,debug,dashboard,settings}{/,}>
     methods:
       - GET
   authenticators:

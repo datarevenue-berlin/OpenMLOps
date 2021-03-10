@@ -1,18 +1,12 @@
 locals {
   ui_deployment_name = "ory-kratos-ui"
-  ui_url = "${var.domain}/"
-  dashboard_url = "${var.domain}/dashboard"
-  registration_url = "${var.domain}/auth/registration"
-  login_url = "${var.domain}/auth/login"
-  settings_url = "${var.domain}/settings"
-  verify_url = "${var.domain}/verify"
-  error_url = "${var.domain}/error"
+  ui_url = "${var.domain}/profile"
   api_url = "${var.domain}/.ory/kratos/public"
 
   provider_paths = {
     "github" = "file:///etc/config/oidc.github.jsonnet"
     "google" = "file:///etc/config/oidc.github.jsonnet"
-    "microsoft" = "file:///etc/config/oidc.github.jsonnet"
+    "microsoft" = "file:///etc/config/oidc.microsoft.jsonnet"
   }
   schemas_path = "${path.module}/schemas"
   scopes = {
@@ -40,6 +34,7 @@ resource "helm_release" "ory-kratos" {
     templatefile("${path.module}/values.yaml", {
       dsn = "postgres://${var.db_username}:${urlencode(var.db_password)}@${module.kratos-postgres.db_host}:5432/${var.database_name}",
       domain = var.domain,
+      ui_path = local.ui_url,
       oidc_providers_config = templatefile("${path.module}/oidc_providers.yaml.tmpl", {
         oauth2_providers = var.oauth2_providers
         provider_paths = local.provider_paths
@@ -96,6 +91,10 @@ resource "kubernetes_deployment" "ory-kratos-ui" {
           env {
             name = "KRATOS_BROWSER_URL"
             value = local.api_url
+          }
+          env {
+            name = "BASE_URL"
+            value = "${local.ui_url}/"
           }
           env {
             name = "PORT"
