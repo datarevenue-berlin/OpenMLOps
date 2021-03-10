@@ -191,7 +191,7 @@ variable "seldon_namespace" {
 
 ## ORY
 
-variable "install_ory" {
+variable "enable_ory_authentication" {
   default = true
 }
 variable "ory_namespace" {
@@ -202,7 +202,7 @@ variable "ory_kratos_db_password"{
   description = "PostgreSQL Database Password"
 }
 
-variable "ory_kratos_cookie-secret" {
+variable "ory_kratos_cookie_secret" {
   description = "Session Cookie Generation secret"
   sensitive = true
 }

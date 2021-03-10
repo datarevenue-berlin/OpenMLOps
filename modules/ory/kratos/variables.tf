@@ -20,8 +20,8 @@ variable "db_password"{
   type = string
 }
 
-variable "domain" {
-  description = "Your application domain. Ex.: http://my-mlops.com"
+variable "app_url" {
+  description = "Your application URL. Ex.: http://my-mlops.com"
   type = string
 }
 

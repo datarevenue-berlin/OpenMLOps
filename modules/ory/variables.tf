@@ -16,7 +16,7 @@ variable "db_password"{
   description = "PostgreSQL Database Password"
 }
 
-variable "cookie-secret" {
+variable "cookie_secret" {
   description = "Session Cookie Generation secret"
   sensitive = true
 }
