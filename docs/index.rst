@@ -4,13 +4,15 @@ MLOps Architecture by Data Revenue
 
 .. toctree::
     :maxdepth: 2
-    :caption: Contents:
 
     components/index
 
 Architecture Overview
 *************************
 
+.. image:: images/high_level_diagram.*
+
+:download:`Higher resolution here <images/high_level_diagram.pdf>`
 
 The MLOps reference architecture is a set of open-source tools carefully chosen to ease user experience of experimenting and deploying machine learning models. The tools consist of the following:
 
@@ -22,15 +24,14 @@ The MLOps reference architecture is a set of open-source tools carefully chosen 
 * **Seldon Core** for model deployment
 
 
-.. image:: components.png
-    :width: 500px
+.. image:: images/components.png
     :align: center
-    :height: 100px
+    :height: 300px
 
 Jupyter Hub
 ############
 
-With Jupyter Hub, we enabled a multi-user environment in which each user can spawn a Jupyter server to do their experiments. Users can work on different environments being able to install any library necessary to meet their needs. We also provide a default Jupyter server image that comes with most ofthe data science packages installed.
+With Jupyter Hub, we enabled a multi-user environment in which each user can spawn a Jupyter server to do their experiments. Users can work on different environments being able to install any library necessary to meet their needs. We also provide a default Jupyter server image that comes with most of the data science packages installed.
 
 Prefect
 ############
@@ -48,18 +49,12 @@ First, the tasks are defined as follows, where each task can be dependent on or 
 
     @task
     def download_dataset(data_dir):
-        """Download the MNIST data set to the KFP volume to share it among all steps"""
-
         # DOWNLOAD DATASET CODE GOES HERE
-
         return dataset
 
     @task
     def train_model(dataset):
-        """Trains a single-layer CNN for 5 epochs using a pre-downloaded dataset.
-
         # MODEL TRAINING CODE GOES HERE
-
         return model
 
 
@@ -74,10 +69,9 @@ These classes are then used to define the flow, setting dependencies as follows.
     flow.run()
 
 
-.. image:: flow.png
-    :width: 200px
+.. image:: images/flow.png
     :align: center
-    :height: 100px
+    :height: 200px
 
 Feast
 #######

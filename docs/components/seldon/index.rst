@@ -1,0 +1,8 @@
+******
+Seldon
+******
+
+.. toctree::
+
+   usage
+   technical
