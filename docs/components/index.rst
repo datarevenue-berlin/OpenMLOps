@@ -7,3 +7,4 @@ Components
     feast/index
     prefect/index
     seldon/index
+    mlflow/index

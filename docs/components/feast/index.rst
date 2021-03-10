@@ -6,3 +6,4 @@ Feast
 
     usage
     technical
+    troubleshooting
