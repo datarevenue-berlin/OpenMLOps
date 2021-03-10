@@ -189,7 +189,7 @@ variable "seldon_namespace" {
   default = "seldon"
 }
 
-## ORY
+## ORY (authentication module)
 
 variable "install_ory" {
   default = true
