@@ -1,6 +1,6 @@
 ## General variables
 variable "hostname" {
-  description = "Hostname of the deployed cluster. Ex.: my_mlops.com"
+  description = "Hostname of the deployed cluster. Ex.: my-mlops.com"
 }
 
 variable "protocol" {
@@ -189,7 +189,7 @@ variable "seldon_namespace" {
   default = "seldon"
 }
 
-## ORY
+## ORY (authentication module)
 
 variable "enable_ory_authentication" {
   default = true
