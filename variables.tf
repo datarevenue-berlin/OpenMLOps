@@ -5,7 +5,7 @@ variable "hostname" {
 
 variable "protocol" {
   default = "http"
-  description = "Preferred connection protocol (HTTPS not configured yet)"
+  description = "Preferred connection protocol"
 }
 
 ## MLFlow

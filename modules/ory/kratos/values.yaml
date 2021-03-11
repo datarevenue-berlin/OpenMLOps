@@ -11,7 +11,7 @@ kratos:
     selfservice:
       default_browser_return_url: "${ui_path}/dashboard"
       whitelisted_return_urls:
-        - ${domain}
+        - ${app_url}
       methods:
         password:
           enabled: true
@@ -66,7 +66,7 @@ kratos:
 
     serve:
       public:
-        base_url: ${domain}/.ory/kratos/public/
+        base_url: ${app_url}/.ory/kratos/public/
         port: 4433
 
       admin:

@@ -71,6 +71,8 @@ module "prefect-server" {
   source    = "./modules/prefect-server"
   namespace = kubernetes_namespace.prefect_namespace.metadata[0].name
   parent_module_name = basename(abspath(path.module))
+  hostname = var.hostname
+  protocol = var.protocol
 }
 
 

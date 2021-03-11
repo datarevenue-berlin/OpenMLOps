@@ -1,3 +1,11 @@
+variable "hostname" {
+  description = "Application hostname ex.: mlops.mywebsite.com"
+}
+
+variable "protocol" {
+  description = "Preferred connection protocol"
+}
+
 variable "parent_module_name" {
   description = "Name of the calling module. Needed for a hack of downloading the Helm chart."
   type = string

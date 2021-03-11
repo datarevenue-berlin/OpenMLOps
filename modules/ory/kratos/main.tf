@@ -1,7 +1,7 @@
 locals {
   ui_deployment_name = "ory-kratos-ui"
-  ui_url = "${var.domain}/profile"
-  api_url = "${var.domain}/.ory/kratos/public"
+  ui_url = "${var.app_url}/profile"
+  api_url = "${var.app_url}/.ory/kratos/public"
 
   provider_paths = {
     "github" = "file:///etc/config/oidc.github.jsonnet"
@@ -33,7 +33,7 @@ resource "helm_release" "ory-kratos" {
   values = [
     templatefile("${path.module}/values.yaml", {
       dsn = "postgres://${var.db_username}:${urlencode(var.db_password)}@${module.kratos-postgres.db_host}:5432/${var.database_name}",
-      domain = var.domain,
+      app_url = var.app_url,
       ui_path = local.ui_url,
       oidc_providers_config = templatefile("${path.module}/oidc_providers.yaml.tmpl", {
         oauth2_providers = var.oauth2_providers

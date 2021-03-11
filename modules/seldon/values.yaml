@@ -53,6 +53,14 @@ service:
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
+      name: prefect_apollo_mapping
+      service: prefect-server-apollo.prefect:4200
+      prefix: /graphql/
+      rewrite: /graphql/
+      host: prefect.${hostname}
+      ---
+      apiVersion: getambassador.io/v2
+      kind: Mapping
       name: prefect_mapping
       service: prefect-server-ui.prefect:8080
       prefix: /
