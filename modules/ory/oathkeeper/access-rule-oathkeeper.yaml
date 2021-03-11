@@ -33,7 +33,7 @@
 
 - id: mlflow-access-rule
   match:
-    url: <{http,https}>://${hostname}/mlflow/<**>
+    url: <{http,https}>://mlflow.${hostname}/<**>
     methods:
       - GET
       - POST
@@ -51,7 +51,7 @@
 
 - id: jhub-access-rule
   match:
-    url: <{http,https}>://${hostname}/jhub/<**>
+    url: <{http,https}>://jupyter.${hostname}/<**>
     methods:
       - GET
       - POST
@@ -59,7 +59,7 @@
       - DELETE
       - PATCH
   authenticators:
-    - handler: anonymous
+    - handler: noop
   authorizer:
     handler: allow
   mutators:
@@ -69,7 +69,7 @@
 
 - id: prefect-access-rule
   match:
-    url: <{http,https}>://${hostname}/prefect/<**>
+    url: <{http,https}>://prefect.${hostname}/<**>
     methods:
       - GET
       - POST

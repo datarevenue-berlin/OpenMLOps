@@ -25,3 +25,7 @@ variable "tls_certificate_arn" {
   description = "TLS Certificate ARN"
   default = ""
 }
+
+variable "hostname" {
+  description = "Application hostname ex.: mlops.mywebsite.com"
+}

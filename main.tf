@@ -143,6 +143,7 @@ module "seldon" {
   aws = var.aws
   tls_certificate_arn = var.tls_certificate_arn
 
+  hostname = var.hostname
 }
 
 resource "kubernetes_namespace" "ory_namespace" {

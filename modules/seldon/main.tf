@@ -30,6 +30,7 @@ resource "helm_release" "ambassador" {
   values = [templatefile("${path.module}/values.yaml", {
     tls_certificate_arn = var.tls_certificate_arn,
     aws = var.aws
+    hostname = var.hostname
   })]
   set {
     name = "image.repository"
