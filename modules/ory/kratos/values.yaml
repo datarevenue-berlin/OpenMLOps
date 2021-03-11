@@ -83,9 +83,10 @@ kratos:
 
     courier:
       smtp:
-        connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
+        connection_uri: smtps://test:test@dummy:1025/?skip_ssl_verify=true
 
   identitySchemas:
+    # TODO: Make terraform render this dinamically
     "identity.traits.schema.json": |
       {
         "$id": "https://schemas.ory.sh/presets/kratos/quickstart/email-password/identity.schema.json",

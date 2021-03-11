@@ -43,8 +43,6 @@ resource "helm_release" "ory-kratos" {
       cookie_secret = var.cookie_secret,
     })
   ]
-  # TODO: Make terraform render these schemas properly
-
 }
 
 resource "kubernetes_deployment" "ory-kratos-ui" {

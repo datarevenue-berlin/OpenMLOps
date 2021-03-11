@@ -147,7 +147,7 @@ module "seldon" {
 }
 
 resource "kubernetes_namespace" "ory_namespace" {
-  count = var.install_ory ? 1 : 0
+  count = var.enable_ory_authentication ? 1 : 0
   metadata {
     name = var.ory_namespace
   }
@@ -156,7 +156,7 @@ resource "kubernetes_namespace" "ory_namespace" {
 module "ory" {
   source = "./modules/ory"
   namespace = kubernetes_namespace.ory_namespace[0].metadata[0].name
-  cookie-secret = var.ory_kratos_cookie-secret
+  cookie_secret = var.ory_kratos_cookie_secret
   db_password = var.ory_kratos_db_password
   oauth2_providers = var.oauth2_providers
 
