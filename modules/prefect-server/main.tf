@@ -9,7 +9,9 @@ resource "helm_release" "prefect-server" {
   namespace = var.namespace
 
   dependency_update = true
-  chart             = "${path.root}/.terraform/modules/${var.parent_module_name}.prefect-server.github-repo/helm/prefect-server"
+  repository = "https://prefecthq.github.io/server/"
+  chart = "prefect-server"
+  version = "2021.03.10"
 
   set {
     name = "jobs.createTenant.enabled"
