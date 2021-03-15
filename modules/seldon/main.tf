@@ -31,6 +31,7 @@ resource "helm_release" "ambassador" {
     tls_certificate_arn = var.tls_certificate_arn,
     aws = var.aws
     hostname = var.hostname
+    tls = var.tls
   })]
   set {
     name = "image.repository"

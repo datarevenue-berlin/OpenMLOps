@@ -146,6 +146,7 @@ module "seldon" {
   tls_certificate_arn = var.tls_certificate_arn
 
   hostname = var.hostname
+  tls = var.protocol == "https" ? true : false
 }
 
 resource "kubernetes_namespace" "ory_namespace" {

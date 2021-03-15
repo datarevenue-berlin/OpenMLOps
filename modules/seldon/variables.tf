@@ -26,6 +26,11 @@ variable "tls_certificate_arn" {
   default = ""
 }
 
+variable "tls" {
+  description = "whether to use TLS encryption or not"
+  type = bool
+}
+
 variable "hostname" {
   description = "Application hostname ex.: mlops.mywebsite.com"
 }
