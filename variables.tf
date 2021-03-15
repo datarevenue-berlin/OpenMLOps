@@ -45,12 +45,22 @@ variable "mlflow_docker_auth_key" {
   default = ""
 }
 
+variable "mlflow_service_type" {
+  description = "Whether to expose the service publicly or internally"
+  type = string
+  default = "LoadBalancer"
+}
 ## Prefect Server
 
 variable "prefect_namespace" {
   default = "prefect"
 }
 
+variable "prefect_service_type" {
+  description = "Whether to expose the service publicly or internally"
+  type = string
+  default = "LoadBalancer"
+}
 ## Jupyter Hub
 
 variable "install_jupyterhub" {
@@ -75,6 +85,12 @@ variable "jhub_proxy_secret_token" {
 
 variable "jhub_proxy_https_letsencrypt_contact_email" {
   default = ""
+}
+
+variable "jhub_proxy_service_type" {
+  description = "Whether to expose the service publicly or internally"
+  type = string
+  default = "LoadBalancer"
 }
 
 variable "oauth_github_enable" {

@@ -45,6 +45,12 @@ resource "helm_release" "jupyterhub_lab" {
           }
         }
         secretToken = var.proxy_secret_token
+        service = {
+          type = var.proxy_service_type
+          nodePorts = {
+            http = var.proxy_service_type == "ClusterIP" ? null : 31939
+          }
+        }
       }
 
       singleuser = {

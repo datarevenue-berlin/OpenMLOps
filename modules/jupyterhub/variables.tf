@@ -51,6 +51,11 @@ variable "proxy_https_letsencrypt_contact_email" {
   default     = ""
 }
 
+variable "proxy_service_type" {
+  description = "Whether to expose the service publicly or internally"
+  type = string
+  default = "LoadBalancer"
+}
 
 variable "singleuser_image_pull_secrets" {
   type = list(

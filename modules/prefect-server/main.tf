@@ -90,6 +90,16 @@ resource "helm_release" "prefect-server" {
     name = "ui.apolloApiUrl"
     value = "${var.protocol}://prefect.${var.hostname}/graphql/"
   }
+
+  set {
+    name = "apollo.service.type"
+    value = var.service_type
+  }
+  set {
+    name = "ui.service.type"
+    value = var.service_type
+  }
+
   values = [
     yamlencode({
       "annotations" = var.annotations
