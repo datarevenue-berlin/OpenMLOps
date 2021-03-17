@@ -7,7 +7,6 @@ service:
       name:  ambassador
       config:
         use_proxy_proto: true
-        use_remote_address: false
       ---
       apiVersion: getambassador.io/v2
       kind: AuthService
@@ -50,6 +49,8 @@ service:
       service: proxy-public.jhub:80
       prefix: /
       host: jupyter.${hostname}
+      allow_upgrade:
+        - websocket
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
