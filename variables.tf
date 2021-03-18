@@ -5,7 +5,7 @@ variable "hostname" {
 
 variable "protocol" {
   default = "http"
-  description = "Preferred connection protocol"
+  description = "Preferred connection protocol. If using https, a valid ACM certificate must be provided under tls_certificate_arn. See documentation"
 }
 
 ## MLFlow
