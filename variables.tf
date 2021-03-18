@@ -61,6 +61,12 @@ variable "prefect_service_type" {
   type = string
   default = "LoadBalancer"
 }
+
+variable "prefect_agent_labels" {
+  description = "Defines what scheduling labels (not K8s labels) should be associated with the agent"
+  default     = [""]
+}
+
 ## Jupyter Hub
 
 variable "install_jupyterhub" {

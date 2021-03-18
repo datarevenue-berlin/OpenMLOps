@@ -56,7 +56,7 @@ service:
       kind: Mapping
       name: prefect_apollo_mapping
       service: prefect-server-apollo.prefect:4200
-      prefix: /graphql/
+      prefix: /graphql
       rewrite: /graphql/
       host: prefect.${hostname}
       ---

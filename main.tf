@@ -75,6 +75,7 @@ module "prefect-server" {
   hostname = var.hostname
   protocol = var.protocol
   service_type = var.prefect_service_type
+  agent_prefect_labels = var.prefect_agent_labels
 }
 
 

@@ -1,6 +1,3 @@
-
-
-
 resource "kubernetes_secret" "private_registry_secret" {
   metadata {
     name      = "regcred"
