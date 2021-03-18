@@ -5,7 +5,7 @@ variable "hostname" {
 
 variable "protocol" {
   default = "http"
-  description = "Preferred connection protocol (HTTPS not configured yet)"
+  description = "Preferred connection protocol"
 }
 
 ## MLFlow
@@ -189,6 +189,14 @@ variable "seldon_namespace" {
   default = "seldon"
 }
 
+variable "aws" {
+  description = "If the deployment is being made in an AWS Cluster"
+}
+
+variable "tls_certificate_arn" {
+  description = "TLS Certificate ARN"
+  default = ""
+}
 ## ORY (authentication module)
 
 variable "enable_ory_authentication" {

@@ -1,12 +1,6 @@
 locals {
   ui_deployment_name = "ory-kratos-ui"
-  ui_url = "${var.app_url}/"
-  dashboard_url = "${var.app_url}/dashboard"
-  registration_url = "${var.app_url}/auth/registration"
-  login_url = "${var.app_url}/auth/login"
-  settings_url = "${var.app_url}/settings"
-  verify_url = "${var.app_url}/verify"
-  error_url = "${var.app_url}/error"
+  ui_url = "${var.app_url}/profile"
   api_url = "${var.app_url}/.ory/kratos/public"
 
   provider_paths = {
@@ -39,7 +33,8 @@ resource "helm_release" "ory-kratos" {
   values = [
     templatefile("${path.module}/values.yaml", {
       dsn = "postgres://${var.db_username}:${urlencode(var.db_password)}@${module.kratos-postgres.db_host}:5432/${var.database_name}",
-      domain = var.app_url,
+      app_url = var.app_url,
+      ui_path = local.ui_url,
       oidc_providers_config = templatefile("${path.module}/oidc_providers.yaml.tmpl", {
         oauth2_providers = var.oauth2_providers
         provider_paths = local.provider_paths
@@ -96,6 +91,10 @@ resource "kubernetes_deployment" "ory-kratos-ui" {
             value = local.api_url
           }
           env {
+            name = "BASE_URL"
+            value = "${local.ui_url}/"
+          }
+          env {
             name = "PORT"
             value = "4455"
           }
@@ -109,16 +108,6 @@ resource "kubernetes_service" "ory-kratos-ui" {
   metadata {
     name = "ory-kratos-ui"
     namespace = var.namespace
-    annotations = {
-      "getambassador.io/config" = <<YAML
----
-apiVersion: getambassador.io/v2
-kind: Mapping
-name: ory-kratos-ui_mapping
-service: ory-kratos-ui.ory
-prefix: /
-YAML
-    }
   }
   spec {
     type = "ClusterIP"

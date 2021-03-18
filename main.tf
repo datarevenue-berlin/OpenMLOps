@@ -71,6 +71,8 @@ module "prefect-server" {
   source    = "./modules/prefect-server"
   namespace = kubernetes_namespace.prefect_namespace.metadata[0].name
   parent_module_name = basename(abspath(path.module))
+  hostname = var.hostname
+  protocol = var.protocol
 }
 
 
@@ -139,6 +141,12 @@ module "seldon" {
   count = var.install_seldon ? 1 : 0
   source    = "./modules/seldon"
   namespace = kubernetes_namespace.seldon_namespace[0].metadata[0].name
+
+  aws = var.aws
+  tls_certificate_arn = var.tls_certificate_arn
+
+  hostname = var.hostname
+  tls = var.protocol == "https" ? true : false
 }
 
 resource "kubernetes_namespace" "ory_namespace" {
