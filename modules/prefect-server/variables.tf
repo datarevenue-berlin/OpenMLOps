@@ -92,3 +92,9 @@ variable "postgresql_persistence_size" {
 variable "postgresql_init_user" {
   default = "postgres"
 }
+
+variable "service_type" {
+  description = "Whether to expose the service publicly or internally"
+  default = "LoadBalancer"
+  type = string
+}

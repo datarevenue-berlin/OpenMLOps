@@ -1,6 +1,3 @@
-
-
-
 resource "kubernetes_secret" "private_registry_secret" {
   metadata {
     name      = "regcred"
@@ -45,6 +42,9 @@ resource "helm_release" "jupyterhub_lab" {
           }
         }
         secretToken = var.proxy_secret_token
+        service = {
+          type = var.proxy_service_type
+        }
       }
 
       singleuser = {
