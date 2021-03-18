@@ -14,6 +14,7 @@ module "jupyterhub" {
   proxy_https_enabled                   = var.jhub_proxy_https_enabled
   proxy_https_hosts                     = var.jhub_proxy_https_hosts
   proxy_https_letsencrypt_contact_email = var.jhub_proxy_https_letsencrypt_contact_email
+  proxy_service_type                    = var.jhub_proxy_service_type
 
   # Authentication settings
   # Following values should be `null` if oauth_github is disabled. However we need to pass submodule's defaults here
@@ -56,7 +57,7 @@ module "mlflow" {
   docker_registry_server = var.mlflow_docker_registry_server
   docker_auth_key       = var.mlflow_docker_auth_key
 
-  service_type = "LoadBalancer"
+  service_type = var.mlflow_service_type
 }
 
 
@@ -73,6 +74,8 @@ module "prefect-server" {
   parent_module_name = basename(abspath(path.module))
   hostname = var.hostname
   protocol = var.protocol
+  service_type = var.prefect_service_type
+  agent_prefect_labels = var.prefect_agent_labels
 }
 
 
