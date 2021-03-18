@@ -1,0 +1,15 @@
+%{ for provider in oauth2_providers ~}
+- id: ${ provider.provider }
+  provider: ${ provider.provider }
+  client_id: ${ provider.client_id }
+  client_secret: ${ provider.client_secret }
+  mapper_url: ${ provider_paths[provider.provider] }
+
+  scope:
+  %{ for scope in scopes[provider.provider] ~}
+  - ${scope}
+  %{ endfor ~}
+
+  %{ if provider.provider == "microsoft" }tenant: ${provider.tenant}
+  %{ endif }
+%{ endfor ~}

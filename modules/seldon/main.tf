@@ -27,6 +27,12 @@ resource "helm_release" "ambassador" {
   name = "ambassador"
   namespace = var.ambassador_namespace
 
+  values = [templatefile("${path.module}/values.yaml", {
+    tls_certificate_arn = var.tls_certificate_arn,
+    aws = var.aws
+    hostname = var.hostname
+    tls = var.tls
+  })]
   set {
     name = "image.repository"
     value = "docker.io/datawire/ambassador"

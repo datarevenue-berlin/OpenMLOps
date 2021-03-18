@@ -1,0 +1,90 @@
+---
+log:
+  # Set a lower level when running in production
+  level: debug
+  format: json
+
+access_rules:
+  # Defaults to regexp
+  matching_strategy: glob
+
+serve:
+  proxy:
+    cors:
+      enabled: true
+      allowed_origins:
+        - "*"
+      allowed_methods:
+        - POST
+        - GET
+        - PUT
+        - PATCH
+        - DELETE
+      allowed_headers:
+        - Authorization
+        - Content-Type
+      exposed_headers:
+        - Content-Type
+      allow_credentials: true
+      debug: true
+
+errors:
+  fallback:
+    - redirect
+    - json
+  handlers:
+    redirect:
+      enabled: true
+      config:
+        to: ${protocol}://${hostname}/profile/auth/login
+        when:
+          - request:
+              header:
+                accept:
+                  - text/*
+                  - application/xhtml+xml
+    json:
+      enabled: true
+      config:
+        verbose: true
+
+authenticators:
+  anonymous:
+    # Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
+    enabled: true
+    config:
+      subject: guest
+
+  cookie_session:
+    enabled: true
+    config:
+      check_session_url: http://ory-kratos-public.ory.svc.cluster.local/sessions/whoami
+      preserve_path: true
+      extra_from: "@this"
+      subject_from: "identity.id"
+      only:
+        - ory_kratos_session
+
+  noop:
+    enabled: true
+
+authorizers:
+  allow:
+    # Set enabled to "true" to enable the authenticator, and "false" to disable the authenticator. Defaults to "false".
+    enabled: true
+
+mutators:
+  noop:
+    # Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
+    enabled: true
+
+  id_token:
+    enabled: true
+    config:
+      issuer_url: ${protocol}://${hostname}
+      jwks_url: file://${secret_path}/id_token.jwks.json
+      claims: |
+        {
+          "session": {{ .Extra | toJson }}
+        }
+---

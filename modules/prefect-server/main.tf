@@ -86,6 +86,10 @@ resource "helm_release" "prefect-server" {
     value = var.postgresql_init_user
   }
 
+  set {
+    name = "ui.apolloApiUrl"
+    value = "${var.protocol}://prefect.${var.hostname}/graphql/"
+  }
   values = [
     yamlencode({
       "annotations" = var.annotations

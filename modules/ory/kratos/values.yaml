@@ -1,0 +1,158 @@
+kratos:
+  # autoMigrate is relying on a simple initContainer mechanism
+  # Do not turn it on if the replicaCount > 1
+  automigrate: true
+  development: true
+  config:
+    dsn: ${dsn}
+    identity:
+      default_schema_url: file:///etc/config/identity.traits.schema.json
+
+    selfservice:
+      default_browser_return_url: "${ui_path}/dashboard"
+      whitelisted_return_urls:
+        - ${app_url}
+      methods:
+        password:
+          enabled: true
+        oidc:
+          enabled: true
+          config:
+            providers:
+              ${indent(14, oidc_providers_config)}
+
+      flows:
+        settings:
+          privileged_session_max_age: 1m
+          after:
+            profile:
+              hooks:
+                - hook: verify
+          ui_url: ${ui_path}/settings
+
+        verification:
+          enabled: false
+          ui_url: ${ui_path}/verify
+
+        logout:
+          after:
+            default_browser_return_url: ${ui_path}/auth/login
+
+        login:
+          lifespan: 10m
+          ui_url: ${ui_path}/auth/login
+
+        error:
+          ui_url: ${ui_path}/error
+
+        registration:
+          lifespan: 10m
+          after:
+            password:
+              hooks:
+                - hook: session
+            oidc:
+              hooks:
+                - hook: session
+
+          ui_url: ${ui_path}/auth/registration
+
+    log:
+      level: debug
+
+    secrets:
+      cookie:
+        - {cookie_secret}
+
+    serve:
+      public:
+        base_url: ${app_url}/.ory/kratos/public/
+        port: 4433
+
+      admin:
+        base_url: http://ory-kratos-admin.ory.svc.cluster.local:4434/
+
+
+    hashers:
+      argon2:
+        parallelism: 1
+        memory: 131072
+        iterations: 2
+        salt_length: 16
+        key_length: 16
+
+    courier:
+      smtp:
+        connection_uri: smtps://test:test@dummy:1025/?skip_ssl_verify=true
+
+  identitySchemas:
+    # TODO: Make terraform render this dinamically
+    "identity.traits.schema.json": |
+      {
+        "$id": "https://schemas.ory.sh/presets/kratos/quickstart/email-password/identity.schema.json",
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Person",
+        "type": "object",
+        "properties": {
+          "traits": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "format": "email",
+                "title": "E-Mail",
+                "minLength": 3,
+                "ory.sh/kratos": {
+                  "credentials": {
+                    "password": {
+                      "identifier": true
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "email"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    "oidc.github.jsonnet": |
+      local claims = {
+        email_verified: false
+      } + std.extVar('claims');
+
+      {
+        identity: {
+          traits: {
+            // Allowing unverified email addresses enables account
+            // enumeration attacks, especially if the value is used for
+            // e.g. verification or as a password login identifier.
+            //
+            // Therefore we only return the email if it (a) exists and (b) is marked verified
+            // by GitHub.
+            [if "email" in claims && claims.email_verified then "email" else null]: claims.email,
+          },
+        },
+      }
+    "oidc.microsoft.jsonnet": |
+      local claims = std.extVar('claims');
+      {
+        identity: {
+          traits: {
+            // Allowing unverified email addresses enables account
+            // enumeration attacks, especially if the value is used for
+            // e.g. verification or as a password login identifier.
+            //
+            // If connecting only to your organization (one tenant), claims.email is safe to use if you have not actively disabled e-mail verification during signup.
+            //
+            // The email might be empty if the account is not linked to an email address.
+            // For a human readable identifier, consider using the "preferred_username" claim.
+            [if "email" in claims then "email" else null]: claims.email,
+          },
+        },
+      }
+
+secret:
+  enabled: true
