@@ -1,18 +1,12 @@
 locals {
   ui_deployment_name = "ory-kratos-ui"
-  ui_url = "${var.domain}/"
-  dashboard_url = "${var.domain}/dashboard"
-  registration_url = "${var.domain}/auth/registration"
-  login_url = "${var.domain}/auth/login"
-  settings_url = "${var.domain}/settings"
-  verify_url = "${var.domain}/verify"
-  error_url = "${var.domain}/error"
-  api_url = "${var.domain}/.ory/kratos/public"
+  ui_url = "${var.app_url}/profile"
+  api_url = "${var.app_url}/.ory/kratos/public"
 
   provider_paths = {
     "github" = "file:///etc/config/oidc.github.jsonnet"
     "google" = "file:///etc/config/oidc.github.jsonnet"
-    "microsoft" = "file:///etc/config/oidc.github.jsonnet"
+    "microsoft" = "file:///etc/config/oidc.microsoft.jsonnet"
   }
   schemas_path = "${path.module}/schemas"
   scopes = {
@@ -39,7 +33,8 @@ resource "helm_release" "ory-kratos" {
   values = [
     templatefile("${path.module}/values.yaml", {
       dsn = "postgres://${var.db_username}:${urlencode(var.db_password)}@${module.kratos-postgres.db_host}:5432/${var.database_name}",
-      domain = var.domain,
+      app_url = var.app_url,
+      ui_path = local.ui_url,
       oidc_providers_config = templatefile("${path.module}/oidc_providers.yaml.tmpl", {
         oauth2_providers = var.oauth2_providers
         provider_paths = local.provider_paths
@@ -48,8 +43,6 @@ resource "helm_release" "ory-kratos" {
       cookie_secret = var.cookie_secret,
     })
   ]
-  # TODO: Make terraform render these schemas properly
-
 }
 
 resource "kubernetes_deployment" "ory-kratos-ui" {
@@ -98,6 +91,10 @@ resource "kubernetes_deployment" "ory-kratos-ui" {
             value = local.api_url
           }
           env {
+            name = "BASE_URL"
+            value = "${local.ui_url}/"
+          }
+          env {
             name = "PORT"
             value = "4455"
           }
@@ -111,16 +108,6 @@ resource "kubernetes_service" "ory-kratos-ui" {
   metadata {
     name = "ory-kratos-ui"
     namespace = var.namespace
-    annotations = {
-      "getambassador.io/config" = <<YAML
----
-apiVersion: getambassador.io/v2
-kind: Mapping
-name: ory-kratos-ui_mapping
-service: ory-kratos-ui.ory
-prefix: /
-YAML
-    }
   }
   spec {
     type = "ClusterIP"

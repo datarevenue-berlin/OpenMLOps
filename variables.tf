@@ -1,11 +1,11 @@
 ## General variables
 variable "hostname" {
-  description = "Hostname of the deployed cluster. Ex.: my_mlops.com"
+  description = "Hostname of the deployed cluster. Ex.: my-mlops.com"
 }
 
 variable "protocol" {
   default = "http"
-  description = "Preferred connection protocol (HTTPS not configured yet)"
+  description = "Preferred connection protocol. If using https, a valid ACM certificate must be provided under tls_certificate_arn. See documentation"
 }
 
 ## MLFlow
@@ -45,10 +45,26 @@ variable "mlflow_docker_auth_key" {
   default = ""
 }
 
+variable "mlflow_service_type" {
+  description = "Whether to expose the service publicly or internally"
+  type = string
+  default = "LoadBalancer"
+}
 ## Prefect Server
 
 variable "prefect_namespace" {
   default = "prefect"
+}
+
+variable "prefect_service_type" {
+  description = "Whether to expose the service publicly or internally"
+  type = string
+  default = "LoadBalancer"
+}
+
+variable "prefect_agent_labels" {
+  description = "Defines what scheduling labels (not K8s labels) should be associated with the agent"
+  default     = [""]
 }
 
 ## Jupyter Hub
@@ -75,6 +91,12 @@ variable "jhub_proxy_secret_token" {
 
 variable "jhub_proxy_https_letsencrypt_contact_email" {
   default = ""
+}
+
+variable "jhub_proxy_service_type" {
+  description = "Whether to expose the service publicly or internally"
+  type = string
+  default = "LoadBalancer"
 }
 
 variable "oauth_github_enable" {
@@ -189,9 +211,17 @@ variable "seldon_namespace" {
   default = "seldon"
 }
 
-## ORY
+variable "aws" {
+  description = "If the deployment is being made in an AWS Cluster"
+}
 
-variable "install_ory" {
+variable "tls_certificate_arn" {
+  description = "TLS Certificate ARN"
+  default = ""
+}
+## ORY (authentication module)
+
+variable "enable_ory_authentication" {
   default = true
 }
 variable "ory_namespace" {
@@ -202,7 +232,7 @@ variable "ory_kratos_db_password"{
   description = "PostgreSQL Database Password"
 }
 
-variable "ory_kratos_cookie-secret" {
+variable "ory_kratos_cookie_secret" {
   description = "Session Cookie Generation secret"
   sensitive = true
 }

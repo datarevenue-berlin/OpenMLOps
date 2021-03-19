@@ -93,8 +93,8 @@ prefectConfig:
   # queued_runs_returned_limit: "25"
   # hasura:
   #   execute_retry_seconds: "10"
-  # logging:
-  #   level: "DEBUG"
+   logging:
+     level: "DEBUG"
   #   format: "[%(asctime)s] %(levelname)s - %(name)s | %(message)s"
   # services:
   #   scheduler:

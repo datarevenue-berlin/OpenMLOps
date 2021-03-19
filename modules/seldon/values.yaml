@@ -1,0 +1,85 @@
+service:
+  annotations:
+    "getambassador.io/config": |
+      ---
+      apiVersion: getambassador.io/v2
+      kind:  Module
+      name:  ambassador
+      config:
+        use_proxy_proto: true
+      ---
+      apiVersion: getambassador.io/v2
+      kind: AuthService
+      name: authentication
+      auth_service: ory-oathkeeper.ory
+      path_prefix: /decisions
+      allowed_request_headers:
+        - Authorization
+      allowed_authorization_headers:
+        - Authorization
+      ---
+      apiVersion: getambassador.io/v2
+      kind: Mapping
+      name: ory-oathkeeper_mapping
+      service: ory-oathkeeper.ory
+      prefix: /ory-oathkeeper/
+      ---
+      apiVersion: getambassador.io/v2
+      kind: Mapping
+      name: ory-kratos-public-mapping
+      service: ory-kratos-public.ory
+      prefix: /.ory/kratos/public/
+      ---
+      apiVersion: getambassador.io/v2
+      kind: Mapping
+      name: ory-kratos-ui_mapping
+      service: ory-kratos-ui.ory
+      prefix: /profile/
+      ---
+      apiVersion: getambassador.io/v2
+      kind: Mapping
+      name: mlflow_mapping
+      service: mlflow.mlflow:5000
+      prefix: /
+      host: mlflow.${hostname}
+      ---
+      apiVersion: getambassador.io/v2
+      kind: Mapping
+      name: jhub_mapping
+      service: proxy-public.jhub:80
+      prefix: /
+      host: jupyter.${hostname}
+      allow_upgrade:
+        - websocket
+      ---
+      apiVersion: getambassador.io/v2
+      kind: Mapping
+      name: prefect_apollo_mapping
+      service: prefect-server-apollo.prefect:4200
+      prefix: /graphql
+      rewrite: /graphql/
+      host: prefect.${hostname}
+      ---
+      apiVersion: getambassador.io/v2
+      kind: Mapping
+      name: prefect_mapping
+      service: prefect-server-ui.prefect:8080
+      prefix: /
+      host: prefect.${hostname}
+    %{ if aws }
+      %{ if tls }
+    "service.beta.kubernetes.io/aws-load-balancer-ssl-cert": ${tls_certificate_arn}
+    "service.beta.kubernetes.io/aws-load-balancer-ssl-ports": "443"
+      %{ endif }
+    "service.beta.kubernetes.io/aws-load-balancer-backend-protocol": "tcp"
+    "service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled": "true"
+    "service.beta.kubernetes.io/aws-load-balancer-proxy-protocol": "*"
+    %{ endif }
+  %{ if aws }
+  externalTrafficPolicy: Local
+  ports:
+    - name: ambassador
+      port: 443
+      targetPort: 8080
+  %{ endif }
+replicaCount: 1

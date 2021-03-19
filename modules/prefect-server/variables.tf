@@ -1,3 +1,11 @@
+variable "hostname" {
+  description = "Application hostname ex.: mlops.mywebsite.com"
+}
+
+variable "protocol" {
+  description = "Preferred connection protocol"
+}
+
 variable "parent_module_name" {
   description = "Name of the calling module. Needed for a hack of downloading the Helm chart."
   type = string
@@ -83,4 +91,10 @@ variable "postgresql_persistence_size" {
 
 variable "postgresql_init_user" {
   default = "postgres"
+}
+
+variable "service_type" {
+  description = "Whether to expose the service publicly or internally"
+  default = "LoadBalancer"
+  type = string
 }

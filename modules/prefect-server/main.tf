@@ -1,15 +1,11 @@
-// This is a hack. We're just making Terraform download the Prefect repository. Then we refer to its location
-// in helm_release resource. This is necessary until Prefect starts hosting its Helm chart in a Helm repository.
-module "github-repo" {
-  source = "git::https://github.com/PrefectHQ/server.git"
-}
-
 resource "helm_release" "prefect-server" {
   name      = "prefect-server"
   namespace = var.namespace
 
   dependency_update = true
-  chart             = "${path.root}/.terraform/modules/${var.parent_module_name}.prefect-server.github-repo/helm/prefect-server"
+  repository = "https://prefecthq.github.io/server/"
+  chart = "prefect-server"
+  version = "2021.03.10"
 
   set {
     name = "jobs.createTenant.enabled"
@@ -86,6 +82,20 @@ resource "helm_release" "prefect-server" {
     value = var.postgresql_init_user
   }
 
+  set {
+    name = "ui.apolloApiUrl"
+    value = "${var.protocol}://prefect.${var.hostname}/graphql/"
+  }
+
+  set {
+    name = "apollo.service.type"
+    value = var.service_type
+  }
+  set {
+    name = "ui.service.type"
+    value = var.service_type
+  }
+
   values = [
     yamlencode({
       "annotations" = var.annotations
@@ -99,40 +109,3 @@ resource "helm_release" "prefect-server" {
   ]
 }
 
-
-resource "kubernetes_service_account" "prefect_deployment" {
-  metadata {
-    name = "prefect-deployment-sa"
-  }
-}
-
-
-resource "kubernetes_cluster_role" "prefect_deployment" {
-  metadata {
-    name = "prefect-deployment-cr"
-  }
-  rule {
-    api_groups = ["machinelearning.seldon.io"]
-    # at the HTTP level, the name of the resource for accessing Deployment
-    # objects is "deployments"
-    resources = ["seldondeployments"]
-    verbs = ["get", "list", "watch", "create", "update", "patch", "delete"]
-  }
-}
-
-
-resource "kubernetes_cluster_role_binding" "prefect_deployment" {
-  metadata {
-    name = "prefect-deployment"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind = "ClusterRole"
-    name = kubernetes_cluster_role.prefect_deployment.metadata[0].name
-  }
-  subject {
-    kind = "ServiceAccount"
-    namespace = var.namespace
-    name = kubernetes_service_account.prefect_deployment.metadata[0].name
-  }
-}

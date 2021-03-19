@@ -14,6 +14,7 @@ module "jupyterhub" {
   proxy_https_enabled                   = var.jhub_proxy_https_enabled
   proxy_https_hosts                     = var.jhub_proxy_https_hosts
   proxy_https_letsencrypt_contact_email = var.jhub_proxy_https_letsencrypt_contact_email
+  proxy_service_type                    = var.jhub_proxy_service_type
 
   # Authentication settings
   # Following values should be `null` if oauth_github is disabled. However we need to pass submodule's defaults here
@@ -56,7 +57,7 @@ module "mlflow" {
   docker_registry_server = var.mlflow_docker_registry_server
   docker_auth_key       = var.mlflow_docker_auth_key
 
-  service_type = "LoadBalancer"
+  service_type = var.mlflow_service_type
 }
 
 
@@ -71,6 +72,10 @@ module "prefect-server" {
   source    = "./modules/prefect-server"
   namespace = kubernetes_namespace.prefect_namespace.metadata[0].name
   parent_module_name = basename(abspath(path.module))
+  hostname = var.hostname
+  protocol = var.protocol
+  service_type = var.prefect_service_type
+  agent_prefect_labels = var.prefect_agent_labels
 }
 
 
@@ -139,10 +144,16 @@ module "seldon" {
   count = var.install_seldon ? 1 : 0
   source    = "./modules/seldon"
   namespace = kubernetes_namespace.seldon_namespace[0].metadata[0].name
+
+  aws = var.aws
+  tls_certificate_arn = var.tls_certificate_arn
+
+  hostname = var.hostname
+  tls = var.protocol == "https" ? true : false
 }
 
 resource "kubernetes_namespace" "ory_namespace" {
-  count = var.install_ory ? 1 : 0
+  count = var.enable_ory_authentication ? 1 : 0
   metadata {
     name = var.ory_namespace
   }
@@ -151,7 +162,7 @@ resource "kubernetes_namespace" "ory_namespace" {
 module "ory" {
   source = "./modules/ory"
   namespace = kubernetes_namespace.ory_namespace[0].metadata[0].name
-  cookie-secret = var.ory_kratos_cookie-secret
+  cookie_secret = var.ory_kratos_cookie_secret
   db_password = var.ory_kratos_db_password
   oauth2_providers = var.oauth2_providers
 
