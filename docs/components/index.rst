@@ -8,3 +8,5 @@ Components
     prefect/index
     seldon/index
     mlflow/index
+    ory/index
+    ambassador/index
