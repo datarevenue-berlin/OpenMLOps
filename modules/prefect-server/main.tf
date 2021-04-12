@@ -95,6 +95,10 @@ resource "helm_release" "prefect-server" {
     name = "ui.service.type"
     value = var.service_type
   }
+  set {
+    name = "serviceAccount.name"
+    value = var.service_account_name
+  }
 
   values = [
     yamlencode({
@@ -109,3 +113,20 @@ resource "helm_release" "prefect-server" {
   ]
 }
 
+resource "kubernetes_cluster_role_binding" "seldon_prefect_crb" {
+  count = var.create_seldon_binding ? 1 : 0
+
+  metadata {
+    name = "prefect-seldon-rolebinding"
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind = "ClusterRole"
+    name = "seldon-manager-role-seldon"
+  }
+  subject {
+    kind = "ServiceAccount"
+    name = var.service_account_name
+    namespace = var.namespace
+  }
+}

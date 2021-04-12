@@ -98,3 +98,14 @@ variable "service_type" {
   default = "LoadBalancer"
   type = string
 }
+
+variable "service_account_name" {
+  description = "Prefect service account name"
+  default = "prefect-server-serviceaccount"
+  type = string
+}
+
+variable "create_seldon_binding" {
+  description = "Whether to create Cluster Role Binding to Seldon"
+  type = bool
+}
