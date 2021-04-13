@@ -64,7 +64,7 @@ variable "prefect_service_type" {
 
 variable "prefect_agent_labels" {
   description = "Defines what scheduling labels (not K8s labels) should be associated with the agent"
-  default     = [""]
+  default     = ["dev"]
 }
 
 ## Jupyter Hub
