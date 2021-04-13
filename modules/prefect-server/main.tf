@@ -91,10 +91,12 @@ resource "helm_release" "prefect-server" {
     name = "apollo.service.type"
     value = var.service_type
   }
+
   set {
     name = "ui.service.type"
     value = var.service_type
   }
+
   set {
     name = "serviceAccount.name"
     value = var.service_account_name
@@ -114,7 +116,7 @@ resource "helm_release" "prefect-server" {
 }
 
 resource "kubernetes_cluster_role_binding" "seldon_prefect_crb" {
-  count = var.create_seldon_binding ? 1 : 0
+  count = var.seldon_manager_cluster_role_name != "" ? 1 : 0
 
   metadata {
     name = "prefect-seldon-rolebinding"
@@ -122,7 +124,7 @@ resource "kubernetes_cluster_role_binding" "seldon_prefect_crb" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind = "ClusterRole"
-    name = "seldon-manager-role-seldon"
+    name = var.seldon_manager_cluster_role_name
   }
   subject {
     kind = "ServiceAccount"

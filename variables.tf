@@ -67,6 +67,11 @@ variable "prefect_agent_labels" {
   default     = [""]
 }
 
+variable "prefect_service_account_name" {
+  description = "Prefect service account name"
+  default = "prefect-server-serviceaccount"
+}
+
 ## Jupyter Hub
 
 variable "install_jupyterhub" {

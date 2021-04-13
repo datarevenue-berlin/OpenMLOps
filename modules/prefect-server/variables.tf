@@ -105,7 +105,8 @@ variable "service_account_name" {
   type = string
 }
 
-variable "create_seldon_binding" {
-  description = "Whether to create Cluster Role Binding to Seldon"
-  type = bool
+variable "seldon_manager_cluster_role_name" {
+  description = "Name of the cluster role that allows Prefect to manage Seldon. Leave blank not allowing Prefect to manage Seldon."
+  default = ""
+  type = string
 }
