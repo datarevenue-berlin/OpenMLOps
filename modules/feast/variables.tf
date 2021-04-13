@@ -51,3 +51,7 @@ variable "feast_prometheus_statsd_exporter_enabled" {
 variable "feast_grafana_enabled" {
   default = false
 }
+
+variable "feast_spark_operator_image_tag" {
+  default = "v1beta2-1.1.2-2.4.5"
+}
