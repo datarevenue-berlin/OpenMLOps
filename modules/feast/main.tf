@@ -122,17 +122,6 @@ resource "kubernetes_role" "use_spark_operator" {
   }
 }
 
-resource "kubernetes_cluster_role" "use_spark_operator" {
-  metadata {
-    name = "use-spark-operator"
-  }
-  rule {
-    api_groups = ["sparkoperator.k8s.io"]
-    resources = ["sparkapplications"]
-    verbs = ["create", "delete", "deletecollection", "get", "list", "update", "watch", "patch"]
-  }
-}
-
 resource "kubernetes_role_binding" "use_spark_operator" {
   metadata {
     name = "use-spark-operator"
@@ -149,19 +138,13 @@ resource "kubernetes_role_binding" "use_spark_operator" {
   }
 }
 
-resource "kubernetes_cluster_role_binding" "use_spark_operator" {
+resource "kubernetes_cluster_role" "use_spark_operator" {
   metadata {
-    name = "use-spark-operator"
-    namespace = var.namespace
+    name = var.feast_spark_operator_cluster_role_name
   }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind = "ClusterRole"
-    name = kubernetes_cluster_role.use_spark_operator.metadata.name
-  }
-  subject {
-    kind = "ServiceAccount"
-    name = "prefect-server-serviceaccount"
-    namespace = var.namespace
+  rule {
+    api_groups = ["sparkoperator.k8s.io"]
+    resources = ["sparkapplications"]
+    verbs = ["create", "delete", "deletecollection", "get", "list", "update", "watch", "patch"]
   }
 }

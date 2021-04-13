@@ -110,3 +110,9 @@ variable "seldon_manager_cluster_role_name" {
   default = ""
   type = string
 }
+
+variable "feast_spark_operator_cluster_role_name" {
+  description = "Name of the cluster role that allows Prefect to manage Spark operator on Fease. Leave blank not allowing Prefect to manage Spark."
+  default = ""
+  type = string
+}

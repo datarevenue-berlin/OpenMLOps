@@ -55,3 +55,7 @@ variable "feast_grafana_enabled" {
 variable "feast_spark_operator_image_tag" {
   default = "v1beta2-1.1.2-2.4.5"
 }
+
+variable "feast_spark_operator_cluster_role_name" {
+  default = ""
+}

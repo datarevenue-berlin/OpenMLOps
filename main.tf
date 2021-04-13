@@ -78,6 +78,7 @@ module "prefect-server" {
   agent_prefect_labels = var.prefect_agent_labels
   service_account_name = var.prefect_service_account_name
   seldon_manager_cluster_role_name = var.install_seldon ? "seldon-manager-role-${var.seldon_namespace}" : ""
+  feast_spark_operator_cluster_role_name = var.install_feast ? var.feast_spark_operator_cluster_role_name : ""
 }
 
 
@@ -129,6 +130,7 @@ module "feast" {
   feast_redis_enabled          = true
 
   feast_postgresql_password = var.feast_postgresql_password
+  feast_spark_operator_cluster_role_name = var.feast_spark_operator_cluster_role_name
 }
 
 

@@ -132,3 +132,20 @@ resource "kubernetes_cluster_role_binding" "seldon_prefect_crb" {
     namespace = var.namespace
   }
 }
+
+resource "kubernetes_cluster_role_binding" "feast_spark_operator_prefect_crb" {
+  metadata {
+    name = "prefect-feast-spark-operator"
+    namespace = var.namespace
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind = "ClusterRole"
+    name = var.feast_spark_operator_cluster_role_name
+  }
+  subject {
+    kind = "ServiceAccount"
+    name = var.service_account_name
+    namespace = var.namespace
+  }
+}

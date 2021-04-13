@@ -206,6 +206,10 @@ variable "feast_postgresql_password" {
   default = "my-feast-password"
 }
 
+variable "feast_spark_operator_cluster_role_name" {
+  default = "feast-spark-operator"
+}
+
 ## Seldon
 
 variable "install_seldon" {
