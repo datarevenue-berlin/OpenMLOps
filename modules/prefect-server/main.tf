@@ -136,7 +136,6 @@ resource "kubernetes_cluster_role_binding" "seldon_prefect_crb" {
 resource "kubernetes_cluster_role_binding" "feast_spark_operator_prefect_crb" {
   metadata {
     name = "prefect-feast-spark-operator"
-    namespace = var.namespace
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"

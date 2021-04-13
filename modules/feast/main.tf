@@ -130,7 +130,7 @@ resource "kubernetes_role_binding" "use_spark_operator" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind = "Role"
-    name = kubernetes_role.use_spark_operator.metadata.name
+    name = kubernetes_role.use_spark_operator.metadata[0].name
   }
   subject {
     kind = "ServiceAccount"
