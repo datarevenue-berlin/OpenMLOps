@@ -98,3 +98,15 @@ variable "service_type" {
   default = "LoadBalancer"
   type = string
 }
+
+variable "service_account_name" {
+  description = "Prefect service account name"
+  default = "prefect-server-serviceaccount"
+  type = string
+}
+
+variable "seldon_manager_cluster_role_name" {
+  description = "Name of the cluster role that allows Prefect to manage Seldon. Leave blank not allowing Prefect to manage Seldon."
+  default = ""
+  type = string
+}

@@ -61,7 +61,6 @@ module "mlflow" {
 }
 
 
-
 resource "kubernetes_namespace" "prefect_namespace" {
   metadata {
     name = var.prefect_namespace
@@ -71,13 +70,15 @@ resource "kubernetes_namespace" "prefect_namespace" {
 module "prefect-server" {
   source    = "./modules/prefect-server"
   namespace = kubernetes_namespace.prefect_namespace.metadata[0].name
+
   parent_module_name = basename(abspath(path.module))
   hostname = var.hostname
   protocol = var.protocol
   service_type = var.prefect_service_type
   agent_prefect_labels = var.prefect_agent_labels
+  service_account_name = var.prefect_service_account_name
+  seldon_manager_cluster_role_name = var.install_seldon ? "seldon-manager-role-${var.seldon_namespace}" : ""
 }
-
 
 
 resource "kubernetes_namespace" "dask_namespace" {
@@ -85,7 +86,6 @@ resource "kubernetes_namespace" "dask_namespace" {
     name = var.dask_namespace
   }
 }
-
 
 module "dask" {
 
@@ -108,7 +108,6 @@ module "dask" {
     }
   ]
 }
-
 
 
 resource "kubernetes_namespace" "feast_namespace" {
@@ -151,6 +150,7 @@ module "seldon" {
   hostname = var.hostname
   tls = var.protocol == "https" ? true : false
 }
+
 
 resource "kubernetes_namespace" "ory_namespace" {
   count = var.enable_ory_authentication ? 1 : 0
