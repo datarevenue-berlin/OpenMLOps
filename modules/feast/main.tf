@@ -89,3 +89,62 @@ resource "helm_release" "feast" {
     value = var.feast_grafana_enabled
   }
 }
+
+
+resource "helm_release" "spark" {
+  name      = "feast-spark"
+  namespace = var.namespace
+
+  repository = "https://googlecloudplatform.github.io/spark-on-k8s-operator"
+  chart      = "spark-operator"
+  version    = "1.0.6"
+
+  set {
+    name  = "serviceAccounts.spark.name"
+    value = "spark"
+  }
+
+  set {
+    name  = "image.tag"
+    value = var.feast_spark_operator_image_tag
+  }
+}
+
+resource "kubernetes_role" "use_spark_operator" {
+  metadata {
+    name = "use-spark-operator"
+    namespace = var.namespace
+  }
+  rule {
+    api_groups = ["sparkoperator.k8s.io"]
+    resources = ["sparkapplications"]
+    verbs = ["create", "delete", "deletecollection", "get", "list", "update", "watch", "patch"]
+  }
+}
+
+resource "kubernetes_role_binding" "use_spark_operator" {
+  metadata {
+    name = "use-spark-operator"
+    namespace = var.namespace
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind = "Role"
+    name = kubernetes_role.use_spark_operator.metadata[0].name
+  }
+  subject {
+    kind = "ServiceAccount"
+    name = "default"
+  }
+}
+
+resource "kubernetes_cluster_role" "use_spark_operator" {
+  metadata {
+    name = var.feast_spark_operator_cluster_role_name
+  }
+  rule {
+    api_groups = ["sparkoperator.k8s.io"]
+    resources = ["sparkapplications"]
+    verbs = ["create", "delete", "deletecollection", "get", "list", "update", "watch", "patch"]
+  }
+}
