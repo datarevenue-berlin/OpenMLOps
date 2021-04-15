@@ -55,6 +55,7 @@ authenticators:
     config:
       subject: guest
 
+  # Cookie based authentication
   cookie_session:
     enabled: true
     config:
@@ -64,6 +65,17 @@ authenticators:
       subject_from: "identity.id"
       only:
         - ory_kratos_session
+
+  # API Token Authentication
+  bearer_token:
+    enabled: true
+    config:
+      check_session_url: http://ory-kratos-public.ory.svc.cluster.local/sessions/whoami
+      preserve_path: true
+      extra_from: "@this"
+      subject_from: "identity.id"
+      token_from:
+        header: "Authorization"
 
   noop:
     enabled: true

@@ -11,6 +11,7 @@ module "ory-kratos" {
   namespace = var.namespace
 
   cookie_secret = var.cookie_secret
+  cookie_domain = var.hostname
   db_password = var.db_password
   oauth2_providers = var.oauth2_providers
 
