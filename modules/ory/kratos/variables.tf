@@ -32,7 +32,7 @@ variable "cookie_secret" {
 }
 
 variable "cookie_domain" {
-  description = "Sets the session cookie domain. Useful when dealing with subdomains. Use with care!"
+  description = "Sets the session cookie domain. Useful when dealing with subdomains. Use with care! If blank, only requests strictly from the exactly same domain (no subdomains) will be accepted "
   type = string
   default = ""
 }
