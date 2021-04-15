@@ -31,6 +31,12 @@ variable "cookie_secret" {
   type = string
 }
 
+variable "cookie_domain" {
+  description = "Sets the session cookie domain. Useful when dealing with subdomains. Use with care! If blank, only requests strictly from the exactly same domain (no subdomains) will be accepted "
+  type = string
+  default = ""
+}
+
 variable "oauth2_providers" {
   //  Configure multiple Oauth2 providers.
   //  example:

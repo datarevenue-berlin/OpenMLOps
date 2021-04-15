@@ -41,6 +41,7 @@ resource "helm_release" "ory-kratos" {
         scopes = local.scopes
       })
       cookie_secret = var.cookie_secret,
+      cookie_domain = var.cookie_domain
     })
   ]
 }

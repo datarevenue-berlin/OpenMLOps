@@ -64,6 +64,10 @@ kratos:
       cookie:
         - {cookie_secret}
 
+    session:
+      cookie:
+        domain: ${cookie_domain}
+
     serve:
       public:
         base_url: ${app_url}/.ory/kratos/public/
