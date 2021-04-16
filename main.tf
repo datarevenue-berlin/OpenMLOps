@@ -165,7 +165,8 @@ module "ory" {
   source = "./modules/ory"
   namespace = kubernetes_namespace.ory_namespace[0].metadata[0].name
   cookie_secret = var.ory_kratos_cookie_secret
-  db_password = var.ory_kratos_db_password
+  kratos_db_password = var.ory_kratos_db_password
+  keto_db_password = var.ory_keto_db_password
   oauth2_providers = var.oauth2_providers
 
   hostname = var.hostname
