@@ -84,6 +84,14 @@ authorizers:
   allow:
     # Set enabled to "true" to enable the authenticator, and "false" to disable the authenticator. Defaults to "false".
     enabled: true
+  keto_engine_acp_ory:
+    enabled: true
+    config:
+      base_url: http://ory-keto.ory.svc.cluster.local
+      required_action: ...
+      required_resource: ...
+      subject: ...
+      flavor: ...
 
 mutators:
   noop:

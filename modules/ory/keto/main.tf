@@ -1,6 +1,8 @@
 locals {
-  dsn = "postgres://${var.db_username}:${urlencode(var.db_password)}@${module.keto-postgres.db_host}:5432/${var.database_name}"
+  db_host = "postgres-keto-postgresql.${helm_release.keto-postgres.namespace}.svc.cluster.local"
+  dsn = "postgres://${var.db_username}:${urlencode(var.db_password)}@${local.db_host}:5432/${var.database_name}"
 }
+
 
 resource "helm_release" "ory-keto" {
   name = "ory-keto"
@@ -8,7 +10,7 @@ resource "helm_release" "ory-keto" {
   repository = "https://k8s.ory.sh/helm/charts"
   chart = "keto"
   depends_on = [
-    module.keto-postgres]
+    helm_release.keto-postgres]
 
   values = [
     templatefile("${path.module}/values.yaml", {
@@ -17,14 +19,23 @@ resource "helm_release" "ory-keto" {
   ]
 }
 
-module "keto-postgres" {
-  source = "../../postgres"
-  namespace = var.namespace
 
-  database_name = var.database_name
-  db_username = var.db_username
-  db_password = var.db_password
-}
-output "db_connection_string" {
-  value = local.dsn
+resource "helm_release" "keto-postgres" {
+  name      = "postgres-keto"
+  namespace = var.namespace
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "postgresql"
+
+  set {
+    name  = "postgresqlUsername"
+    value = var.db_username
+  }
+  set {
+    name  = "postgresqlPassword"
+    value = var.db_password
+  }
+  set {
+    name  = "postgresqlDatabase"
+    value = var.database_name
+  }
 }
