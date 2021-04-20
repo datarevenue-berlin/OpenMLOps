@@ -134,6 +134,8 @@ resource "kubernetes_cluster_role_binding" "seldon_prefect_crb" {
 }
 
 resource "kubernetes_cluster_role_binding" "feast_spark_operator_prefect_crb" {
+  count = var.feast_spark_operator_cluster_role_name != "" ? 1 : 0
+
   metadata {
     name = "prefect-feast-spark-operator"
   }
