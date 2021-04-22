@@ -40,6 +40,10 @@ variable "feast_redis_use_password" {
   default = false
 }
 
+variable "feast_redis_disable_commands" {
+  default = ""
+}
+
 variable "feast_prometheus_enabled" {
   default = false
 }
