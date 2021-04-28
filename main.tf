@@ -171,3 +171,8 @@ module "ory" {
   hostname = var.hostname
   protocol = var.protocol
 }
+
+module "k8s_tools" {
+  source = "./modules/k8s_tools"
+  install_metrics_server = var.install_metrics_server
+}
