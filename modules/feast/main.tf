@@ -75,6 +75,16 @@ resource "helm_release" "feast" {
   }
 
   set {
+    name  = "redis.master.disableCommands"
+    value = var.feast_redis_disable_commands
+  }
+
+  set {
+    name  = "redis.slave.disableCommands"
+    value = var.feast_redis_disable_commands
+  }
+
+  set {
     name  = "prometheus-statsd-exporter.enabled"
     value = var.feast_prometheus_statsd_exporter_enabled
   }

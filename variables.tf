@@ -265,3 +265,9 @@ variable "oauth2_providers" {
   }))
   description = "OAuth2 Providers credentials"
 }
+
+## Other K8S tools
+
+variable "install_metrics_server" {
+  default = true
+}
