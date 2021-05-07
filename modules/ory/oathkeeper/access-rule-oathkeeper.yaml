@@ -31,10 +31,6 @@
     - handler: id_token
   credentials_issuer:
     handler: noop
-  errors:
-    - handler: redirect
-      config:
-        to: http://${hostname}/auth/login
 
 - id: seldon-access-rule
   match:
@@ -53,10 +49,6 @@
     - handler: id_token
   credentials_issuer:
     handler: noop
-  errors:
-    - handler: redirect
-      config:
-        to: http://${hostname}/auth/login
 
 - id: mlflow-access-rule
   match:
