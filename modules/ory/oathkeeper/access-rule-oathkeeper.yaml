@@ -48,6 +48,10 @@
     - handler: id_token
   credentials_issuer:
     handler: noop
+  errors:
+    - handler: redirect
+      config:
+        to: http://${hostname}/auth/login
 
 - id: jhub-access-rule
   match:
@@ -66,6 +70,10 @@
     - handler: id_token
   credentials_issuer:
     handler: noop
+  errors:
+    - handler: redirect
+      config:
+        to: http://${hostname}/auth/login
 
 - id: prefect-access-rule:ui
   match:
@@ -85,6 +93,10 @@
     - handler: id_token
   credentials_issuer:
     handler: noop
+  errors:
+    - handler: redirect
+      config:
+        to: http://${hostname}/auth/login
 
 - id: ory:kratos:public
   upstream:
