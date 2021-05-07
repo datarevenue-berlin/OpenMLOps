@@ -41,11 +41,11 @@
       - DELETE
       - PATCH
   authenticators:
-    - handler: anonymous
+    - handler: cookie_session
   authorizer:
     handler: allow
   mutators:
-    - handler: noop
+    - handler: id_token
   credentials_issuer:
     handler: noop
 
@@ -59,15 +59,15 @@
       - DELETE
       - PATCH
   authenticators:
-    - handler: noop
+    - handler: cookie_session
   authorizer:
     handler: allow
   mutators:
-    - handler: noop
+    - handler: id_token
   credentials_issuer:
     handler: noop
 
-- id: prefect-access-rule
+- id: prefect-access-rule:ui
   match:
     url: <{http,https}>://prefect.${hostname}/<**>
     methods:
@@ -77,11 +77,12 @@
       - DELETE
       - PATCH
   authenticators:
-    - handler: anonymous
+    - handler: bearer_token
+    - handler: cookie_session
   authorizer:
     handler: allow
   mutators:
-    - handler: noop
+    - handler: id_token
   credentials_issuer:
     handler: noop
 
