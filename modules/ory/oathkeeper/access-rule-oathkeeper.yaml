@@ -19,9 +19,6 @@
     methods:
       - GET
       - POST
-      - PUT
-      - DELETE
-      - PATCH
   authenticators:
     - handler: bearer_token
     - handler: cookie_session
@@ -38,9 +35,6 @@
     methods:
       - GET
       - POST
-      - PUT
-      - DELETE
-      - PATCH
   authenticators:
     - handler: bearer_token
   authorizer:
