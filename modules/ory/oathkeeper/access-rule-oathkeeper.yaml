@@ -15,19 +15,32 @@
 
 - id: seldon-access-rule
   match:
-    url: <{http,https}>://${hostname}/seldon/<**>
+    url: <{http,https}>://${hostname}/seldon/<**>/doc<**> # swagger
     methods:
       - GET
       - POST
-      - PUT
-      - DELETE
-      - PATCH
   authenticators:
-    - handler: anonymous
+    - handler: bearer_token
+    - handler: cookie_session
   authorizer:
     handler: allow
   mutators:
-    - handler: noop
+    - handler: id_token
+  credentials_issuer:
+    handler: noop
+
+- id: seldon-access-rule
+  match:
+    url: <{http,https}>://${hostname}/seldon/<**>/predictions<**> # API endpoint
+    methods:
+      - GET
+      - POST
+  authenticators:
+    - handler: bearer_token
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: id_token
   credentials_issuer:
     handler: noop
 
