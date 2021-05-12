@@ -324,6 +324,19 @@ can access this resource (returning `200` or not, `401`).
 In this project, we rely on ORY ecosystem to enable authentication.
 ORY is an open-source ecosystem of services with clear boundaries that solve 
 authentication and authorization.
+### Session Lifespan
+The session lifespan of authenticated users can be managed through the 
+`/ory/kratos/values.yaml` file. By default, the session lifespan is 24h, 
+but it is currently set to 30 days.
+```yaml
+kratos:
+  config:
+  ...
+    session:
+      cookie:
+        domain: ${cookie_domain}
+      lifespan: 720h
+```
 ### ORY Oathkeeper
 ORY Oathkeeper is an Identity and Access Proxy. It functions as a centralized way to 
 manage different Authentication and Authorization methods, and inform the gateway, whether

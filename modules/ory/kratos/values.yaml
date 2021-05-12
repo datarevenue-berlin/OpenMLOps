@@ -67,6 +67,7 @@ kratos:
     session:
       cookie:
         domain: ${cookie_domain}
+      lifespan: 720h
 
     serve:
       public:
