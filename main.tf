@@ -151,6 +151,7 @@ module "seldon" {
 
   hostname = var.hostname
   tls = var.protocol == "https" ? true : false
+  enable_ory_authentication = var.enable_ory_authentication
 }
 
 
