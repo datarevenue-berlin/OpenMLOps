@@ -8,6 +8,7 @@ service:
       config:
         use_proxy_proto: true
       ---
+      %{ if enable_ory_authentication }
       apiVersion: getambassador.io/v2
       kind: AuthService
       name: authentication
@@ -17,6 +18,7 @@ service:
         - Authorization
       allowed_authorization_headers:
         - Authorization
+      %{ endif }
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
