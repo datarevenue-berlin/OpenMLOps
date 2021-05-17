@@ -7,8 +7,8 @@ service:
       name:  ambassador
       config:
         use_proxy_proto: true
-      ---
       %{ if enable_ory_authentication }
+      ---
       apiVersion: getambassador.io/v2
       kind: AuthService
       name: authentication
