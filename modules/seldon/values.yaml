@@ -2,10 +2,10 @@ replicaCount: 1
 resources:
   limits:
     cpu: 1000m
-    memory: 6Gi
+    memory: 2Gi
   requests:
     cpu: 200m
-    memory: 3Gi
+    memory: 1Gi
 service:
   annotations:
     "getambassador.io/config": |
