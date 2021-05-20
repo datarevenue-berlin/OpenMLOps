@@ -157,6 +157,13 @@ Set the TTL (time to live) to 60 seconds so that you don't have to wait too long
 
 Now wait for a few minutes again, and you should be able to access your services.
 
+## Setting up a user authentication database
+
+To create a database for user authentication, run the following command
+```
+kubectl exec -n ory svc/ory-kratos-admin -- kratos migrate sql -y -e -c /etc/config/kratos.yaml
+```
+
 ## Trying out the services
 
 The first step is to visit `mlops.example.com/auth/profile/registration` to create a new user account. Once you've done that, you can visit any of the following services
