@@ -1,3 +1,11 @@
+replicaCount: 1
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 200m
+    memory: 1Gi
 service:
   annotations:
     "getambassador.io/config": |
@@ -82,4 +90,3 @@ service:
       port: 443
       targetPort: 8080
   %{ endif }
-replicaCount: 1
