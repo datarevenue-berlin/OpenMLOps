@@ -31,18 +31,21 @@ service:
       name: ory-oathkeeper_mapping
       service: ory-oathkeeper.ory
       prefix: /ory-oathkeeper/
+      timeout_ms: 0
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
       name: ory-kratos-public-mapping
       service: ory-kratos-public.ory
       prefix: /.ory/kratos/public/
+      timeout_ms: 0
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
       name: ory-kratos-ui_mapping
       service: ory-kratos-ui.ory
       prefix: /profile/
+      timeout_ms: 0
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
@@ -50,6 +53,7 @@ service:
       service: mlflow.mlflow:5000
       prefix: /
       host: mlflow.${hostname}
+      timeout_ms: 0
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
@@ -59,6 +63,7 @@ service:
       host: jupyter.${hostname}
       allow_upgrade:
         - websocket
+      timeout_ms: 0
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
@@ -67,6 +72,7 @@ service:
       prefix: /graphql
       rewrite: /graphql/
       host: prefect.${hostname}
+      timeout_ms: 0
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
@@ -74,6 +80,7 @@ service:
       service: prefect-server-ui.prefect:8080
       prefix: /
       host: prefect.${hostname}
+      timeout_ms: 0
     %{ if aws }
       %{ if tls }
     "service.beta.kubernetes.io/aws-load-balancer-ssl-cert": ${tls_certificate_arn}
