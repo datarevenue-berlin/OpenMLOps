@@ -31,24 +31,18 @@ service:
       name: ory-oathkeeper_mapping
       service: ory-oathkeeper.ory
       prefix: /ory-oathkeeper/
-      timeout_ms: 0
-      idle_timeout_ms: 3600000
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
       name: ory-kratos-public-mapping
       service: ory-kratos-public.ory
       prefix: /.ory/kratos/public/
-      timeout_ms: 0
-      idle_timeout_ms: 3600000
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
       name: ory-kratos-ui_mapping
       service: ory-kratos-ui.ory
       prefix: /profile/
-      timeout_ms: 0
-      idle_timeout_ms: 3600000
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
