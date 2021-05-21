@@ -29,7 +29,7 @@ To follow the steps in this guide, you need
 
 * An AWS account, with a domain registered through Route 53.
 * Some familiarity with AWS - using the web console and `awscli`. 
-* Git, Terraform, Docker, and Kubectl installed locally.
+* Git, Terraform, Docker, Kubectl, and the AWS IAM authenticator installed locally. You can find a guide on setting up client-side dependencies [here](./install-dependencies.md)
 * Access to our Open MLOps repositories. [Contact us](https://datarevenue.com/en-contact) to get access to these while we are still in beta.
 * To be comfortable editing `yaml` configuration files.
 
@@ -100,7 +100,13 @@ Now change into the `mlops-architecture-on-aws` directory and run `terraform ini
 You should see "Terraform has been successfully initialized!" towards the end of the output.
 
 ### Initialising the Kubernetes secrets
-Before we continue with the next steps of Terraform, we need to generate some secrets for Kubernetes. Change into the `open-mlops` repository and run `sh generate-secrets.sh`. 
+Before we continue with the next steps of Terraform, we need to generate some secrets for Kubernetes. Change into the `open-mlops` repository and run the generate secrets script and then change back to the aws repository by using the following commands:
+
+```
+cd ../mlops-architecture
+sh generate-secrets.sh
+cd ../mlops-architecture-on-aws
+```
 
 ### Initialising Kubectl
 
