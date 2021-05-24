@@ -2,15 +2,15 @@
 
 *How to deploy Jupyter Hub, MLFlow, Prefect, Dask, Feast and Seldon on EKS automatically.*
 
-It's likely that your machine learning team isn't using best practices. 
+You might not have had the time to set up an architecture that allows you to follow machine learningbest practices. 
 
-You know that there are tools like MLFlow, Prefect, Jupyter Hub and Feast that could make shipping new models faster and more reliable, but you're not quite sure how ot set everything up, and you don't have the time to figure it out. There are just too many tools to choose from.
+Many tools like MLFlow, Prefect, Jupyter Hub and Feast that can help you make shi models faster and more reliably, but you're not quite sure how ot set everything up, and you didn't find the the time yet to figure it out. There are seem to be too many tools to know about and choose from.
 
-We had the same problem. Instead of solving it just for our team, we wanted to solve it for others too. We evaluated most of MLOps tools on the market, and chose our favourite ones that were open source and played nicely together.
+We had the same problem, took a lot of time and solved it. Instead of solving it just for our team, we wanted to solve it for others too. We evaluated most of MLOps tools on the market, and chose our the best ones that were open source and played nicely together.
 
-We then created a series of scripts to fully automate the set up process.
+This tutorial guides you through all the scripts that will automatically set up the fully equipped MLOps infrastructure for you.
 
-The result: you can clone our repositories, change a few lines of configuration, run the scripts in your own AWS account, and have a replica of our **Open MLOps Architecture** running in a couple of hours.
+You can clone our repositories, change a few lines of configuration, run the scripts in your own AWS account, and have a replica of our **Open MLOps Architecture** running in a couple of hours.
 
 ## The result of following this guide
 
@@ -22,6 +22,8 @@ Once you've gone through the steps listed below, you'll have a Kubernetes cluste
 * **Feast** - A feature store, so you can easily train and predict on the same features.
 * **Seldon** - A model deployment tool to turn your model files into production APIs.
 * **Dask** - to run heavy jobs in parallel on a scalable cluster of machines.
+
+![](./images/architecture-overview.png)
 
 ## What you need to follow this guide
 
@@ -53,12 +55,12 @@ Next, you need a domain name to access all of the various services that we will 
 
 ![](./images/buy-domain-route53.png)
 
-Wait for the domain purchase to complete and be verified, which might take a while. Come back tomorrow if necessary. You now have a domain and a hosted zone. You now need an SSL certificate to securely connect to your services.
+Wait for the domain purchase to complete and be verified, which might take a bit. Come back tomorrow if necessary. You now have a domain and a hosted zone. You now need an SSL certificate to securely connect to your services.
 
-Visit the AWS Certificate Manager and provision a new public certificate. You'll need to add two names to it
+Visit the **AWS Certificate Manager** and provision a new public certificate. You'll need to add two names to it
 
-* The main subdomain, e.g. `mlops`. We'll use this for registration and account management of users. For example, they will visit `https://mlops.example.com/auth/profile/registration` to create a new account
-* All subdomains of this. We'll be using, `prefect.mlops.example.com` to host the Prefect installation, `jupyter.mlops.example.com` for the shared notebook, etc.
+* The main subdomain, e.g. `mlops`. We'll use this for registration and account management of users. For example, your users (team) will visit `https://mlops.example.com/auth/profile/registration` to create a new account.
+* All subdomains of this main subdomain. We'll be using, `prefect.mlops.example.com` to host the Prefect installation, `jupyter.mlops.example.com` for the shared notebook, etc.
 
 Add these two patterns to the certificate (substituting the `example.com` part for your actual domain).
 
@@ -72,7 +74,6 @@ mlops.example.com
 Expand the validation section and press the "Create record in Route 53" button. This will confirm that you own the domain. 
 
 ![](./images/validate-certificate-dns.png)
-
 
 Press "Continue" and copy the ARN of the certificate from the certificate overview page. You'll need this to configure the repositories correctly in the next step.
 
@@ -95,12 +96,12 @@ Next you'll need to personalise the secrets and other values in the `openmlops/m
 
 ## Initialising Terraform
 
-Now change into the `mlops-architecture-on-aws` directory and run `terraform init`, which will pull down the terraform dependencies that we need.
+Now change into the `mlops-architecture-on-aws` directory and run `terraform init`, which will pull down the terraform dependencies that you need.
 
 You should see "Terraform has been successfully initialized!" towards the end of the output.
 
 ### Initialising the Kubernetes secrets
-Before we continue with the next steps of Terraform, we need to generate some secrets for Kubernetes. Change into the `open-mlops` repository and run the generate secrets script and then change back to the aws repository by using the following commands:
+Before you continue with the next steps of Terraform, you need to generate some secrets for Kubernetes. Change into the `open-mlops` repository and run the generate secrets script and then change back to the aws repository by using the following commands:
 
 ```
 cd ../mlops-architecture
@@ -120,7 +121,7 @@ This will use Docker to download and configure Oathkeeper.
 
 ## Creating the Terraform plan
 
-Terraform will spin up over 80 various services in all. Before we start doing this, we should check that everything is working and configured correctly. Run 
+Terraform will spin up over 80 various services in all. Before you do this, you should check that everything is working and configured correctly. Run 
 
 ```
 terraform plan -var-file=my_vars.tfvars
@@ -142,7 +143,7 @@ Enter `yes` when prompted and wait for everything to create. You can follow alon
 
 ## Linking your domain to the load balancer
 
-Your services are all up and running now. They are behind a load balancer, so the last thing we need to do is set up our Hosted Zone to redirect traffic to this loadbalancer.
+Your services are all up and running now. They are behind a load balancer, so the last thing you need to do is set up your Hosted Zone to redirect traffic to this loadbalancer.
 
 To get the public address of the load balancer, run.
 
