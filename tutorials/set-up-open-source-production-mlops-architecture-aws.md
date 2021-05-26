@@ -157,12 +157,12 @@ And copy the long `EXTERNAL-IP` value that you see.
 
 In the AWS Console, navigate to your hosted zone in Route 53 and click "Create Record."
 
-Add an asterisk `*` into the Record name, `CNAME` as the record type, and the public IP address you copied above as the `Value`.
+Create two `CNAME` records, one for `mlops.example.com` and one for `*.mlops.example.com`, adding the public IP address you copied above as the `Value`.
 
 Set the TTL (time to live) to 60 seconds so that you don't have to wait too long for changes to propagate, and click "Create records".
 ![](./images/add-record.png)
 
-Now wait for a few minutes again, and you should be able to access your services.
+Wait a few minutes for these changes to take effect.
 
 ## Setting up a user authentication database
 
@@ -170,6 +170,10 @@ To create a database for user authentication, run the following command
 ```
 kubectl exec -n ory svc/ory-kratos-admin -- kratos migrate sql -y -e -c /etc/config/kratos.yaml
 ```
+
+You should see a bunch of output ending with "Successfully applied SQL migrations!". 
+
+Now you should be ready to start using the various services.
 
 ## Trying out the services
 
