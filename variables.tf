@@ -74,6 +74,10 @@ variable "prefect_service_account_name" {
 
 ## Jupyter Hub
 
+variable "jupyter_dummy_password" {
+  default = ""
+}
+
 variable "install_jupyterhub" {
   default = true
 }
@@ -170,7 +174,7 @@ variable "singleuser_profile_list" {
 locals {
   jhub_auth_config = {
     dummy = {
-      password = "a-shared-secret-password"
+      password = var.jupyter_dummy_password
     }
     github = {
       clientId     = var.oauth_github_client_id
