@@ -84,7 +84,7 @@ def train_model(data, alpha=0.5, l1_ratio=0.5):
 You can check that everything works so far by adding the following two lines a new cell and running them.
 
 ```python
-data = get_data()
+data = fetch_data()
 train_model(data)
 ```
 
