@@ -14,6 +14,7 @@ module "ory-kratos" {
   cookie_domain = var.hostname
   db_password = var.db_password
   oauth2_providers = var.oauth2_providers
+  enable_registration = var.enable_registration
 
   app_url = "${var.protocol}://${var.hostname}"
 }

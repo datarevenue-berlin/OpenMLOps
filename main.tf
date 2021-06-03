@@ -151,6 +151,8 @@ module "seldon" {
 
   hostname = var.hostname
   tls = var.protocol == "https" ? true : false
+
+  enable_registration = var.enable_registration
 }
 
 

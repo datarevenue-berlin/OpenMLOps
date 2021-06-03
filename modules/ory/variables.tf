@@ -21,6 +21,10 @@ variable "cookie_secret" {
   sensitive = true
 }
 
+variable "enable_registration" {
+  description = "Bool to set if registration page will or not be visible to users"
+}
+
 variable "oauth2_providers" {
   //  Configure multiple Oauth2 providers.
   //  example:
