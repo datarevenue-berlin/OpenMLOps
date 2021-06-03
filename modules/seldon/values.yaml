@@ -38,12 +38,14 @@ service:
       service: ory-kratos-public.ory
       prefix: /.ory/kratos/public/
       ---
+      %{ if show_auth_ui }
       apiVersion: getambassador.io/v2
       kind: Mapping
       name: ory-kratos-ui_mapping
       service: ory-kratos-ui.ory
       prefix: /profile/
       ---
+      %{ endif }
       apiVersion: getambassador.io/v2
       kind: Mapping
       name: mlflow_mapping

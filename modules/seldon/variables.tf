@@ -34,3 +34,8 @@ variable "tls" {
 variable "hostname" {
   description = "Application hostname ex.: mlops.mywebsite.com"
 }
+
+variable "show_auth_ui" {
+  description = "If true then /profile routes will be acessible (kratos UI)"
+  default = false
+}
