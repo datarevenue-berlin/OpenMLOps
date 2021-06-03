@@ -23,6 +23,7 @@ variable "cookie_secret" {
 
 variable "enable_registration" {
   description = "Bool to set if registration page will or not be visible to users"
+  type = bool
 }
 
 variable "oauth2_providers" {
