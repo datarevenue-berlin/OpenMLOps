@@ -4,6 +4,7 @@ module "ory-oathkeeper" {
 
   hostname = var.hostname
   protocol = var.protocol
+  enable_registration = var.enable_registration
 }
 
 module "ory-kratos" {

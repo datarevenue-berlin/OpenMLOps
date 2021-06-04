@@ -170,6 +170,8 @@ module "ory" {
 
   hostname = var.hostname
   protocol = var.protocol
+
+  enable_registration = var.enable_registration
 }
 
 module "k8s_tools" {
