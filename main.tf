@@ -173,3 +173,8 @@ module "ory" {
 
   enable_registration = var.enable_registration
 }
+
+module "k8s_tools" {
+  source = "./modules/k8s_tools"
+  install_metrics_server = var.install_metrics_server
+}

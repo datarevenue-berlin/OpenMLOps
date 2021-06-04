@@ -266,6 +266,12 @@ variable "oauth2_providers" {
   description = "OAuth2 Providers credentials"
 }
 
+## Other K8S tools
+
+variable "install_metrics_server" {
+  default = true
+}
+
 variable "enable_registration" {
   description = "Bool to set if registration page will or not be visible to users"
   type = bool
