@@ -111,6 +111,29 @@
       config:
         to: http://${hostname}/auth/login
 
+- id: ory-kratos-ui:registration
+  upstream:
+    preserve_host: true
+    url: "http://ory-kratos-ui.ory.svc.cluster.local"
+  match:
+    url: <{http,https}>://${hostname}/profile/auth/registration<**>
+    methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - PATCH
+  authenticators:
+  %{ if enable_registration }
+    - handler: cookie_session
+  %{ else }
+    - handler: unauthorized
+  %{ endif }
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: id_token
+
 - id: ory:kratos:public
   upstream:
     preserve_host: true
@@ -163,28 +186,4 @@
     - handler: redirect
       config:
         to: http://${hostname}/auth/login
-
-- id: ory-kratos-ui:registration
-  upstream:
-    preserve_host: true
-    url: "http://ory-kratos-ui.ory.svc.cluster.local"
-  match:
-    url: <{http,https}>://${hostname}/profile/auth/registration/<**>
-    methods:
-      - GET
-      - POST
-      - PUT
-      - DELETE
-      - PATCH
-  authenticators:
-    %{ if enable_registration }
-    - handler: unauthorized
-    %{ endif }
-    ${ if not enable_registration }
-    - handler: cookie_session
-    %{ endif }
-  authorizer:
-    handler: allow
-  mutators:
-    - handler: id_token
 ---
