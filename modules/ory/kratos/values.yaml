@@ -7,6 +7,11 @@ kratos:
     dsn: ${dsn}
     identity:
       default_schema_url: file:///etc/config/identity.traits.schema.json
+      schemas:
+        - id: admin
+          url: file:///etc/config/admin.traits.schema.json
+        - id: machine
+          url: file:///etc/config/machine.traits.schema.json
 
     selfservice:
       default_browser_return_url: "${ui_path}/dashboard"
@@ -91,12 +96,74 @@ kratos:
         connection_uri: smtps://test:test@dummy:1025/?skip_ssl_verify=true
 
   identitySchemas:
-    # TODO: Make terraform render this dinamically
+    # TODO: Make terraform render this dynamically
     "identity.traits.schema.json": |
       {
         "$id": "https://schemas.ory.sh/presets/kratos/quickstart/email-password/identity.schema.json",
         "$schema": "http://json-schema.org/draft-07/schema#",
         "title": "Person",
+        "type": "object",
+        "properties": {
+          "traits": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "format": "email",
+                "title": "E-Mail",
+                "minLength": 3,
+                "ory.sh/kratos": {
+                  "credentials": {
+                    "password": {
+                      "identifier": true
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "email"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    "admin.traits.schema.json": |
+      {
+        "$id": "https://schemas.ory.sh/presets/kratos/quickstart/email-password/identity.schema.json",
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Admin",
+        "type": "object",
+        "properties": {
+          "traits": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "format": "email",
+                "title": "E-Mail",
+                "minLength": 3,
+                "ory.sh/kratos": {
+                  "credentials": {
+                    "password": {
+                      "identifier": true
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "email"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    "machine.traits.schema.json": |
+      {
+        "$id": "https://schemas.ory.sh/presets/kratos/quickstart/email-password/identity.schema.json",
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Machine",
         "type": "object",
         "properties": {
           "traits": {
