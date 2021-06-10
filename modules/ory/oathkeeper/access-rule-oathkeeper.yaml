@@ -124,11 +124,11 @@
       - DELETE
       - PATCH
   authenticators:
-%{ if enable_registration }
-    - handler: anonymous
-%{ else }
-    - handler: unauthorized
-%{ endif }
+  %{ if enable_registration }
+  - handler: anonymous
+  %{ else }
+  - handler: unauthorized
+  %{ endif }
   authorizer:
     handler: allow
   mutators:
@@ -158,7 +158,7 @@
     preserve_host: true
     url: "http://ory-kratos-ui.ory.svc.cluster.local"
   match:
-    url: <{http,https}>://${hostname}/profile/<{error,recovery,verify,auth/(?!registration).*,**.css,**.js,**.ico}{/,}>
+    url: <{http,https}>://${hostname}/profile/<{error,recovery,verify,auth/!(registration),**.css,**.js,**.ico}{/,}>
     methods:
       - GET
   authenticators:
