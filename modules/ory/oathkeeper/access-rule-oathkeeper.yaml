@@ -125,7 +125,7 @@
       - PATCH
   authenticators:
   %{ if enable_registration }
-    - handler: cookie_session
+    - handler: anonymous
   %{ else }
     - handler: unauthorized
   %{ endif }
