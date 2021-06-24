@@ -64,7 +64,7 @@
   errors:
     - handler: redirect
       config:
-        to: http://${hostname}/auth/login
+        to: https://${hostname}/profile/auth/login
 
 - id: jhub-access-rule
   match:
@@ -86,7 +86,7 @@
   errors:
     - handler: redirect
       config:
-        to: http://${hostname}/auth/login
+        to: https://${hostname}/profile/auth/login
 
 - id: prefect-access-rule:ui
   match:
@@ -109,7 +109,7 @@
   errors:
     - handler: redirect
       config:
-        to: http://${hostname}/auth/login
+        to: https://${hostname}/profile/auth/login
 
 - id: ory-kratos-ui:registration
   upstream:
@@ -124,11 +124,11 @@
       - DELETE
       - PATCH
   authenticators:
-  %{ if enable_registration }
-    - handler: cookie_session
-  %{ else }
+%{ if enable_registration }
+    - handler: anonymous
+%{ else }
     - handler: unauthorized
-  %{ endif }
+%{ endif }
   authorizer:
     handler: allow
   mutators:
@@ -158,7 +158,7 @@
     preserve_host: true
     url: "http://ory-kratos-ui.ory.svc.cluster.local"
   match:
-    url: <{http,https}>://${hostname}/profile/<{error,recovery,verify,auth/*,**.css,**.js,**.ico}{/,}>
+    url: <{http,https}>://${hostname}/profile/<{error,recovery,verify,auth/login**,**.css,**.js,**.ico}{/,}>
     methods:
       - GET
   authenticators:
@@ -185,5 +185,5 @@
   errors:
     - handler: redirect
       config:
-        to: http://${hostname}/auth/login
+        to: https://${hostname}/profile/auth/login
 ---
