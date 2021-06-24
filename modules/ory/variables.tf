@@ -50,3 +50,7 @@ variable "oauth2_providers" {
 variable "keto_db_password"{
   description = "PostgreSQL Database Password"
 }
+variable "install_ory_keto" {
+  type = bool
+  description = "Whether to install or not Keto for User Authorization"
+}

@@ -273,6 +273,11 @@ variable "oauth2_providers" {
   }))
   description = "OAuth2 Providers credentials"
 }
+## ORY Keto
+variable "install_ory_keto" {
+  description = "Whether to install or not Keto for User Authorization"
+  default = false
+}
 
 ## Other K8S tools
 
@@ -280,7 +285,7 @@ variable "install_metrics_server" {
   default = true
 }
 
-variable "enable_registration" {
+variable "enable_registration_page" {
   description = "Bool to set if registration page will or not be visible to users"
   type = bool
   default = true

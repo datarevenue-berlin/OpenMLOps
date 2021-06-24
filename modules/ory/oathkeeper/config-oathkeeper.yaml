@@ -88,6 +88,7 @@ authorizers:
   allow:
     # Set enabled to "true" to enable the authenticator, and "false" to disable the authenticator. Defaults to "false".
     enabled: true
+%{ if enable_keto }
   keto_engine_acp_ory:
     enabled: true
     config:
@@ -96,6 +97,7 @@ authorizers:
       required_resource: ...
       subject: ...
       flavor: ...
+%{ if enable_keto }
 
 mutators:
   noop:

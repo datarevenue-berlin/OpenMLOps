@@ -173,7 +173,8 @@ module "ory" {
   hostname = var.hostname
   protocol = var.protocol
 
-  enable_registration = var.enable_registration
+  enable_registration = var.enable_registration_page
+  install_ory_keto = var.install_ory_keto
 }
 
 module "k8s_tools" {
