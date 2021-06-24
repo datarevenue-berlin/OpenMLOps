@@ -31,6 +31,7 @@ resource "helm_release" "ambassador" {
     aws = var.aws
     hostname = var.hostname
     tls = var.tls
+    enable_ory_authentication = var.enable_ory_authentication
   })]
   set {
     name = "image.repository"
