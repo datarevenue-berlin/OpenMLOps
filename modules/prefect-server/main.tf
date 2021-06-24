@@ -9,7 +9,7 @@ resource "helm_release" "prefect-server" {
 
   set {
     name = "jobs.createTenant.enabled"
-    value = "true"
+    value = true
   }
 
   set {
