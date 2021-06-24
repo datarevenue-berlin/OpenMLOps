@@ -34,3 +34,7 @@ variable "tls" {
 variable "hostname" {
   description = "Application hostname ex.: mlops.mywebsite.com"
 }
+
+variable "enable_ory_authentication" {
+  description = "Whether to enable ory_authentication"
+}

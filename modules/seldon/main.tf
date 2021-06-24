@@ -9,7 +9,6 @@ resource "helm_release" "seldon" {
   name      = "seldon-core"
   namespace = var.namespace
 
-
   repository = "https://storage.googleapis.com/seldon-charts"
   chart      = "seldon-core-operator"
 
@@ -32,6 +31,7 @@ resource "helm_release" "ambassador" {
     aws = var.aws
     hostname = var.hostname
     tls = var.tls
+    enable_ory_authentication = var.enable_ory_authentication
   })]
   set {
     name = "image.repository"

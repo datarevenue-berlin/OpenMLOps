@@ -40,6 +40,12 @@ variable "feast_redis_use_password" {
   default = false
 }
 
+variable "feast_redis_disable_commands" {
+  // use a string to specify commands to be disabled
+  // e.g. "['flushall','flushdb']"
+  default = ""
+}
+
 variable "feast_prometheus_enabled" {
   default = false
 }

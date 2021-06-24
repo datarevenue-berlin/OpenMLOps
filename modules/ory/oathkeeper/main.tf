@@ -7,6 +7,7 @@ data "template_file" "oathkeeper-access-rules"{
   template = file("${path.module}/access-rule-oathkeeper.yaml")
   vars = {
     hostname = var.hostname
+    enable_registration = var.enable_registration
   }
 }
 

@@ -151,6 +151,7 @@ module "seldon" {
 
   hostname = var.hostname
   tls = var.protocol == "https" ? true : false
+  enable_ory_authentication = var.enable_ory_authentication
 }
 
 
@@ -171,4 +172,11 @@ module "ory" {
 
   hostname = var.hostname
   protocol = var.protocol
+
+  enable_registration = var.enable_registration
+}
+
+module "k8s_tools" {
+  source = "./modules/k8s_tools"
+  install_metrics_server = var.install_metrics_server
 }

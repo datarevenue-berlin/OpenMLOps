@@ -1,3 +1,11 @@
+replicaCount: 1
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 200m
+    memory: 1Gi
 service:
   annotations:
     "getambassador.io/config": |
@@ -7,6 +15,7 @@ service:
       name:  ambassador
       config:
         use_proxy_proto: true
+      %{ if enable_ory_authentication }
       ---
       apiVersion: getambassador.io/v2
       kind: AuthService
@@ -17,6 +26,7 @@ service:
         - Authorization
       allowed_authorization_headers:
         - Authorization
+      %{ endif }
       ---
       apiVersion: getambassador.io/v2
       kind: Mapping
@@ -82,4 +92,3 @@ service:
       port: 443
       targetPort: 8080
   %{ endif }
-replicaCount: 1

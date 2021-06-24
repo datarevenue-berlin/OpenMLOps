@@ -15,19 +15,32 @@
 
 - id: seldon-access-rule
   match:
-    url: <{http,https}>://${hostname}/seldon/<**>
+    url: <{http,https}>://${hostname}/seldon/<**>/doc<**> # swagger
     methods:
       - GET
       - POST
-      - PUT
-      - DELETE
-      - PATCH
   authenticators:
-    - handler: anonymous
+    - handler: bearer_token
+    - handler: cookie_session
   authorizer:
     handler: allow
   mutators:
-    - handler: noop
+    - handler: id_token
+  credentials_issuer:
+    handler: noop
+
+- id: seldon-access-rule
+  match:
+    url: <{http,https}>://${hostname}/seldon/<**>/predictions<**> # API endpoint
+    methods:
+      - GET
+      - POST
+  authenticators:
+    - handler: bearer_token
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: id_token
   credentials_issuer:
     handler: noop
 
@@ -41,13 +54,17 @@
       - DELETE
       - PATCH
   authenticators:
-    - handler: anonymous
+    - handler: cookie_session
   authorizer:
     handler: allow
   mutators:
-    - handler: noop
+    - handler: id_token
   credentials_issuer:
     handler: noop
+  errors:
+    - handler: redirect
+      config:
+        to: https://${hostname}/profile/auth/login
 
 - id: jhub-access-rule
   match:
@@ -59,15 +76,19 @@
       - DELETE
       - PATCH
   authenticators:
-    - handler: noop
+    - handler: cookie_session
   authorizer:
     handler: allow
   mutators:
-    - handler: noop
+    - handler: id_token
   credentials_issuer:
     handler: noop
+  errors:
+    - handler: redirect
+      config:
+        to: https://${hostname}/profile/auth/login
 
-- id: prefect-access-rule
+- id: prefect-access-rule:ui
   match:
     url: <{http,https}>://prefect.${hostname}/<**>
     methods:
@@ -77,13 +98,41 @@
       - DELETE
       - PATCH
   authenticators:
-    - handler: anonymous
+    - handler: bearer_token
+    - handler: cookie_session
   authorizer:
     handler: allow
   mutators:
-    - handler: noop
+    - handler: id_token
   credentials_issuer:
     handler: noop
+  errors:
+    - handler: redirect
+      config:
+        to: https://${hostname}/profile/auth/login
+
+- id: ory-kratos-ui:registration
+  upstream:
+    preserve_host: true
+    url: "http://ory-kratos-ui.ory.svc.cluster.local"
+  match:
+    url: <{http,https}>://${hostname}/profile/auth/registration<**>
+    methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - PATCH
+  authenticators:
+%{ if enable_registration }
+    - handler: anonymous
+%{ else }
+    - handler: unauthorized
+%{ endif }
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: id_token
 
 - id: ory:kratos:public
   upstream:
@@ -109,7 +158,7 @@
     preserve_host: true
     url: "http://ory-kratos-ui.ory.svc.cluster.local"
   match:
-    url: <{http,https}>://${hostname}/profile/<{error,recovery,verify,auth/*,**.css,**.js,**.ico}{/,}>
+    url: <{http,https}>://${hostname}/profile/<{error,recovery,verify,auth/login**,**.css,**.js,**.ico}{/,}>
     methods:
       - GET
   authenticators:
@@ -136,5 +185,5 @@
   errors:
     - handler: redirect
       config:
-        to: http://${hostname}/auth/login
+        to: https://${hostname}/profile/auth/login
 ---
