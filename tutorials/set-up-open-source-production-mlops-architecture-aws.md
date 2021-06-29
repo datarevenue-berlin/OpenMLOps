@@ -19,7 +19,6 @@ Once you've gone through the steps listed below, you'll have a Kubernetes cluste
 * **Jupyter Hub** - A notebook environment to write code, train models, and do experiments.
 * **MLFlow** - An experiment tracker.
 * **Prefect** - A workflow and dataflow tool.
-* **Feast** - A feature store, so you can easily train and predict on the same features.
 * **Seldon** - A model deployment tool to turn your model files into production APIs.
 * **Dask** - to run heavy jobs in parallel on a scalable cluster of machines.
 
@@ -42,9 +41,9 @@ And a little bit of patience for everything to spin up.
 On your local machine, create a directory called `openmlops` and clone the following three Open MLOps repositories into that directory.
 
 ```
-git clone git@github.com:MLOps-architecture/mlops-architecture.git
-git clone git@github.com:MLOps-architecture/mlops-architecture-eks-cluster.git
-git clone git@github.com:MLOps-architecture/mlops-architecture-on-aws.git
+git clone git@github.com:datarevenue-berlin/OpenMLOps.git
+git clone git@github.com:datarevenue-berlin/OpenMLOps-AWS.git
+git clone git@github.com:datarevenue-berlin/OpenMLOps-EKS-cluster.git
 ```
 
 ## Step 2: Registering and configuring your domain name and certificate
@@ -104,9 +103,9 @@ You should see "Terraform has been successfully initialized!" towards the end of
 Before you continue with the next steps of Terraform, you need to generate some secrets for Kubernetes. Change into the `open-mlops` repository and run the generate secrets script and then change back to the aws repository by using the following commands:
 
 ```
-cd ../mlops-architecture
+cd ../OpenMLOps
 sh generate-secrets.sh
-cd ../mlops-architecture-on-aws
+cd ../OpenMLOps-AWS
 ```
 
 ### Initialising Kubectl
@@ -182,7 +181,6 @@ The first step is to visit `mlops.example.com/auth/profile/registration` to crea
 * `https://jupyter.mlops.example.com` to start writing code in your setup
 * `https://prefect.mlops.example.com` to configure workflow and dataflows
 * `https://mlflow.mlops.example.com` to see and track your experiments
-* `https://feast.mlops.example.com`
-* `https://seldon.mlops.example.com`
-* `https://dask.mlops.example.com`
+
+Take a look at [our tutorial](https://github.com/datarevenue-berlin/OpenMLOps/blob/master/tutorials/basic-usage-of-jupyter-mlflow-and-prefect.md) on creating a basic production machine learning system using the Open MLOps architecture.
 
