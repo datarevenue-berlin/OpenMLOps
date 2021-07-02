@@ -49,7 +49,7 @@ keto:
         port: 4466
     namespaces:
       - id: 0
-        name: sample
+        name: backend
     dsn: ${dsn}
     log:
       format: json

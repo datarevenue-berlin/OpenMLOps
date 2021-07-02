@@ -101,7 +101,9 @@
     - handler: bearer_token
     - handler: cookie_session
   authorizer:
-    handler: allow
+    handler: keto_engine_acp_ory
+      config:
+        required_action: 
   mutators:
     - handler: id_token
   credentials_issuer:

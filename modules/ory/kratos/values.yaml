@@ -36,7 +36,7 @@ kratos:
           ui_url: ${ui_path}/settings
 
         verification:
-          enabled: false
+          enabled: true
           ui_url: ${ui_path}/verify
 
         logout:
@@ -93,7 +93,8 @@ kratos:
 
     courier:
       smtp:
-        connection_uri: smtps://test:test@dummy:1025/?skip_ssl_verify=true
+        connection_uri: "smtp://myname%40datarevenue.com:mypass@smtp.gmail.com:465"
+        from_address: myname@datarevenue.com
 
   identitySchemas:
     # TODO: Make terraform render this dynamically
@@ -117,6 +118,9 @@ kratos:
                     "password": {
                       "identifier": true
                     }
+                  },
+                  "verification": {
+                    "via": "email"
                   }
                 }
               }
