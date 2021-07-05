@@ -82,7 +82,7 @@ resource "kubernetes_deployment" "ory-kratos-ui" {
           }
           env {
             name = "SECURITY_MODE"
-            value = "jwks"
+            value = "jwt"
           }
           env {
             name = "JWKS_URL"
