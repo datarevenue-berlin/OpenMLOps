@@ -25,6 +25,7 @@ locals {
 resource "helm_release" "ory-kratos" {
   name = "ory-kratos"
   namespace = var.namespace
+  version = "0.14.1"
   depends_on = [
     module.kratos-postgres]
   repository = "https://k8s.ory.sh/helm/charts"
