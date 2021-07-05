@@ -1,6 +1,8 @@
 kratos:
   # autoMigrate is relying on a simple initContainer mechanism
   # Do not turn it on if the replicaCount > 1
+  version: v0.6.3-alpha.1
+
   automigrate: true
   development: true
   config:
@@ -28,15 +30,11 @@ kratos:
 
       flows:
         settings:
-          privileged_session_max_age: 1m
-          after:
-            profile:
-              hooks:
-                - hook: verify
+          privileged_session_max_age: 10m
           ui_url: ${ui_path}/settings
 
         verification:
-          enabled: true
+          enabled: false
           ui_url: ${ui_path}/verify
 
         logout:
@@ -86,15 +84,14 @@ kratos:
     hashers:
       argon2:
         parallelism: 1
-        memory: 131072
+        memory: "128MB"
         iterations: 2
         salt_length: 16
         key_length: 16
 
     courier:
       smtp:
-        connection_uri: "smtp://myname%40datarevenue.com:mypass@smtp.gmail.com:465"
-        from_address: myname@datarevenue.com
+        connection_uri: smtps://test:test@dummy:1025/?skip_ssl_verify=true
 
   identitySchemas:
     # TODO: Make terraform render this dynamically
