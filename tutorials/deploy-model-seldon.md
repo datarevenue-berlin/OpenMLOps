@@ -8,7 +8,7 @@ In this tutorial, we'll deploy that same model to a production REST API using Se
 
 Once you've set everything up, you'll have your model deployed behind a REST API. You'll be able to pass metrics of an individual wine and get back a predicted quality rating, e.g. using `curl` or `requests`.
 
-![](images/03-seldon/seldon.result.png)
+![](./images/03-seldon/seldon.result.png)
 
 ## Writing the training and deployment code
 
@@ -321,7 +321,7 @@ deploy_flow_id = prefect_client.register(flow, project_name=prefect_project_name
 
 Now instead of running the flow directly, we only register it with Prefect and include a string Parameter for the model URI. Now in the Prefect dashboard, you can trigger the flow manually, and paste in the URI of the model you want.
 
-![](/images/03-seldon/create-manual-deployment.gif)
+![](./images/03-seldon/create-manual-deployment.gif)
 
 ## Debugging Seldon in Kubernetes
 
