@@ -8,7 +8,7 @@ In this tutorial, we'll deploy that same model to a production REST API using Se
 
 Once you've set everything up, you'll have your model deployed behind a REST API. You'll be able to pass metrics of an individual wine and get back a predicted quality rating, e.g. using `curl` or `requests`.
 
-![](./images/03-seldon/seldon.result.png)
+![](./images/03-seldon/seldon-result.png)
 
 ## Writing the training and deployment code
 
