@@ -103,7 +103,8 @@
   authorizer:
     handler: keto_engine_acp_ory
       config:
-        required_action: 
+        required_action: "service:{{ .MatchContext.Method }}"
+        required_resource: "service:prefect"
   mutators:
     - handler: id_token
   credentials_issuer:
