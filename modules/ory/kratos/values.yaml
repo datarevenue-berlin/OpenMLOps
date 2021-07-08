@@ -91,7 +91,8 @@ kratos:
 
     courier:
       smtp:
-        connection_uri: smtps://test:test@dummy:1025/?skip_ssl_verify=true
+        connection_uri: "smtp://omigamibot%40gmail.com:omigamidevbot2021@smtp.gmail.com:587"
+        from_address: "omigamibot@gmail.com"
 
   identitySchemas:
     # TODO: Make terraform render this dynamically

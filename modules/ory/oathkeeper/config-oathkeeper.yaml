@@ -98,6 +98,11 @@ authorizers:
       subject: ...
       flavor: ...
 %{ endif }
+  remote_json:
+    enabled: true
+    config:
+      remote: http://ory-keto-read.ory.svc.cluster.local
+      payload: "{\"subject\":\" \", \"object\":\"  \", \"namespace\":\"  \", \"action\":\"  \"}"
 
 mutators:
   noop:
