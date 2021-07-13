@@ -2,11 +2,11 @@
 
 *How to deploy Jupyter Hub, MLFlow, Prefect, Dask, Feast and Seldon on EKS automatically.*
 
-You might not have had the time to set up an architecture that allows you to follow machine learningbest practices. 
+You might not have had the time to set up an architecture that allows you to follow machine learning best practices. 
 
-Many tools like MLFlow, Prefect, Jupyter Hub and Feast that can help you make shi models faster and more reliably, but you're not quite sure how ot set everything up, and you didn't find the the time yet to figure it out. There are seem to be too many tools to know about and choose from.
+Many tools such as MLFlow, Prefect, and JupyterHub can help you ship models faster and more reliably, but maybe you are not sure how to set everything up, or you do not have the time to figure everything out.
 
-We had the same problem, took a lot of time and solved it. Instead of solving it just for our team, we wanted to solve it for others too. We evaluated most of MLOps tools on the market, and chose our the best ones that were open source and played nicely together.
+We had the same problem. We spent a lot of time and solved it. Instead of solving it just for our team, we wanted to solve it for others too. We evaluated most of MLOps tools on the market, and chose our the best ones that were open source and played nicely together.
 
 This tutorial guides you through all the scripts that will automatically set up the fully equipped MLOps infrastructure for you.
 
