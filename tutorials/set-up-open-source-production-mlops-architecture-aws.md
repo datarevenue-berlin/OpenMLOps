@@ -6,7 +6,7 @@ You might not have had the time to set up an architecture that allows you to fol
 
 Many tools such as MLFlow, Prefect, and JupyterHub can help you ship models faster and more reliably, but maybe you are not sure how to set everything up, or you do not have the time to figure everything out.
 
-We had the same problem. We spent a lot of time and solved it. Instead of solving it just for our team, we wanted to solve it for others too. We evaluated most of MLOps tools on the market, and chose our the best ones that were open source and played nicely together.
+We had the same problem. We spent a lot of time and solved it. Instead of solving it just for our team, we wanted to solve it for others too. We evaluated most of MLOps tools on the market, and chose the best ones that were open-source and played nicely together.
 
 This tutorial guides you through all the scripts that will automatically set up the fully equipped MLOps infrastructure for you.
 
