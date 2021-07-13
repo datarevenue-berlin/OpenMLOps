@@ -277,7 +277,7 @@ As each run is using resources (downloading data from the web, training the mode
 
 ## Deploying your model
 
-Now that you've seen how to schedule a training task and track changes in results, you'll want to deploy your model so that others can use it. We'll cover that in our next tutorial.
+Now that you've seen how to schedule a training task and track changes in results, you'll want to deploy your model so that you can create predictions on new data. Follow [Deploying a model to production with Prefect and Seldon](./deploy-model-seldon.md) to see how.
 
 
 

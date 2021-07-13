@@ -176,11 +176,11 @@ Now you should be ready to start using the various services.
 
 ## Trying out the services
 
-The first step is to visit `mlops.example.com/auth/profile/registration` to create a new user account. Once you've done that, you can visit any of the following services
+The first step is to visit `https://mlops.example.com/auth/profile/registration` to create a new user account. Once you've done that, you can visit any of the following services
 
 * `https://jupyter.mlops.example.com` to start writing code in your setup
 * `https://prefect.mlops.example.com` to configure workflow and dataflows
 * `https://mlflow.mlops.example.com` to see and track your experiments
 
-Take a look at [our tutorial](https://github.com/datarevenue-berlin/OpenMLOps/blob/master/tutorials/basic-usage-of-jupyter-mlflow-and-prefect.md) on creating a basic production machine learning system using the Open MLOps architecture.
+Next, take a look at [our tutorial](./basic-usage-of-jupyter-mlflow-and-prefect.md) on creating a basic production machine learning system using the Open MLOps architecture.
 
