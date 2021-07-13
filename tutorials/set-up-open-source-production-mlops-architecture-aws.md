@@ -1,6 +1,6 @@
 # Set up your Production Machine Learning architecture in under two hours (AWS)
 
-*How to deploy Jupyter Hub, MLFlow, Prefect, Dask, Feast and Seldon on EKS automatically.*
+*How to deploy Jupyter Hub, MLFlow, Prefect, Dask and Seldon on EKS automatically.*
 
 You might not have had the time to set up an architecture that allows you to follow machine learning best practices. 
 
