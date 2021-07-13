@@ -1,10 +1,3 @@
-resource "kubernetes_namespace" "ambdassador_namespace" {
-  count = var.ambassador_enabled ? 1 : 0
-  metadata {
-    name = var.ambassador_namespace
-  }
-}
-
 resource "helm_release" "ambassador" {
   count = var.ambassador_enabled ? 1 : 0
   repository = "https://www.getambassador.io"

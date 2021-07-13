@@ -1,4 +1,4 @@
-variable "namespace" {
+variable "seldon_namespace" {
   description = "Namespace name to deploy the application"
   default     = "default"
 }
