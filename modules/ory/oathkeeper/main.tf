@@ -18,6 +18,7 @@ data "template_file" "oathkeeper-config"{
     protocol = var.protocol
     config_path = local.config_mount_path
     secret_path = local.secrets_mount_path
+    enable_keto = var.enable_keto
   }
 }
 
