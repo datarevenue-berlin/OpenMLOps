@@ -1,6 +1,6 @@
 # Creating a basic machine learning system on Open MLOps
 
-Now that you've [set up your Open MLOps](#) architecture, you'll want to build something with it to see how all the pieces fit together. Let's start with a simple machine learning model to predict wine quality ratings, based on the properties of the wine. Specifically, we will
+Now that you've [set up your Open MLOps](https://github.com/datarevenue-berlin/OpenMLOps/blob/master/tutorials/set-up-open-source-production-mlops-architecture-aws.md) architecture, you'll want to build something with it to see how all the pieces fit together. Let's start with a simple machine learning model to predict wine quality ratings, based on the properties of the wine. Specifically, we will
 
 * Use JupyterHub to write code to fetch the data, process it, and train a model
 * Create an experiment on MLFlow so that we can keep track of different models and parameters
@@ -14,7 +14,7 @@ To access each of the services, you'll need to have an account registered at [ht
 
 You'll also need the shared JupyterHub password that you set in the YAML config while setting up the infrastructure.
 
-![](https://i.ritzastatic.com/images/b413cb95c8334537b916805af5543925/register.png)
+![](./images/register.png)
 
 ## Getting data and training a model
 
@@ -43,7 +43,7 @@ data = fetch_data()
 data.head()
 ```
 
-![](https://i.ritzastatic.com/images/3f67fa0a5bcf4e8a9a99cb1db3f2bcd1/wine-data.png)
+![](./images/wine-data.png)
 
 You can see that this data can easily be used to train a machine learning model. We have a bunch of numerical columns describing the make up of different wines, followed by a quality raiting in the final column. Our research question is *Can we predict the wine's quality by analysing its components?*
 
@@ -94,11 +94,11 @@ You should see that the model trains in a couple of seconds and outputs the vari
 
 Visit https://mlflow.mlops.example.com and choose to create a new experiment.
 
-![](https://i.ritzastatic.com/images/16464f943d1249169600716cb840781c/create-experiment.png)
+![](./images/create-experiment.png)
 
 Note the experiment ID , as we'll need to add this to our code. It should be `1` if you haven't used MLFlow before.
 
-![](https://i.ritzastatic.com/images/add3b4ac1ce642828cb1c13a2afc215b/experiment-id.png)
+![](./images/experiment-id.png)
 
 Now we'll need to install MLFlow in our Jupyter environment. In a new cell, run the following.
 
@@ -158,7 +158,7 @@ train_model(data, mlflow_experiment_id=1, alpha=0.3, l1_ratio=0.3)
 train_model(data, mlflow_experiment_id=1, alpha=0.3, l1_ratio=0.3)
 ```
 
-![](https://i.ritzastatic.com/images/b7a5d2f4f76642aca7061600778a85a7/mlflow-results.png)
+![](./images/mlflow-results.png)
 
 You can see that each run was recorded in MLFlow, with the date, inputs, and outputs.
 
@@ -261,19 +261,23 @@ Prefect will fetch the data and train the model every 2 minutes - this is probab
 
 Navigate back to the Prefect dashboard and you'll see the tasks - both those that are completed and the ones scheduled for the future.
 
-![](https://i.ritzastatic.com/images/4838f273e63545fe8894351536cac5c5/prefect-runs-overview.png)
+![](./images/prefect-runs-overview.png)
 
 Prefect has also calculated how the tasks rely on each other automatically, and you can view the calculated [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph). In our case, it's very simple: training the model depends on fetching the data, but Prefect would have figured out the full graph even for complicated inter-connected DAGs.
 
-![](https://i.ritzastatic.com/images/bef90dbe999d489b8a01bb28f16e9812/prefect-dag.png)
+![](./images/prefect-dag.png)
 
 Wait a few minutes and check the MLFlow dashboard - you should see the runs recorded every two minutes.
 
-![](https://i.ritzastatic.com/images/bca7a676f06341d988213efdc919a576/mlflow-2-minute-runs.png)
+![](./images/mlflow-2-minute-runs.png)
 
 As each run is using resources (downloading data from the web, training the model, and storing the full model binary in S3), we probably want to turn it off again. We can do this in the Prefect interfact by toggling the "schedule" toggle to off.
 
-![](https://i.ritzastatic.com/images/066a01f8d60e49db855c6f7e055aa0b7/prefect-turn-off-flow.png)
+![](./images/prefect-turn-off-flow.png)
+
+## Deploying your model
+
+Now that you've seen how to schedule a training task and track changes in results, you'll want to deploy your model so that you can create predictions on new data. Follow [Deploying a model to production with Prefect and Seldon](./deploy-model-seldon.md) to see how.
 
 
 

@@ -35,3 +35,6 @@ override.tf.json
 # example: *tfplan*
 secrets/*
 docs/_build/
+
+# Mac OS DSStore
+*.DS_Store
