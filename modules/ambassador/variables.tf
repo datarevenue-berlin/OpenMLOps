@@ -1,4 +1,4 @@
-variable "ambassador_namespace" {
+variable "namespace" {
   description = "Namespace name to deploy Ambassador"
   default     = "ambassador"
 }

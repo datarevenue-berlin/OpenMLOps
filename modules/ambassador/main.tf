@@ -3,7 +3,7 @@ resource "helm_release" "ambassador" {
   repository = "https://www.getambassador.io"
   chart = "ambassador"
   name = "ambassador"
-  namespace = var.ambassador_namespace
+  namespace = var.namespace
 
   values = [templatefile("${path.module}/values.yaml", {
     tls_certificate_arn = var.tls_certificate_arn,
