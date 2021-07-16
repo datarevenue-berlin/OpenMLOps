@@ -157,6 +157,7 @@ resource "kubernetes_namespace" "ambassador_namespace" {
 module "ambassador" {
   count = var.ambassador_enabled ? 1 : 0
   source    = "./modules/ambassador"
+  namespace = var.ambassador_namespace
 
   aws = var.aws
   tls_certificate_arn = var.tls_certificate_arn

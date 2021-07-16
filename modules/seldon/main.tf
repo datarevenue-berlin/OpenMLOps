@@ -1,6 +1,6 @@
 resource "helm_release" "seldon" {
   name      = "seldon-core"
-  seldon_namespace = var.seldon_namespace
+  namespace = var.namespace
 
   repository = "https://storage.googleapis.com/seldon-charts"
   chart      = "seldon-core-operator"
