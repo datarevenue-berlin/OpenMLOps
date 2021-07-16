@@ -8,6 +8,7 @@ data "template_file" "oathkeeper-access-rules"{
   vars = {
     hostname = var.hostname
     enable_registration = var.enable_registration
+    enable_keto = var.enable_keto
   }
 }
 
