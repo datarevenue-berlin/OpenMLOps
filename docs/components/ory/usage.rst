@@ -140,12 +140,12 @@ One example::
     $ actionUrl=$(\
       curl -s -X GET -H "Accept: application/json" \
         "https://{host}/.ory/kratos/public/self-service/login/api" \
-        | jq -r '.methods.password.config.action'\
+        | jq -r '.ui.action'\
     )
 
     # Complete Login Flow with password method
     $ curl -s -X POST -H  "Accept: application/json" -H "Content-Type: application/json" \
-        -d '{"identifier": "api@user.org", "password": "fhAzi860a"}' \
+        -d '{"password_identifier": "api@user.org", "password": "fhAzi860a", "method": "password"}' \
         "$actionUrl" | jq
 
     # It will return a Session Token which can be validated under

@@ -12,7 +12,7 @@ variable "protocol" {
 }
 
 // KRATOS
-variable "db_password"{
+variable "kratos_db_password"{
   description = "PostgreSQL Database Password"
 }
 
@@ -44,4 +44,13 @@ variable "oauth2_providers" {
     tenant = string
   }))
   description = "OAuth2 Providers credentials"
+}
+
+// KETO
+variable "keto_db_password"{
+  description = "PostgreSQL Database Password"
+}
+variable "install_ory_keto" {
+  type = bool
+  description = "Whether to install or not Keto for User Authorization"
 }
