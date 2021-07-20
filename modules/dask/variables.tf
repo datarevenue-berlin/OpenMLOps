@@ -20,7 +20,7 @@ variable "worker_image_repository" {
 
 variable "worker_image_tag" {
   description = "Container image tag"
-  default     = "2.30.0"
+  default     = "2021.7.0"
 }
 
 variable "worker_image_pull_policy" {

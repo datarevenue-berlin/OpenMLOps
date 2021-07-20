@@ -5,7 +5,7 @@ resource "helm_release" "dask" {
 
   repository = "https://helm.dask.org"
   chart      = "dask"
-  version    = "4.5.6"
+  version    = "2021.7.0"
 
   set {
     name  = "worker.name"
