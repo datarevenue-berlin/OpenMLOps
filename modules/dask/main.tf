@@ -37,6 +37,21 @@ resource "helm_release" "dask" {
     value = var.worker_image_dask_worker_command
   }
 
+  set {
+    name  = "scheduler.image.repository"
+    value = var.scheduler_image_repository
+  }
+
+  set {
+    name  = "scheduler.image.tag"
+    value = var.scheduler_image_tag
+  }
+
+  set {
+    name  = "scheduler.image.pullPolicy"
+    value = var.scheduler_image_pull_policy
+  }
+
 
   values = [
     yamlencode({

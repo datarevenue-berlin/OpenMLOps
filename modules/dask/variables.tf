@@ -28,6 +28,26 @@ variable "worker_image_pull_policy" {
   default     = "IfNotPresent"
 }
 
+variable "scheduler_name" {
+  description = "Dask scheduler name"
+  default     = "scheduler"
+}
+
+variable "scheduler_image_tag" {
+  description = "Container image tag"
+  default     = "2021.7.0"
+}
+
+variable "scheduler_image_repository" {
+  description = "Container image repository"
+  default     = "daskdev/dask"
+}
+
+variable "scheduler_image_pull_policy" {
+  description = "Container image pull policy."
+  default     = "IfNotPresent"
+}
+
 variable "worker_image_dask_worker_command" {
   description = "Dask worker command. E.g `dask-cuda-worker` for GPU worker."
   default     = "dask-worker"
