@@ -141,6 +141,19 @@ module "seldon" {
   count = var.install_seldon ? 1 : 0
   source    = "./modules/seldon"
   namespace = kubernetes_namespace.seldon_namespace[0].metadata[0].name
+}
+
+resource "kubernetes_namespace" "ambassador_namespace" {
+  count = var.ambassador_enabled ? 1 : 0
+  metadata {
+    name = var.ambassador_namespace
+  }
+}
+
+module "ambassador" {
+  count = var.ambassador_enabled ? 1 : 0
+  source    = "./modules/ambassador"
+  namespace = var.ambassador_namespace
 
   aws = var.aws
   tls_certificate_arn = var.tls_certificate_arn
