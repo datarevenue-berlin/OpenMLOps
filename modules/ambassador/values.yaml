@@ -44,6 +44,7 @@ service:
       kind: Mapping
       name: ory-kratos-ui_mapping
       service: ory-kratos-ui.ory
+      host: ${hostname}
       prefix: /profile/
       ---
       apiVersion: getambassador.io/v2

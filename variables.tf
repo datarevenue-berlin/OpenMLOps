@@ -229,6 +229,10 @@ variable "ambassador_namespace" {
   default = "ambassador"
 }
 
+variable "ambassador_enabled" {
+  default = true
+}
+
 variable "aws" {
   description = "If the deployment is being made in an AWS Cluster"
 }
