@@ -100,10 +100,6 @@ module "dask" {
   ]
   worker_environment_variables = [
     {
-      name  = "EXTRA_CONDA_PACKAGES"
-      value = "python==3.7 -c conda-forge"
-    },
-    {
       name  = "EXTRA_PIP_PACKAGES"
       value = "prefect==0.14.1 --upgrade"
     }
