@@ -1,4 +1,4 @@
-# Open MLOps - A Production-focussed Open-Source Machine Learning Framework
+# Open MLOps - A Production-focused Open-Source Machine Learning Framework
 
 Open MLOps is a set of open-source tools carefully
 chosen to ease user experience of conducting machine learning experiments and deploying machine
