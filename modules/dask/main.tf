@@ -5,7 +5,7 @@ resource "helm_release" "dask" {
 
   repository = "https://helm.dask.org"
   chart      = "dask"
-  version    = "4.5.6"
+  version    = "2021.7.0"
 
   set {
     name  = "worker.name"
@@ -35,6 +35,21 @@ resource "helm_release" "dask" {
   set {
     name  = "worker.image.dask_worker"
     value = var.worker_image_dask_worker_command
+  }
+
+  set {
+    name  = "scheduler.image.repository"
+    value = var.scheduler_image_repository
+  }
+
+  set {
+    name  = "scheduler.image.tag"
+    value = var.scheduler_image_tag
+  }
+
+  set {
+    name  = "scheduler.image.pullPolicy"
+    value = var.scheduler_image_pull_policy
   }
 
 

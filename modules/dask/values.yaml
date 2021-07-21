@@ -6,7 +6,7 @@ scheduler:
   name: scheduler  # Dask scheduler name.
   image:
     repository: "daskdev/dask"  # Container image repository.
-    tag: 2.30.0  # Container image tag.
+    tag: 2021.7.0  # Container image tag.
     pullPolicy: IfNotPresent  # Container image pull policy.
     pullSecrets:  # Container image [pull secrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
     #  - name: regcred
@@ -50,7 +50,7 @@ worker:
   name: worker  # Dask worker name.
   image:
     repository: "daskdev/dask"  # Container image repository.
-    tag: 2.30.0  # Container image tag.
+    tag: 2021.7.0  # Container image tag.
     pullPolicy: IfNotPresent  # Container image pull policy.
     dask_worker: "dask-worker"  # Dask worker command. E.g `dask-cuda-worker` for GPU worker.
     pullSecrets:  # Container image [pull secrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
