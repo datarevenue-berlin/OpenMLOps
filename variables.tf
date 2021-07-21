@@ -151,11 +151,11 @@ variable "singleuser_profile_list" {
 
   default = [
     {
-      display_name = "Notebook with Prefect"
-      description  = "Notebook with prefect installed <br> Image: drtools/prefect:notebook-prefect"
+      display_name = "OpenMLOps client evironment"
+      description  = "Notebook with OpenMLOps required client libraries installed. <br> Image: drtools/openmlops-notebook:v1.1"
       default      = true
       kubespawner_override = {
-        image = "drtools/prefect:notebook-prefect"
+        image = "drtools/openmlops-notebook:v1.1"
       }
     },
 

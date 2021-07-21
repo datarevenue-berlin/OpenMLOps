@@ -1,7 +1,7 @@
-# MLOps Reference Architecture
+# Open MLOps - A Production-focused Open-Source Machine Learning Framework
 
-The MLOps reference architecture is a set of open-source tools carefully
-chosen to ease user experience of experimenting and deploying machine
+Open MLOps is a set of open-source tools carefully
+chosen to ease user experience of conducting machine learning experiments and deploying machine
 learning models.
 
 In this repository, we provide these applications as Terraform modules

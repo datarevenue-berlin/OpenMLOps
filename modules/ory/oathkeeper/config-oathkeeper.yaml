@@ -89,20 +89,12 @@ authorizers:
     # Set enabled to "true" to enable the authenticator, and "false" to disable the authenticator. Defaults to "false".
     enabled: true
 %{ if enable_keto }
-  keto_engine_acp_ory:
-    enabled: true
-    config:
-      base_url: http://ory-keto.ory.svc.cluster.local
-      required_action: ...
-      required_resource: ...
-      subject: {{ .Extra.identity.schema_id }}
-      flavor: ...
-%{ endif }
   remote_json:
     enabled: true
     config:
       remote: http://ory-keto-read.ory.svc.cluster.local
       payload: "{\"subject\":\" \", \"object\":\"  \", \"namespace\":\"  \", \"action\":\"  \"}"
+%{ endif }
 
 mutators:
   noop:
