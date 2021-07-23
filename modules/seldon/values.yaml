@@ -1,4 +1,4 @@
 storageInitializer:
   image: "http://gcr.io/kfserving/storage-initializer:v0.4.0"
 usageMetrics:
-  enabled: %{ usage_metrics_enabled }
+  enabled: ${usage_metrics_enabled}
