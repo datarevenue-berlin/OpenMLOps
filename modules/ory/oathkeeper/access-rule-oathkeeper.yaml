@@ -56,15 +56,7 @@
   authenticators:
     - handler: cookie_session
   authorizer:
-%{ if enable_keto }
-    handler: remote_json
-      config:
-        remote: http://ory-keto-read.ory.svc.cluster.local/check
-        payload: "{\"subject\":\"{{ .Extra.identity.schema_id }}\", \"object\":\"mlflow\", \"namespace\":\"services\", \"action\":\"access\"}"
-%{ else }
     handler: allow
-%{ endif }
-
   mutators:
     - handler: id_token
   credentials_issuer:
@@ -86,14 +78,7 @@
   authenticators:
     - handler: cookie_session
   authorizer:
-%{ if enable_keto }
-    handler: remote_json
-    config:
-      remote: http://ory-keto-read.ory.svc.cluster.local/check
-      payload: "{\"subject\":\"{{ .Extra.identity.schema_id }}\", \"object\":\"jhub\", \"namespace\":\"services\", \"action\":\"access\"}"
-%{ else }
     handler: allow
-%{ endif }
   mutators:
     - handler: id_token
   credentials_issuer:
@@ -116,14 +101,7 @@
     - handler: bearer_token
     - handler: cookie_session
   authorizer:
-%{ if enable_keto }
-    handler: remote_json
-    config:
-      remote: http://ory-keto-read.ory.svc.cluster.local/check
-      payload: "{\"subject\":\"{{ .Extra.identity.schema_id }}\", \"object\":\"prefect\", \"namespace\":\"services\", \"action\":\"access\"}"
-%{ else }
     handler: allow
-%{ endif }
   mutators:
     - handler: id_token
   credentials_issuer:

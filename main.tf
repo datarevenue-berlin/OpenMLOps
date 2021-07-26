@@ -182,6 +182,8 @@ module "ory" {
   protocol = var.protocol
 
   enable_registration = var.enable_registration_page
+
+  access_rules_path = var.access_rules_path
 }
 
 module "k8s_tools" {

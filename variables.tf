@@ -290,3 +290,8 @@ variable "enable_registration_page" {
   type = bool
   default = true
 }
+
+variable "access_rules_path" {
+  type = string
+  default = null
+}
