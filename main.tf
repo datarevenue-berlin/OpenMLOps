@@ -31,7 +31,6 @@
 
 module "dask-jupyterhub" {
     source    = "./modules/dask-jupyterhub"
-    namespace = "daskhub"
 }
 
 
