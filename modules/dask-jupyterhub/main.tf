@@ -1,6 +1,6 @@
 resource "helm_release" "dask-jupyterhub" {
   name      = "daskhub"
-  namespace = var.namespace
+  namespace = "daskhub"
 
   repository = "https://helm.dask.org"
   chart      = "daskhub"
