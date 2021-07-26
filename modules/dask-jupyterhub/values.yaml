@@ -2,10 +2,10 @@ jupyterhub:
   hub:
     services:
       dask-gateway:
-        apiToken: %{ daskgateway_secret }
+        apiToken: ${ daskgateway_secret }
 
 dask-gateway:
   gateway:
     auth:
       jupyterhub:
-        apiToken: %{ jupyterhub_secret }
+        apiToken: ${ jupyterhub_secret }
