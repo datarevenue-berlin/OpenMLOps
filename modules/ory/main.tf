@@ -19,13 +19,3 @@ module "ory-kratos" {
 
   app_url = "${var.protocol}://${var.hostname}"
 }
-
-module "ory-keto" {
-  count = var.install_ory_keto ? 1 : 0
-
-  source = "./keto"
-  namespace = var.namespace
-
-  db_password = var.keto_db_password
-  hostname = var.hostname
-}
