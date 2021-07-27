@@ -3,6 +3,12 @@ jupyterhub:
     services:
       dask-gateway:
         apiToken: ${ daskgateway_secret }
+  singleuser:
+    extraEnv:
+      DASK_GATEWAY__CLUSTER__OPTIONS__IMAGE: 'drtools/openmlops-notebook:v1.2'
+    image:
+      name: "drtools/openmlops-notebook"
+      tag: "v1.2"
 
 dask-gateway:
   gateway:
