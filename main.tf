@@ -29,6 +29,13 @@
 //  singleuser_profile_list = var.singleuser_profile_list
 //}
 
+resource "kubernetes_namespace" "dsakhub_namespace" {
+  metadata {
+    name = "daskhub"
+  }
+}
+
+
 module "dask-jupyterhub" {
     source    = "./modules/dask-jupyterhub"
 }
