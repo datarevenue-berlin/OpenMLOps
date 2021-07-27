@@ -29,7 +29,7 @@
 //  singleuser_profile_list = var.singleuser_profile_list
 //}
 
-resource "kubernetes_namespace" "dsakhub_namespace" {
+resource "kubernetes_namespace" "daskhub_namespace" {
   metadata {
     name = "daskhub"
   }
