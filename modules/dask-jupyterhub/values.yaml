@@ -4,16 +4,16 @@ jupyterhub:
       dask-gateway:
         apiToken: ${ daskgateway_secret }
   singleuser:
-    profileList: ${ var.singleuser_profile_list }
+    profileList: ${ singleuser_profile_list }
     image:
       name: "jupyterhub/k8s-network-tools"
-      pullSecrets: ${ var.singleuser_image_pull_secrets }
-      pullPolicy: ${ var.singleuser_image_pull_policy }
+      pullSecrets: ${ singleuser_image_pull_secrets }
+      pullPolicy: ${ singleuser_image_pull_policy }
     memory:
-      guarantee: ${ var.singleuser_memory_guarantee }
+      guarantee: ${ singleuser_memory_guarantee }
     storage:
-      capacity: ${ var.singleuser_storage_capacity }
-      homeMountPath: ${ var.singleuser_storage_mount_path }
+      capacity: ${ singleuser_storage_capacity }
+      homeMountPath: ${ singleuser_storage_mount_path }
     extraEnv:
       TZ: "Europe/Berlin"
 
