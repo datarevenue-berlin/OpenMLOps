@@ -17,11 +17,7 @@ jupyterhub:
       pullPolicy: ${ singleuser_image_pull_policy }
       pullSecrets:
 %{ for img_pull_secret in singleuser_image_pull_secrets ~}
-      - create: ${ img_pull_secret.create }
-        automaticRefere: ${ img_pull_secret.automaticRefere }
-        registry: ${ img_pull_secret.registry }
-        username: ${ img_pull_secret.username }
-        email: ${ img_pull_secret.email }
+      - name: ${ img_pull_secret.name }
 %{ endfor ~}
     memory:
       guarantee: ${ singleuser_memory_guarantee }
