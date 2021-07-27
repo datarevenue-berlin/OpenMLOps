@@ -4,27 +4,21 @@ jupyterhub:
       dask-gateway:
         apiToken: ${ daskgateway_secret }
   singleuser:
-    extraEnv:
-      DASK_GATEWAY__CLUSTER__OPTIONS__IMAGE: 'drtools/openmlops-notebook:v1.2'
+    profileList: ${ var.singleuser_profile_list }
     image:
-      name: "drtools/openmlops-notebook"
-      tag: "v1.2"
+      name: "jupyterhub/k8s-network-tools"
+      pullSecrets: ${ var.singleuser_image_pull_secrets }
+      pullPolicy: ${ var.singleuser_image_pull_policy }
+    memory:
+      guarantee: ${ var.singleuser_memory_guarantee }
+    storage:
+      capacity: ${ var.singleuser_storage_capacity }
+      homeMountPath: ${ var.singleuser_storage_mount_path }
+    extraEnv:
+      TZ: "Europe/Berlin"
 
 dask-gateway:
   gateway:
     auth:
       jupyterhub:
         apiToken: ${ jupyterhub_secret }
-      extraConfig:
-        optionHandler: |
-          from dask_gateway_server.options import Options, Integer, Float, String
-          def option_handler(options):
-              if ":" not in options.image:
-                  raise ValueError("When specifying an image you must also provide a tag")
-              return {
-                  "image": options.image,
-              }
-          c.Backend.cluster_options = Options(
-              String("image", default="pangeo/base-notebook:2020.07.28", label="Image"),
-              handler=option_handler,
-          )

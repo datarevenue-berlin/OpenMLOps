@@ -8,3 +8,58 @@ variable "daskgateway_secret" {
     type = string
     default = "ca7de235a4ae54103d49f5004a11690004c66fe14810f35dc476103573e56ff1"
 }
+
+variable "singleuser_image_pull_secrets" {
+  type = list(
+    object({
+      name = string
+    })
+  )
+  default = []
+}
+
+variable "singleuser_image_pull_policy" {
+  default = "Always"
+}
+
+variable "singleuser_default_url" {
+  description = ""
+  default     = "/lab"
+}
+
+variable "singleuser_profile_list" {
+  description = "List of images which the user can select to spawn a server"
+  type = list(object({
+    display_name = string
+    description  = string
+    default      = bool
+    kubespawner_override = object({
+      image = string
+    })
+  }))
+
+  default = [
+    {
+      display_name = "Datascience environment"
+      description  = "Default data science enviroment"
+      default      = true
+      kubespawner_override = {
+        image = "jupyter/datascience-notebook:2343e33dec46"
+      }
+
+    }
+  ]
+
+}
+
+variable "singleuser_memory_guarantee" {
+  default = "1G"
+}
+
+variable "singleuser_storage_capacity" {
+  default = "1G"
+}
+
+variable "singleuser_storage_mount_path" {
+  default = "/home/jovyan/persistent"
+}
