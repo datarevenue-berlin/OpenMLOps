@@ -15,10 +15,6 @@ jupyterhub:
     image:
       name: "jupyterhub/k8s-network-tools"
       pullPolicy: ${ singleuser_image_pull_policy }
-      pullSecrets:
-%{ for img_pull_secret in singleuser_image_pull_secrets ~}
-      - name: ${ img_pull_secret.name }
-%{ endfor ~}
     memory:
       guarantee: ${ singleuser_memory_guarantee }
     storage:
