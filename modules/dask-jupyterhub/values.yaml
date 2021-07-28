@@ -7,7 +7,7 @@ jupyterhub:
     profileList:
 %{for profile in singleuser_profile_list ~}
       - display_name: ${ profile.display_name }
-        description: ${ profile.description }
+        description: "${ profile.description }"
         default: ${ profile.default }
         kubespawner_override:
           image: ${ profile.kubespawner_override.image }
