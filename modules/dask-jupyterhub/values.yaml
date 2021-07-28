@@ -14,7 +14,18 @@ jupyterhub:
 %{ endfor ~}
     extraEnv:
       TZ: "Europe/Berlin"
-
+    image:
+      name: "jupyterhub/k8s-network-tools"
+      pullPolicy: ${ singleuser_image_pull_policy }
+	  pullSecrets:
+%{ for img_pull_secret in singleuser_image_pull_secrets ~}
+	  - name: "${ img_pull_secret.name }"
+%{ endfor ~}
+    memory:
+      guarantee: ${ singleuser_memory_guarantee }
+    storage:
+      capacity: ${ singleuser_storage_capacity }
+      homeMountPath: ${ singleuser_storage_mount_path }
 dask-gateway:
   gateway:
     auth:
