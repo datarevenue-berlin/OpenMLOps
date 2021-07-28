@@ -17,7 +17,7 @@ jupyterhub:
     image:
       name: "jupyterhub/k8s-network-tools"
       pullPolicy: ${ singleuser_image_pull_policy }
-%{ if can(singleuser_image_pull_secrets) }
+%{ if length(singleuser_image_pull_secrets) > 0 }
 	  pullSecrets:
 %{ for img_pull_secret in singleuser_image_pull_secrets ~}
 	  - name: "${ img_pull_secret.name }"
