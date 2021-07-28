@@ -29,32 +29,16 @@
 //  singleuser_profile_list = var.singleuser_profile_list
 //}
 
+resource "kubernetes_namespace" "daskhub_namespace" {
+  metadata {
+    name = "daskhub"
+  }
+}
 
 
-
-
-
-
-
-
-//resource "kubernetes_namespace" "daskhub_namespace" {
-//  metadata {
-//    name = "daskhub"
-//  }
-//}
-
-
-//module "dask-jupyterhub" {
-//    source    = "./modules/dask-jupyterhub"
-//}
-
-
-
-
-
-
-
-
+module "dask-jupyterhub" {
+    source    = "./modules/dask-jupyterhub"
+}
 
 resource "kubernetes_namespace" "mlflow_namespace" {
   metadata {
