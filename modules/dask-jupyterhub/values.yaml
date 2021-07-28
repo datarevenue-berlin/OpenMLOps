@@ -12,14 +12,6 @@ jupyterhub:
         kubespawner_override:
           image: ${ profile.kubespawner_override.image }
 %{ endfor ~}
-    image:
-      name: "jupyterhub/k8s-network-tools"
-      pullPolicy: ${ singleuser_image_pull_policy }
-    memory:
-      guarantee: ${ singleuser_memory_guarantee }
-    storage:
-      capacity: ${ singleuser_storage_capacity }
-      homeMountPath: ${ singleuser_storage_mount_path }
     extraEnv:
       TZ: "Europe/Berlin"
 
