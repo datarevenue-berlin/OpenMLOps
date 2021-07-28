@@ -47,14 +47,6 @@ variable "singleuser_profile_list" {
       kubespawner_override = {
         image = "drtools/openmlops-notebook:v1.2"
       }
-    },
-    {
-      display_name = "Data Science environment"
-      description  = "Default data science environment"
-      default      = false
-      kubespawner_override = {
-        image = "jupyter/datascience-notebook:2343e33dec46"
-      }
     }
   ]
 }
