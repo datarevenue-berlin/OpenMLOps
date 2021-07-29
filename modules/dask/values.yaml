@@ -1,12 +1,23 @@
 worker:
   name: ${ worker_name }
   replicas: ${ worker_replicas }
-  env: ${ worker_environment_variables }
+%{ if length(worker_environment_variables) > 0 }
+  env:
+%{ for env in worker_environment_variables ~}
+  - name: ${ env.name }
+    value: ${ env.value }
+%{ endfor ~}
+%{ endif }
   image:
     repository: ${ worker_image_repository }
     tag: ${ worker_image_tag }
     pullPolicy: ${ worker_image_pull_policy }
-    pullSecrets: ${ worker_image_pull_secret }
+%{ if length(worker_image_pull_secret) > 0 }
+    pullSecrets:
+%{ for env in worker_image_pull_secret ~}
+    - name: ${ env.name }
+%{ endfor ~}
+%{ endif }
     dask_worker: $ { worker_image_dask_worker_command }
 
 scheduler:
