@@ -18,7 +18,7 @@ worker:
     - name: ${ env.name }
 %{ endfor ~}
 %{ endif }
-    dask_worker: $ { worker_image_dask_worker_command }
+    dask_worker: ${ worker_image_dask_worker_command }
 
 scheduler:
   image:
