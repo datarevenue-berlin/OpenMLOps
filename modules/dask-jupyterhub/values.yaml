@@ -1,31 +1,30 @@
-daskhub:
-  jupyterhub:
-    hub:
-      allowNamedServers: ${ hub_allow_named_servers }
-    singleuser:
-      serviceAccountName: daskkubernetes
-      profileList:
+jupyterhub:
+  hub:
+    allowNamedServers: ${ hub_allow_named_servers }
+  singleuser:
+    serviceAccountName: daskkubernetes
+    profileList:
 %{for profile in singleuser_profile_list ~}
-      - display_name: ${ profile.display_name }
-        description: "${ profile.description }"
-        default: ${ profile.default }
-        kubespawner_override:
-          image: ${ profile.kubespawner_override.image }
+    - display_name: ${ profile.display_name }
+      description: "${ profile.description }"
+      default: ${ profile.default }
+      kubespawner_override:
+        image: ${ profile.kubespawner_override.image }
 %{ endfor ~}
-      memory:
-        guarantee: ${ singleuser_memory_guarantee }
-      storage:
-        capacity: ${ singleuser_storage_capacity }
-        homeMountPath: ${ singleuser_storage_mount_path }
-      extraEnv:
-        TZ: "Europe/Berlin"
+    memory:
+      guarantee: ${ singleuser_memory_guarantee }
+    storage:
+      capacity: ${ singleuser_storage_capacity }
+      homeMountPath: ${ singleuser_storage_mount_path }
+    extraEnv:
+      TZ: "Europe/Berlin"
 
-  dask-gateway:
-    enabled: false
-    gateway:
-      auth:
-        jupyterhub:
-          apiToken: ${ jupyterhub_secret }
+dask-gateway:
+  enabled: false
+  gateway:
+    auth:
+      jupyterhub:
+        apiToken: ${ jupyterhub_secret }
 
-  dask-kubernetes:
-    enabled: true
+dask-kubernetes:
+  enabled: true
