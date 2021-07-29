@@ -3,15 +3,6 @@ jupyterhub:
     services:
       dask-gateway:
         apiToken: ${ daskgateway_secret }
-    image:
-      name: "jupyterhub/k8s-network-tools"
-      pullPolicy: ${ singleuser_image_pull_policy }
-%{ if length(singleuser_image_pull_secrets) > 0 }
-      pullSecrets:
-%{ for img_pull_secret in singleuser_image_pull_secrets ~}
-      - name: "${ img_pull_secret.name }"
-%{ endfor ~}
-%{ endif }
     allowNamedServers: ${ hub_allow_named_servers }
   singleuser:
     profileList:
