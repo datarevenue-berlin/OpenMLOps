@@ -19,5 +19,6 @@ resource "helm_release" "dask" {
     scheduler_image_repository = var.scheduler_image_repository
     scheduler_image_tag = var.scheduler_image_tag
     scheduler_image_pull_policy = var.scheduler_image_pull_policy
+    jupyterhub_secret = var.jupyterhub_secret
   })]
 }
