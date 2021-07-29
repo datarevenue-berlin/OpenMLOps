@@ -5,6 +5,7 @@ jupyterhub:
         apiToken: ${ daskgateway_secret }
     allowNamedServers: ${ hub_allow_named_servers }
   singleuser:
+    serviceAccountName: daskkubernetes
     profileList:
 %{for profile in singleuser_profile_list ~}
     - display_name: ${ profile.display_name }
@@ -22,7 +23,7 @@ jupyterhub:
       TZ: "Europe/Berlin"
 
 dask-gateway:
-  gateway:
-    auth:
-      jupyterhub:
-        apiToken: ${ jupyterhub_secret }
+  enabled: false
+
+dask-kubernetes:
+  enabled: true
