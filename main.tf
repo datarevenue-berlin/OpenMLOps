@@ -1,34 +1,3 @@
-//resource "kubernetes_namespace" "jupyterhub_namespace" {
-//  metadata {
-//    name = var.jupyterhub_namespace
-//  }
-//}
-
-//module "jupyterhub" {
-//  count     = var.install_jupyterhub ? 1 : 0
-//  source    = "./modules/jupyterhub"
-//  namespace = kubernetes_namespace.jupyterhub_namespace.metadata[0].name
-//
-//  # Proxy settings
-//  proxy_secret_token                    = var.jhub_proxy_secret_token
-//  proxy_https_enabled                   = var.jhub_proxy_https_enabled
-//  proxy_https_hosts                     = var.jhub_proxy_https_hosts
-//  proxy_https_letsencrypt_contact_email = var.jhub_proxy_https_letsencrypt_contact_email
-//  proxy_service_type                    = var.jhub_proxy_service_type
-//
-//  # Authentication settings
-//  # Following values should be `null` if oauth_github is disabled. However we need to pass submodule's defaults here
-//  # explicitly because of this Terraform bug: https://github.com/hashicorp/terraform/issues/21702
-//  authentication_type   = var.oauth_github_enable ? "github" : "dummy"
-//  authentication_config = merge(
-//    local.jhub_auth_config,
-//    {JupyterHub = {authenticator_class = var.oauth_github_enable ? "github" : "dummy"}}
-//  )
-//
-//  # Profile list configuration
-//  singleuser_profile_list = var.singleuser_profile_list
-//}
-
 resource "kubernetes_namespace" "daskhub_namespace" {
   metadata {
     name = "daskhub"
@@ -92,29 +61,28 @@ module "prefect-server" {
 }
 
 
-//resource "kubernetes_namespace" "dask_namespace" {
-//  metadata {
-//    name = var.dask_namespace
-//  }
-//}
+resource "kubernetes_namespace" "dask_namespace" {
+  metadata {
+    name = var.dask_namespace
+  }
+}
 
-//module "dask" {
+module "dask" {
+  source    = "./modules/dask"
+  namespace = kubernetes_namespace.dask_namespace.metadata[0].name
 
-//  source    = "./modules/dask"
-//  namespace = kubernetes_namespace.dask_namespace.metadata[0].name
-
-//  worker_image_pull_secret = [
-//    {
-//      name = "regcred"
-//    }
-//  ]
-//  worker_environment_variables = [
-//    {
-//      name  = "EXTRA_PIP_PACKAGES"
-//      value = "prefect==0.14.1 --upgrade"
-//    }
-//  ]
-//}
+  worker_image_pull_secret = [
+    {
+      name = "regcred"
+    }
+  ]
+  worker_environment_variables = [
+    {
+      name  = "EXTRA_PIP_PACKAGES"
+      value = "prefect==0.14.1 --upgrade"
+    }
+  ]
+}
 
 
 resource "kubernetes_namespace" "feast_namespace" {
