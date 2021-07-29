@@ -12,6 +12,7 @@ jupyterhub:
       - name: "${ img_pull_secret.name }"
 %{ endfor ~}
 %{ endif }
+    allowNamedServers: ${ hub_allow_named_servers }
   singleuser:
     profileList:
 %{for profile in singleuser_profile_list ~}

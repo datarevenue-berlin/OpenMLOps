@@ -4,6 +4,9 @@ resource "helm_release" "dask-jupyterhub" {
   chart      = "daskhub"
   version    = "2021.7.2"
 
+  // It takes some time to pull all the necessary images.
+  timeout = 15 * 60
+
   values = [templatefile("${path.module}/values.yaml", {
     jupyterhub_secret = var.jupyterhub_secret
     daskgateway_secret = var.daskgateway_secret
@@ -13,5 +16,6 @@ resource "helm_release" "dask-jupyterhub" {
     singleuser_memory_guarantee = var.singleuser_memory_guarantee
     singleuser_storage_capacity = var.singleuser_storage_capacity
     singleuser_storage_mount_path = var.singleuser_storage_mount_path
+    hub_allow_named_servers = var.hub_allow_named_servers
   })]
 }

@@ -70,3 +70,8 @@ variable "singleuser_storage_capacity" {
 variable "singleuser_storage_mount_path" {
   default = "/home/jovyan/persistent"
 }
+
+variable "hub_allow_named_servers" {
+  description = "Configures if a user can spawn multiple servers"
+  default     = false
+}
