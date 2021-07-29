@@ -35,9 +35,9 @@ resource "kubernetes_namespace" "daskhub_namespace" {
   }
 }
 
-
 module "dask-jupyterhub" {
     source    = "./modules/dask-jupyterhub"
+    namespace = kubernetes_namespace.daskhub_namespace.metadata[0].name
 }
 
 resource "kubernetes_namespace" "mlflow_namespace" {
