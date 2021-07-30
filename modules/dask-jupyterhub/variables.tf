@@ -43,9 +43,14 @@ variable "singleuser_profile_list" {
       })
   }))
 
-  default = [
-
-  ]
+  default = [{
+      display_name = "OpenMLOps client environment"
+      description  = "Notebook with OpenMLOps required client libraries installed. <br> Image: drtools/openmlops-notebook:v1.3.1"
+      default      = true
+      kubespawner_override = {
+        image = "drtools/openmlops-notebook:v1.3.1"
+      }
+  }]
 }
 
 variable "singleuser_memory_guarantee" {
