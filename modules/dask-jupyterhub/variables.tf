@@ -46,10 +46,10 @@ variable "singleuser_profile_list" {
   default = [
     {
       display_name = "OpenMLOps client environment"
-      description  = "Notebook with OpenMLOps required client libraries installed. <br> Image: drtools/openmlops-notebook:v1.3"
+      description  = "Notebook with OpenMLOps required client libraries installed. <br> Image: drtools/openmlops-notebook:v1.2"
       default      = true
       kubespawner_override = {
-        image = "drtools/openmlops-notebook:v1.3"
+        image = "drtools/openmlops-notebook:v1.2"
       }
     }
   ]
