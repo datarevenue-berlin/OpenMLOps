@@ -46,18 +46,10 @@ variable "singleuser_profile_list" {
   default = [
     {
       display_name = "OpenMLOps client environment"
-      description  = "Notebook with OpenMLOps required client libraries installed. <br> Image: drtools/openmlops-notebook:v1.2"
+      description  = "Notebook with OpenMLOps required client libraries installed. <br> Image: drtools/openmlops-notebook:v1.3"
       default      = true
       kubespawner_override = {
-        image = "drtools/openmlops-notebook:v1.2"
-      }
-    },
-    {
-      display_name = "Data Science environment"
-      description  = "Default data science environment"
-      default      = false
-      kubespawner_override = {
-        image = "jupyter/datascience-notebook:2343e33dec46"
+        image = "drtools/openmlops-notebook:v1.3"
       }
     }
   ]
