@@ -21,6 +21,10 @@ jupyterhub:
 
 dask-gateway:
   enabled: false
+  gateway:
+    auth:
+      type: null
+
 
 dask-kubernetes:
   enabled: true
