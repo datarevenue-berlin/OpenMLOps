@@ -20,11 +20,7 @@ jupyterhub:
       TZ: "Europe/Berlin"
 
 dask-gateway:
-  enabled: false
   gateway:
     auth:
       jupyterhub:
         apiToken: ${ jupyterhub_secret }
-
-dask-kubernetes:
-  enabled: true
