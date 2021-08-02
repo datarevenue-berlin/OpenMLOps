@@ -5,7 +5,8 @@ module "ory-oathkeeper" {
   hostname = var.hostname
   protocol = var.protocol
   enable_registration = var.enable_registration
-  enable_keto = var.install_ory_keto
+
+  access_rules_path = var.access_rules_path
 }
 
 module "ory-kratos" {
@@ -18,14 +19,4 @@ module "ory-kratos" {
   oauth2_providers = var.oauth2_providers
 
   app_url = "${var.protocol}://${var.hostname}"
-}
-
-module "ory-keto" {
-  count = var.install_ory_keto ? 1 : 0
-
-  source = "./keto"
-  namespace = var.namespace
-
-  db_password = var.keto_db_password
-  hostname = var.hostname
 }

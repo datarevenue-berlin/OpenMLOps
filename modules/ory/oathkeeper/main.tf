@@ -1,14 +1,14 @@
 locals {
   config_mount_path = "/etc/config"
   secrets_mount_path = "/etc/secrets"
+  access_rules_path = "${path.module}/access-rule-oathkeeper.yaml"
 }
 
 data "template_file" "oathkeeper-access-rules"{
-  template = file("${path.module}/access-rule-oathkeeper.yaml")
+  template = file("%{if var.access_rules_path == null}${path.module}/access-rule-oathkeeper.yaml%{else}${var.access_rules_path}%{ endif }")
   vars = {
     hostname = var.hostname
     enable_registration = var.enable_registration
-    enable_keto = var.enable_keto
   }
 }
 
@@ -19,7 +19,6 @@ data "template_file" "oathkeeper-config"{
     protocol = var.protocol
     config_path = local.config_mount_path
     secret_path = local.secrets_mount_path
-    enable_keto = var.enable_keto
   }
 }
 

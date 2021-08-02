@@ -176,14 +176,14 @@ module "ory" {
   namespace = kubernetes_namespace.ory_namespace[0].metadata[0].name
   cookie_secret = var.ory_kratos_cookie_secret
   kratos_db_password = var.ory_kratos_db_password
-  keto_db_password = var.ory_keto_db_password
   oauth2_providers = var.oauth2_providers
 
   hostname = var.hostname
   protocol = var.protocol
 
   enable_registration = var.enable_registration_page
-  install_ory_keto = var.install_ory_keto
+
+  access_rules_path = var.access_rules_path
 }
 
 module "k8s_tools" {

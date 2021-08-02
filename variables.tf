@@ -254,10 +254,6 @@ variable "ory_kratos_db_password"{
   description = "PostgreSQL Database Password"
 }
 
-variable "ory_keto_db_password"{
-  description = "PostgreSQL Database Password"
-}
-
 variable "ory_kratos_cookie_secret" {
   description = "Session Cookie Generation secret"
   sensitive = true
@@ -282,11 +278,6 @@ variable "oauth2_providers" {
   }))
   description = "OAuth2 Providers credentials"
 }
-## ORY Keto
-variable "install_ory_keto" {
-  description = "Whether to install or not Keto for User Authorization"
-  default = false
-}
 
 ## Other K8S tools
 
@@ -298,4 +289,9 @@ variable "enable_registration_page" {
   description = "Bool to set if registration page will or not be visible to users"
   type = bool
   default = true
+}
+
+variable "access_rules_path" {
+  type = string
+  default = null
 }

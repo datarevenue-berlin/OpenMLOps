@@ -46,11 +46,7 @@ variable "oauth2_providers" {
   description = "OAuth2 Providers credentials"
 }
 
-// KETO
-variable "keto_db_password"{
-  description = "PostgreSQL Database Password"
-}
-variable "install_ory_keto" {
-  type = bool
-  description = "Whether to install or not Keto for User Authorization"
+variable "access_rules_path" {
+  type = string
+  default = null
 }

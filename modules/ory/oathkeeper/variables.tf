@@ -15,7 +15,7 @@ variable "enable_registration" {
   type = bool
 }
 
-variable "enable_keto" {
-  description = "Whether to install or not Keto for User Authorization"
-  type = bool
+variable "access_rules_path" {
+    type = string
+    default = null
 }
