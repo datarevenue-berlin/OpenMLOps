@@ -4,6 +4,13 @@ resource "kubernetes_namespace" "jupyterhub_namespace" {
   }
 }
 
+resource "helm_release" "jupyterhub" {
+  name = "jupyterhub_1.1.1"
+  version = 1.1.1
+  repository = "https://jupyterhub.github.io/helm-chart/"
+  chart = "jupyterhub"
+}
+
 module "jupyterhub" {
   count     = var.install_jupyterhub ? 1 : 0
   source    = "./modules/jupyterhub"
@@ -36,6 +43,13 @@ resource "kubernetes_namespace" "mlflow_namespace" {
   }
 }
 
+resource "helm_release" "postgres" {
+  name = "postgres_13.3"
+  version = 13.3
+  repository = "https://krakazyabra.github.io/microservices"
+  chart = "postgres"
+}
+
 module "postgres" {
   source    = "./modules/postgres"
   namespace = kubernetes_namespace.mlflow_namespace.metadata[0].name
@@ -43,6 +57,13 @@ module "postgres" {
   db_username   = var.db_username
   db_password   = var.db_password
   database_name = var.database_name
+}
+
+resource "helm_release" "mlflow" {
+  name = "mlflow_1.5.0"
+  version = 1.5.0
+  repository = "https://cetic.github.io/helm-charts"
+  chart = "mlflow"
 }
 
 module "mlflow" {
@@ -67,6 +88,8 @@ resource "kubernetes_namespace" "prefect_namespace" {
   }
 }
 
+# TODO: There is no prefect module in the helm hub
+
 module "prefect-server" {
   source    = "./modules/prefect-server"
   namespace = kubernetes_namespace.prefect_namespace.metadata[0].name
@@ -86,6 +109,13 @@ resource "kubernetes_namespace" "dask_namespace" {
   metadata {
     name = var.dask_namespace
   }
+}
+
+resource "helm_release" "dask" {
+  name = "dask_2021.7.2"
+  version = 2021.7.2
+  repository = "https://helm.dask.org/"
+  chart = "dask"
 }
 
 module "dask" {
@@ -114,6 +144,8 @@ resource "kubernetes_namespace" "feast_namespace" {
   }
 }
 
+# TODO: There is no feast module in the helm hub
+
 module "feast" {
   count = var.install_feast ? 1 : 0
 
@@ -137,6 +169,12 @@ resource "kubernetes_namespace" "seldon_namespace" {
   }
 }
 
+resource "helm_release" "Seldon" {
+  name = "Seldon_1.7.0"
+  version = 1.7.0
+  chart = "https://operatorhub.io/install/stable/seldon-operator.yaml"
+}
+
 module "seldon" {
   count = var.install_seldon ? 1 : 0
   source    = "./modules/seldon"
@@ -148,6 +186,13 @@ resource "kubernetes_namespace" "ambassador_namespace" {
   metadata {
     name = var.ambassador_namespace
   }
+}
+
+resource "helm_release" "ambassador" {
+  name = "ambassador_1.13.10"
+  version = 1.13.10
+  repository = "https://getambassador.io/"
+  chart = "ambassador"
 }
 
 module "ambassador" {
@@ -169,6 +214,13 @@ resource "kubernetes_namespace" "ory_namespace" {
   metadata {
     name = var.ory_namespace
   }
+}
+
+resource "helm_release" "ory_kratos" {
+  name = "ory_kratos_0.18.0"
+  version = 0.18.0
+  repository = "https://k8s.ory.sh/helm/charts"
+  chart = "ory_kratos"
 }
 
 module "ory" {
