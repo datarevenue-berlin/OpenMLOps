@@ -2,7 +2,7 @@
 
 Open MLOps is a set of open-source tools carefully
 chosen to ease user experience of conducting machine learning experiments and deploying machine
-learning models.
+learning models. Read our announcement blog post with more background [here](https://datarevenue.com/en-blog/open-mlops-open-source-production-machine-learning).
 
 We also provide a [step by step set-up guide](./tutorials/set-up-open-source-production-mlops-architecture-aws.md) and some other [getting started tutorials](./tutorials).
 
