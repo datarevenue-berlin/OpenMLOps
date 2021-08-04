@@ -6,7 +6,7 @@ resource "kubernetes_namespace" "jupyterhub_namespace" {
 
 resource "helm_release" "jupyterhub" {
   name = "jupyterhub_1.1.1"
-  version = 1.1.1
+  version = "1.1.1"
   repository = "https://jupyterhub.github.io/helm-chart/"
   chart = "jupyterhub"
 }
@@ -45,7 +45,7 @@ resource "kubernetes_namespace" "mlflow_namespace" {
 
 resource "helm_release" "postgres" {
   name = "postgres_13.3"
-  version = 13.3
+  version = "13.3"
   repository = "https://krakazyabra.github.io/microservices"
   chart = "postgres"
 }
@@ -61,7 +61,7 @@ module "postgres" {
 
 resource "helm_release" "mlflow" {
   name = "mlflow_1.5.0"
-  version = 1.5.0
+  version = "1.5.0"
   repository = "https://cetic.github.io/helm-charts"
   chart = "mlflow"
 }
@@ -113,7 +113,7 @@ resource "kubernetes_namespace" "dask_namespace" {
 
 resource "helm_release" "dask" {
   name = "dask_2021.7.2"
-  version = 2021.7.2
+  version = "2021.7.2"
   repository = "https://helm.dask.org/"
   chart = "dask"
 }
@@ -171,7 +171,7 @@ resource "kubernetes_namespace" "seldon_namespace" {
 
 resource "helm_release" "Seldon" {
   name = "Seldon_1.7.0"
-  version = 1.7.0
+  version = "1.7.0"
   chart = "https://operatorhub.io/install/stable/seldon-operator.yaml"
 }
 
@@ -190,7 +190,7 @@ resource "kubernetes_namespace" "ambassador_namespace" {
 
 resource "helm_release" "ambassador" {
   name = "ambassador_1.13.10"
-  version = 1.13.10
+  version = "1.13.10"
   repository = "https://getambassador.io/"
   chart = "ambassador"
 }
@@ -216,11 +216,11 @@ resource "kubernetes_namespace" "ory_namespace" {
   }
 }
 
-resource "helm_release" "ory_kratos" {
+resource "helm_release" "kratos" {
   name = "ory_kratos_0.18.0"
-  version = 0.18.0
+  version = "0.18.0"
   repository = "https://k8s.ory.sh/helm/charts"
-  chart = "ory_kratos"
+  chart = "kratos"
 }
 
 module "ory" {
