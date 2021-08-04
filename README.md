@@ -4,7 +4,7 @@ Open MLOps is a set of open-source tools carefully
 chosen to ease user experience of conducting machine learning experiments and deploying machine
 learning models.
 
-We also provide a [step by step set-up guide](./tutorials/set-up-open-source-production-mlops-architecture-aws.md) and some other [getting started tutorials](./tutorials)
+We also provide a [step by step set-up guide](./tutorials/set-up-open-source-production-mlops-architecture-aws.md) and some other [getting started tutorials](./tutorials).
 
 In this repository, we provide these applications as Terraform modules
 with which the user will be able to install them into a Kubernetes
