@@ -20,9 +20,9 @@ resource "kubernetes_secret" "private_registry_secret" {
 }
 
 resource "helm_release" "mlflow" {
-  name      = "mlflow"
-  namespace = var.namespace
-
+  name       = "mlflow"
+  namespace  = var.namespace
+  version    = "1.5.0"
   repository = "https://larribas.me/helm-charts"
   chart      = "mlflow"
 
