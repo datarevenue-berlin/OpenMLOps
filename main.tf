@@ -47,7 +47,7 @@ resource "kubernetes_role" "daskhub-role" {
   }
 }
 
-resource "kubernetes_cluster_role_binding" "daskhub-rb" {
+resource "kubernetes_role_binding" "daskhub-rb" {
   metadata {
     name = "daskhub-rb"
   }
