@@ -9,6 +9,61 @@ module "dask-jupyterhub" {
     namespace = kubernetes_namespace.daskhub_namespace.metadata[0].name
 }
 
+resource "kubernetes_service_account" "daskhub-sa" {
+  metadata {
+    name      = "daskhub-sa"
+    namespace = kubernetes_namespace.daskhub_namespace.metadata[0].name
+  }
+}
+
+resource "kubernetes_role" "daskhub-role" {
+  metadata {
+    name = "daskhub-role"
+    namespace = kubernetes_namespace.daskhub_namespace.metadata[0].name
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["pods"]
+    verbs          = ["get", "list", "watch", "create", "delete"]
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["pods/logs"]
+    verbs          = ["get", "list"]
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["services"]
+    verbs          = ["get", "list", "watch", "create", "delete"]
+  }
+
+  rule {
+    api_groups     = ["policy"]
+    resources      = ["poddisruptionbudgets"]
+    verbs          = ["get", "list", "watch", "create", "delete"]
+  }
+}
+
+resource "kubernetes_cluster_role_binding" "daskhub-rb" {
+  metadata {
+    name = "daskhub-rb"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "daskhub-role"
+  }
+
+  subject {
+    kind = "ServiceAccount"
+    name = "daskhub-sa"
+  }
+}
+
 resource "kubernetes_namespace" "mlflow_namespace" {
   metadata {
     name = var.mlflow_namespace

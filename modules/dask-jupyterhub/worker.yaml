@@ -11,8 +11,8 @@ spec:
         value: git+https://github.com/dask/distributed
     resources:
       limits:
-        cpu: "2"
-        memory: 6G
+        cpu: "0.5"
+        memory: 1G
       requests:
-        cpu: "2"
-        memory: 6G
+        cpu: "0.5"
+        memory: 1G
