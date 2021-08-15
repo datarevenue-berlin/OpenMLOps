@@ -155,7 +155,7 @@ Now train the model twice more - first with the default parameters, and then wit
 
 ```python
 train_model(data, mlflow_experiment_id=1, alpha=0.3, l1_ratio=0.3)
-train_model(data, mlflow_experiment_id=1, alpha=0.3, l1_ratio=0.3)
+train_model(data, mlflow_experiment_id=1, alpha=0.5, l1_ratio=0.5)
 ```
 
 ![](./images/mlflow-results.png)
