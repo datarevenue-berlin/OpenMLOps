@@ -303,6 +303,7 @@ api_request = requests.post(
         headers={"Authorization": f"Bearer {token}"},
         timeout=600
 )
+```
 
 ## Deploying the model via the Prefect UI
 
