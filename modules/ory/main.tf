@@ -17,6 +17,10 @@ module "ory-kratos" {
   cookie_domain = var.hostname
   db_password = var.kratos_db_password
   oauth2_providers = var.oauth2_providers
+  enable_password_recovery = var.enable_password_recovery
+  enable_verification = var.enable_verification
+  smtp_connection_uri = var.smtp_connection_uri
+  smtp_from_address = var.smtp_from_address
 
   app_url = "${var.protocol}://${var.hostname}"
 }
