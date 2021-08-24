@@ -56,3 +56,23 @@ variable "oauth2_providers" {
   }))
   description = "OAuth2 Providers credentials"
 }
+
+variable "smtp_connection_uri" {
+  description = "SMTP Connection for Ory"
+  type = string
+}
+
+variable "smtp_from_address" {
+  description = "Email address for outgoing mails from Ory"
+  type = string
+}
+
+variable "enable_password_recovery" {
+  description = "Bool to set to enable password recovery using emails"
+  type = bool
+}
+
+variable "enable_verification" {
+  description = "Bool to set to enable account registration confirmation using emails"
+  type = bool
+}
