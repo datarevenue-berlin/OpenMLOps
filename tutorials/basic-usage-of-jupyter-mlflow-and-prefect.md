@@ -222,7 +222,7 @@ prefect_url = f"https://prefect.{domain}/graphql"
 def get_prefect_token():
     r = requests.get(auth_url)
     jsn = r.json()
-    action_url = jsn["methods"]["password"]["config"]["action"]
+    action_url = jsn["ui"]["action"]
     data = {"identifier": username, "password": password}
     headers = {"Accept": "application/json", "Content-Type": "application/json"}
     r = requests.post(action_url, json=data, headers=headers)
