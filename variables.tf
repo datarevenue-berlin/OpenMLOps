@@ -282,13 +282,13 @@ variable "oauth2_providers" {
 variable "smtp_connection_uri" {
   description = "SMTP Connection for Ory"
   type = string
-  default = "smtp://omigamibot%40gmail.com:omigamidevbot2021@smtp.gmail.com:587"
+  default = "smtp://"
 }
 
 variable "smtp_from_address" {
   description = "Email address for outgoing mails from Ory"
   type = string
-  default = "omigamibot@gmail.com"
+  default = ""
 }
 
 variable "enable_password_recovery" {
