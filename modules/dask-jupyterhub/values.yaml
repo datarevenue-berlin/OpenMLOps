@@ -1,4 +1,7 @@
 jupyterhub:
+  proxy:
+    service:
+      type: "ClusterIP"
   hub:
     allowNamedServers: ${ hub_allow_named_servers }
   singleuser:
@@ -24,7 +27,6 @@ dask-gateway:
   gateway:
     auth:
       type: null
-
 
 dask-kubernetes:
   enabled: true
