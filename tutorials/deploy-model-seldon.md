@@ -230,7 +230,8 @@ Note that we leave the `model_uri` as an argument, so that we can specify this e
 
 ```python
 @task
-def deploy_model(model_uri: str, namespace: str = "seldon"): logger = prefect.context.get("logger")
+def deploy_model(model_uri: str, namespace: str = "seldon"):
+    logger = prefect.context.get("logger")
 
     logger.info(f"Deploying model {model_uri} to enviroment {namespace}")
 
@@ -302,6 +303,7 @@ api_request = requests.post(
         headers={"Authorization": f"Bearer {token}"},
         timeout=600
 )
+```
 
 ## Deploying the model via the Prefect UI
 

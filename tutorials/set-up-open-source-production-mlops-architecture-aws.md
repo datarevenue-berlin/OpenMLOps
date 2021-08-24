@@ -31,7 +31,6 @@ To follow the steps in this guide, you need
 * An AWS account, with a domain registered through Route 53.
 * Some familiarity with AWS - using the web console and `awscli`. 
 * Git, Terraform, Docker, Kubectl, and the AWS IAM authenticator installed locally. You can find a guide on setting up client-side dependencies [here](./install-dependencies.md)
-* Access to our Open MLOps repositories. [Contact us](https://datarevenue.com/en-contact) to get access to these while we are still in beta.
 * To be comfortable editing `yaml` configuration files.
 
 And a little bit of patience for everything to spin up.

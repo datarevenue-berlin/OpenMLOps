@@ -125,14 +125,11 @@ Then, the client should send a POST request to the desired actionURL::
 One example::
 
     # REGISTER
-    $ actionUrl=$(\
-      curl -s -X GET -H "Accept: application/json" \
-        "https://{host}/.ory/kratos/public/self-service/registration/api" \
-        | jq -r '.methods.password.config.action'\
-    )
+    $ actionUrl=$(curl -s -X GET -H "Accept: application/json" "https://{host}/.ory/kratos/public/self-service/registration/api" \
+    | jq -r ".ui.action")
 
     $ curl -s -X POST -H  "Accept: application/json" -H "Content-Type: application/json" \
-      -d '{"traits.email": "api@user.org", "password": "fhAzi860a"}' \
+      -d '{"traits.email": "api@user.org", "password": "fhAzi860a", "method": "password"}' \
       "$actionUrl" | jq
 
     # LOGIN
