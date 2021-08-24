@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0
+
+### Features
+- Support Dask from Jupyter notebook
+
 ## 0.1.0
 
 ### Features
