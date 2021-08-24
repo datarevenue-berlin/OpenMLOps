@@ -34,7 +34,7 @@ kratos:
           ui_url: ${ui_path}/settings
 
         verification:
-          enabled: false
+          enabled: ${enable_verification}
           ui_url: ${ui_path}/verify
 
         logout:
@@ -57,8 +57,11 @@ kratos:
             oidc:
               hooks:
                 - hook: session
-
           ui_url: ${ui_path}/auth/registration
+
+        recovery:
+          enabled: ${enable_password_recovery}
+          ui_url: ${ui_path}/recovery
 
     log:
       level: debug
@@ -91,8 +94,8 @@ kratos:
 
     courier:
       smtp:
-        connection_uri: "smtp://omigamibot%40gmail.com:omigamidevbot2021@smtp.gmail.com:587"
-        from_address: "omigamibot@gmail.com"
+        connection_uri: ${smtp_connection_uri}
+        from_address: ${smtp_from_address}
 
   identitySchemas:
     # TODO: Make terraform render this dynamically
@@ -118,6 +121,9 @@ kratos:
                     }
                   },
                   "verification": {
+                    "via": "email"
+                  },
+                  "recovery": {
                     "via": "email"
                   }
                 }

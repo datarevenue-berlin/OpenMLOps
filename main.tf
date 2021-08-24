@@ -182,6 +182,10 @@ module "ory" {
   protocol = var.protocol
 
   enable_registration = var.enable_registration_page
+  enable_password_recovery = var.enable_password_recovery
+  enable_verification = var.enable_verification
+  smtp_connection_uri = var.smtp_connection_uri
+  smtp_from_address = var.smtp_from_address
 
   access_rules_path = var.access_rules_path
 }
