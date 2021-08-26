@@ -5,6 +5,9 @@
 ### Features
 - Support password recovery using SMTP
 
+### Bug fixes
+- Use specific chart versions and image tags for MLFlow, Ambassador, and PostgresQL
+
 ## 0.1.0
 
 ### Features
