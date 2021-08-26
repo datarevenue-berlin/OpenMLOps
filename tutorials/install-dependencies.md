@@ -1,4 +1,4 @@
-To set up the Open MLOps architecture, you need several dependencies on your local or client machine. If you've used docker,  terraform ,and kubectl before, you'll likely hav everything you need. If not, below are instructions for installing all the client-side dependencies on a fresh install of Ubuntu 20.04.
+To set up the Open MLOps architecture, you need several dependencies on your local or client machine. If you've used Docker, Terraform, and Kubectl before, you'll likely have everything you need. If not, below are instructions for installing all the client-side dependencies on a fresh install of Ubuntu 20.04.
 
 ## Install Git
 
