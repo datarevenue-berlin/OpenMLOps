@@ -3,7 +3,7 @@ resource "helm_release" "ambassador" {
   repository = "https://www.getambassador.io"
   chart = "ambassador"
   name = "ambassador"
-  version = "1.13.10"
+  version = "6.7.13"
   namespace = var.namespace
 
   values = [templatefile("${path.module}/values.yaml", {
