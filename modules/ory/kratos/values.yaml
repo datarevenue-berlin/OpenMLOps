@@ -27,6 +27,8 @@ kratos:
           config:
             providers:
               ${indent(14, oidc_providers_config)}
+        link:
+          enabled: true
 
       flows:
         settings:
