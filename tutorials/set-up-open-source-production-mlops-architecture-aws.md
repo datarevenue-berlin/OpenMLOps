@@ -79,7 +79,7 @@ Press "Continue" and copy the ARN of the certificate from the certificate overvi
 
 ## Configuring the `my_vars.tfvars` file
 
-Next you'll need to personalise the secrets and other values in the `openmlops/mlops-architecture-on-aws/my_vars.tfvars` file. Many of these are self-describing, but you can find additional explanations of how to configure each in this section if you find any confusing.
+Next you'll need to personalise the secrets and other values in the `openmlops/OpenMLOps-AWS/my_vars.tfvars` file. Many of these are self-describing, but you can find additional explanations of how to configure each in this section if you find any confusing.
 
 * `tls_certificate_arn` - this is the full ARN of the certificate you created in the previous step.
 * `aws_region` - e.g. `eu-west-2`, set this to an AWS region close to you for low latency access to the various dashboards.
@@ -94,7 +94,7 @@ Next you'll need to personalise the secrets and other values in the `openmlops/m
 
 ## Initialising Terraform
 
-Now change into the `mlops-architecture-on-aws` directory and run `terraform init`, which will pull down the terraform dependencies that you need.
+Now change into the `OpenMLOps-AWS` directory and run `terraform init`, which will pull down the terraform dependencies that you need.
 
 You should see "Terraform has been successfully initialized!" towards the end of the output.
 
