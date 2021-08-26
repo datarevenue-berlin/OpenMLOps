@@ -2,7 +2,7 @@
 resource "helm_release" "postgres" {
   name      = "postgres"
   namespace = var.namespace
-
+  version = "10.9.1"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "postgresql"
 
@@ -26,4 +26,8 @@ resource "helm_release" "postgres" {
     value = var.service_port
   }
 
+  set {
+    name = "image.tag"
+    value = "11.12.0-debian-10-r70"
+  }
 }
