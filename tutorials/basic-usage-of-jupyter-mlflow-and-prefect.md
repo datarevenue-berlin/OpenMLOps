@@ -155,7 +155,7 @@ Now train the model twice more - first with the default parameters, and then wit
 
 ```python
 train_model(data, mlflow_experiment_id=1, alpha=0.3, l1_ratio=0.3)
-train_model(data, mlflow_experiment_id=1, alpha=0.3, l1_ratio=0.3)
+train_model(data, mlflow_experiment_id=1, alpha=0.5, l1_ratio=0.5)
 ```
 
 ![](./images/mlflow-results.png)
@@ -222,8 +222,8 @@ prefect_url = f"https://prefect.{domain}/graphql"
 def get_prefect_token():
     r = requests.get(auth_url)
     jsn = r.json()
-    action_url = jsn["methods"]["password"]["config"]["action"]
-    data = {"identifier": username, "password": password}
+    action_url = jsn["ui"]["action"]
+    data = {"password_identifier": username, "password": password, "method": "password"}
     headers = {"Accept": "application/json", "Content-Type": "application/json"}
     r = requests.post(action_url, json=data, headers=headers)
     jsn = r.json()

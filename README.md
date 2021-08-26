@@ -2,7 +2,9 @@
 
 Open MLOps is a set of open-source tools carefully
 chosen to ease user experience of conducting machine learning experiments and deploying machine
-learning models.
+learning models. Read our announcement blog post with more background [here](https://datarevenue.com/en-blog/open-mlops-open-source-production-machine-learning).
+
+We also provide a [step by step set-up guide](./tutorials/set-up-open-source-production-mlops-architecture-aws.md) and some other [getting started tutorials](./tutorials).
 
 In this repository, we provide these applications as Terraform modules
 with which the user will be able to install them into a Kubernetes
@@ -16,10 +18,9 @@ cluster. The tools we provide are the following:
 
 ![Architecture diagram](https://global-uploads.webflow.com/5d3ec351b1eba4332d213004/6001c1daafa02889e5389a59_EE2q1dQqp2fmiaXGX5vuaVVnTPXmKlmD3BC1dp90YrPB2TOiHWSq3RCCmC39MzsmYHUrQFXVK9nmTf4haQ0dIj-vdk_we67e1SR5yqEWPTuEAApuiNOXOgdr7mSefSmlZxSwu0JB.png)
 
-
 # Other repositories
 
-![Repositories diagram](http://www.plantuml.com/plantuml/svg/fP91Qpen4CNl-HI3ztNlV_u7fVHGR6d1GW_Y8IQZEvYTMJA9HKg_UwEY29MriBTaU8_vpPkPQB8nvJOO5wmgZ5wUNpk5QNGD9NGfHmHXQ8bfcrSuWYy3yCJ55OB2IPn4ofiOx4K7BcHD6A6eFNP1zkWXY2kk_RZK5eicfKx_rVM6KfDNOoTjxMrXmHroncg5CH3NRP1EAtj5KmbNbov5ieNbqdoRVlpfn_n4_XPbHqh22lR2I4T1-Khs1s3B7kZ6YCF1xQV-XVbkpBDSsZ0crFCGmzYke5XI-U8wcVU6529sOf0z7EfzAJ_Evl1mOhaHzMzWo4gyETeKuuuSWgmFUnYOCcwrEhUuYlhkNV-lgfkRC7qdDS3Kdw0n3Na4Hz45D1Dadzlm0m00)
+![Repositories diagram](http://www.plantuml.com/plantuml/svg/dP51Qm8n48NlyoiUtjUzbnuifOTYYmKBFOY7c8nkQ9micSHBwNzlLYrON7hmcCVCUr_Up3IRbCi-a0r65PD5puBNbqMlY8A7Z-K4NmIyfNZmwgCe36mecZd17mVgCnO70eougbN74FJiaMCCEYLWjUfoxlMkRNS-TsKpjN7VEbFJ-S1IkDbm2bxQ8V-usWpMLVd4UatVTCrt0diUoHl03EQbMWfdrb_WcpWk62HcHk1jflVEAnBtaLWS1dq444_p9HvFqICjNlEXg9VTSKqv7RnbnErGyMq5Lf_c77zP98tT-Bvf_dJxpz3u_uWwxnZM9nkOPYokxCCF)
 
 
 # Modules

@@ -36,6 +36,10 @@ resource "helm_release" "ory-kratos" {
       dsn = "postgres://${var.db_username}:${urlencode(var.db_password)}@${module.kratos-postgres.db_host}:5432/${var.database_name}",
       app_url = var.app_url,
       ui_path = local.ui_url,
+      smtp_connection_uri = var.smtp_connection_uri,
+      smtp_from_address = var.smtp_from_address,
+      enable_password_recovery = var.enable_password_recovery,
+      enable_verification = var.enable_verification,
       oidc_providers_config = templatefile("${path.module}/oidc_providers.yaml.tmpl", {
         oauth2_providers = var.oauth2_providers
         provider_paths = local.provider_paths
