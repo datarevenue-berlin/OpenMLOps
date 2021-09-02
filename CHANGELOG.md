@@ -8,6 +8,7 @@
 
 ### Bug fixes
 - Use specific chart versions and image tags for MLFlow, Ambassador, and PostgresQL
+- Remove terraform_backend.tf to prevent applying from the OpenMLOPs repository
 
 ## 0.1.0
 
