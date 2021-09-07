@@ -172,6 +172,7 @@ resource "kubernetes_namespace" "ory_namespace" {
 }
 
 module "ory" {
+  count = var.enable_ory_authentication ? 1 : 0
   source = "./modules/ory"
   namespace = kubernetes_namespace.ory_namespace[0].metadata[0].name
   cookie_secret = var.ory_kratos_cookie_secret

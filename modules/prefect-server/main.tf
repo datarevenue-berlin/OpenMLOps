@@ -9,7 +9,7 @@ resource "helm_release" "prefect-server" {
 
   set {
     name = "jobs.createTenant.enabled"
-    value = true
+    value = false
   }
 
   set {
@@ -89,7 +89,7 @@ resource "helm_release" "prefect-server" {
 
   set {
     name = "apollo.service.type"
-    value = var.service_type
+    value = "ClusterIP"
   }
 
   set {
