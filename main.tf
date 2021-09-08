@@ -134,7 +134,7 @@ module "dask" {
   worker_environment_variables = [
     {
       name  = "EXTRA_PIP_PACKAGES"
-      value = "prefect==0.14.1 --upgrade"
+      value = "prefect==0.14.1 aiohttp --upgrade"
     }
   ]
 }
