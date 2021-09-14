@@ -26,6 +26,11 @@ variable "annotations" {
   default     = {}
 }
 
+variable "create_tenant_enabled" {
+  description = "determines if the Prefect tenant is created automatically"
+  default     = true
+}
+
 variable "agent_enabled" {
   description = "determines if the Prefect Kubernetes agent is deployed"
   default     = true
