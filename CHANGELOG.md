@@ -9,6 +9,9 @@
 - Use specific chart versions and image tags for MLFlow, Ambassador, and PostgresQL
 - Remove terraform_backend.tf to prevent applying from the OpenMLOPs repository
 
+### Enhancements
+- Add tutorial on how to set up on Minikube
+
 ## 0.1.0
 
 ### Features

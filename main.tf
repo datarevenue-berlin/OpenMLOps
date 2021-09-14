@@ -79,6 +79,7 @@ module "prefect-server" {
   service_account_name = var.prefect_service_account_name
   seldon_manager_cluster_role_name = var.install_seldon ? "seldon-manager-role-${var.seldon_namespace}" : ""
   feast_spark_operator_cluster_role_name = var.install_feast ? var.feast_spark_operator_cluster_role_name : ""
+  create_tenant_enabled = var.prefect_create_tenant_enabled
 }
 
 
@@ -172,6 +173,7 @@ resource "kubernetes_namespace" "ory_namespace" {
 }
 
 module "ory" {
+  count = var.enable_ory_authentication ? 1 : 0
   source = "./modules/ory"
   namespace = kubernetes_namespace.ory_namespace[0].metadata[0].name
   cookie_secret = var.ory_kratos_cookie_secret
