@@ -3,9 +3,14 @@ variable "namespace" {
   default     = "default"
 }
 
+variable "service_type" {
+  type = string
+  default = "ClusterIP"
+}
+
 variable "jupyterhub_secret" {
-    type = string
-    default = "4301bf5a2aa1fbade157046863ac64ec46df03e3da39ec3bf345a2f8caa81e02"
+  type = string
+  default = "4301bf5a2aa1fbade157046863ac64ec46df03e3da39ec3bf345a2f8caa81e02"
 }
 
 variable "daskgateway_secret" {
@@ -48,7 +53,7 @@ variable "singleuser_profile_list" {
       description  = "Notebook with OpenMLOps required client libraries installed. <br> Image: drtools/openmlops-notebook:v1.4"
       default      = true
       kubespawner_override = {
-        image = "drtools/openmlops-notebook:v1.4"
+        image = "drtools/openmlops-notebook:v1.5-rc4"
       }
   }]
 }

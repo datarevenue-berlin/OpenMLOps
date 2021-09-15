@@ -50,6 +50,7 @@ variable "mlflow_service_type" {
   type = string
   default = "LoadBalancer"
 }
+
 ## Prefect Server
 
 variable "prefect_namespace" {
@@ -77,92 +78,17 @@ variable "prefect_create_tenant_enabled" {
   default     = true
 }
 
-## Jupyter Hub
+## Dask
 
-variable "jupyter_dummy_password" {
-  default = ""
-}
-
-variable "install_jupyterhub" {
+variable "install_daskhub" {
   default = true
 }
 
-variable "jupyterhub_namespace" {
-  default = "jhub"
-}
-
-variable "jhub_proxy_https_enabled" {
-  default = false
-}
-
-variable "jhub_proxy_https_hosts" {
-  default = [""]
-}
-
-variable "jhub_proxy_secret_token" {
-  default = ""
-}
-
-variable "jhub_proxy_https_letsencrypt_contact_email" {
-  default = ""
-}
-
-variable "jhub_proxy_service_type" {
+variable "daskhub_service_type" {
   description = "Whether to expose the service publicly or internally"
   type = string
   default = "LoadBalancer"
 }
-
-variable "oauth_github_enable" {
-  description = "Defines whether the authentication will be handled by github oauth"
-  default     = false
-}
-
-variable "oauth_github_client_id" {
-  description = "github client id used on GitHubOAuthenticator"
-  default     = ""
-}
-variable "oauth_github_client_secret" {
-  description = "github secret used to authenticate with github"
-  default     = ""
-}
-
-variable "oauth_github_admin_users" {
-  description = "Github user names to allow as administrator"
-  default     = []
-}
-
-variable "oauth_github_callback_url" {
-  description = "The URL that people are redirected to after they authorize your GitHub App to act on their behalf"
-  default     = ""
-}
-
-variable "oauth_github_allowed_organizations" {
-  description = "List of Github organization to restrict access to the members"
-  default     = [""]
-}
-
-
-locals {
-  jhub_auth_config = {
-    dummy = {
-      password = var.jupyter_dummy_password
-    }
-    github = {
-      clientId     = var.oauth_github_client_id
-      clientSecret = var.oauth_github_client_secret
-      callbackUrl  = var.oauth_github_callback_url
-      orgWhiteList = var.oauth_github_allowed_organizations
-    }
-    scope = ["read:user"]
-    admin = {
-      users = var.oauth_github_admin_users
-    }
-  }
-}
-
-
-## Dask
 
 variable "dask_namespace" {
   default = "dask"
@@ -213,6 +139,7 @@ variable "tls_certificate_arn" {
   description = "TLS Certificate ARN"
   default = ""
 }
+
 ## ORY (authentication module)
 
 variable "enable_ory_authentication" {

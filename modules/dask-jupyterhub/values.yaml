@@ -1,7 +1,7 @@
 jupyterhub:
   proxy:
     service:
-      type: "ClusterIP"
+      type: ${ service_type }
   hub:
     allowNamedServers: ${ hub_allow_named_servers }
   singleuser:

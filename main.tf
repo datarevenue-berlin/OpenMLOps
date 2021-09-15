@@ -5,8 +5,10 @@ resource "kubernetes_namespace" "daskhub_namespace" {
 }
 
 module "dask-jupyterhub" {
-    source    = "./modules/dask-jupyterhub"
-    namespace = kubernetes_namespace.daskhub_namespace.metadata[0].name
+  count = var.install_daskhub ? 1 : 0
+  source    = "./modules/dask-jupyterhub"
+  namespace = kubernetes_namespace.daskhub_namespace.metadata[0].name
+  service_type = var.daskhub_service_type
 }
 
 resource "kubernetes_service_account" "daskhub-sa" {

@@ -10,6 +10,7 @@ resource "helm_release" "dask-jupyterhub" {
   timeout = 15 * 60
 
   values = [templatefile("${path.module}/values.yaml", {
+    service_type = var.service_type
     jupyterhub_secret = var.jupyterhub_secret
     daskgateway_secret = var.daskgateway_secret
     singleuser_profile_list = var.singleuser_profile_list
