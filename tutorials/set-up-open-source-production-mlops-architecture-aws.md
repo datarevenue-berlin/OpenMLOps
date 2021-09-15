@@ -175,7 +175,7 @@ Now you should be ready to start using the various services.
 
 ## Trying out the services
 
-The first step is to visit `https://mlops.example.com/auth/profile/registration` to create a new user account. Once you've done that, you can visit any of the following services
+The first step is to visit `https://mlops.example.com/profile/auth/registration` to create a new user account. Once you've done that, you can visit any of the following services
 
 * `https://jupyter.mlops.example.com` to start writing code in your setup
 * `https://prefect.mlops.example.com` to configure workflow and dataflows

@@ -72,6 +72,11 @@ variable "prefect_service_account_name" {
   default = "prefect-server-serviceaccount"
 }
 
+variable "prefect_create_tenant_enabled" {
+  description = "determines if the Prefect tenant is created automatically"
+  default     = true
+}
+
 ## Jupyter Hub
 
 variable "jupyter_dummy_password" {
