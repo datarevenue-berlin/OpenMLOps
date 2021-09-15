@@ -26,7 +26,6 @@ minikube tunnel
 
 Next you'll need to personalise the secrets and other values in the tfvars file. You can create  a file in `openmlops/OpenMLOps/my_vars.tfvars` and use the example settings below.
 
-
 ```
 aws = false
 db_username = "mlflow-db-user"
@@ -38,7 +37,6 @@ install_metrics_server = false
 install_feast = false
 install_seldon = false
 prefect_create_tenant_enabled = false
-jhub_proxy_secret_token = "IfYouDecideToUseJhubProxyYouShouldChangeThisValueToARandomString"
 enable_ory_authentication = false
 oauth2_providers = []
 mlflow_artifact_root = "/tmp"
@@ -107,11 +105,11 @@ kubectl get services --all-namespaces
 
 You should look for the `EXTERNAL_IP` and `PORT` of the `LoadBalancer` services you want to access. For example,
 
-* `http://[EXTERNAL_IP_OF_JUPYTER_HUB_PROXY_PUBLIC]:80` to start writing code in your setup
+* `http://[EXTERNAL_IP_OF_DASKHUB_PROXY_PUBLIC]:80` to start writing code in your setup
 * `http://[EXTERNAL_IP_OF_PREFECT_UI]:8080` to configure workflow and dataflows
 * `http://[EXTERNAL_IP_OF_MLFLOW]:5000` to see and track your experiments
 
-Next, take a look at [our tutorial](./basic-usage-of-jupyter-mlflow-and-prefect.md) on creating a basic production machine learning system using the Open MLOps architecture.
+Next, take a look at [our tutorial](./basic-usage-of-jupyter-mlflow-and-prefect.md) on creating a basic production machine learning system using the Open MLOps architecture. Note that you can access jupyter hub using any username and password.
 
 ## Tearing down the cluster
 
