@@ -57,7 +57,7 @@ service:
       apiVersion: getambassador.io/v2
       kind: Mapping
       name: jhub_mapping
-      service: proxy-public.jhub:80
+      service: proxy-public.daskhub:80
       prefix: /
       host: jupyter.${hostname}
       allow_upgrade:

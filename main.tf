@@ -1,34 +1,68 @@
-resource "kubernetes_namespace" "jupyterhub_namespace" {
+resource "kubernetes_namespace" "daskhub_namespace" {
   metadata {
-    name = var.jupyterhub_namespace
+    name = "daskhub"
   }
 }
 
-module "jupyterhub" {
-  count     = var.install_jupyterhub ? 1 : 0
-  source    = "./modules/jupyterhub"
-  namespace = kubernetes_namespace.jupyterhub_namespace.metadata[0].name
-
-  # Proxy settings
-  proxy_secret_token                    = var.jhub_proxy_secret_token
-  proxy_https_enabled                   = var.jhub_proxy_https_enabled
-  proxy_https_hosts                     = var.jhub_proxy_https_hosts
-  proxy_https_letsencrypt_contact_email = var.jhub_proxy_https_letsencrypt_contact_email
-  proxy_service_type                    = var.jhub_proxy_service_type
-
-  # Authentication settings
-  # Following values should be `null` if oauth_github is disabled. However we need to pass submodule's defaults here
-  # explicitly because of this Terraform bug: https://github.com/hashicorp/terraform/issues/21702
-  authentication_type   = var.oauth_github_enable ? "github" : "dummy"
-  authentication_config = merge(
-    local.jhub_auth_config,
-    {JupyterHub = {authenticator_class = var.oauth_github_enable ? "github" : "dummy"}}
-  )
-
-  # Profile list configuration
-  singleuser_profile_list = var.singleuser_profile_list
+module "dask-jupyterhub" {
+    source    = "./modules/dask-jupyterhub"
+    namespace = kubernetes_namespace.daskhub_namespace.metadata[0].name
 }
 
+resource "kubernetes_service_account" "daskhub-sa" {
+  metadata {
+    name      = "daskhub-sa"
+    namespace = kubernetes_namespace.daskhub_namespace.metadata[0].name
+  }
+}
+
+resource "kubernetes_role" "daskhub-role" {
+  metadata {
+    name = "daskhub-role"
+    namespace = kubernetes_namespace.daskhub_namespace.metadata[0].name
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["pods"]
+    verbs          = ["get", "list", "watch", "create", "delete"]
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["pods/logs"]
+    verbs          = ["get", "list"]
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["services"]
+    verbs          = ["get", "list", "watch", "create", "delete"]
+  }
+
+  rule {
+    api_groups     = ["policy"]
+    resources      = ["poddisruptionbudgets"]
+    verbs          = ["get", "list", "watch", "create", "delete"]
+  }
+}
+
+resource "kubernetes_role_binding" "daskhub-rb" {
+  metadata {
+    name = "daskhub-rb"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "daskhub-role"
+  }
+
+  subject {
+    kind = "ServiceAccount"
+    name = "daskhub-sa"
+  }
+}
 
 resource "kubernetes_namespace" "mlflow_namespace" {
   metadata {
@@ -90,7 +124,6 @@ resource "kubernetes_namespace" "dask_namespace" {
 }
 
 module "dask" {
-
   source    = "./modules/dask"
   namespace = kubernetes_namespace.dask_namespace.metadata[0].name
 
@@ -102,7 +135,7 @@ module "dask" {
   worker_environment_variables = [
     {
       name  = "EXTRA_PIP_PACKAGES"
-      value = "prefect==0.14.1 --upgrade"
+      value = "prefect==0.14.1 aiohttp --upgrade"
     }
   ]
 }

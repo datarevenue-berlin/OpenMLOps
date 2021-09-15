@@ -1,0 +1,32 @@
+jupyterhub:
+  proxy:
+    service:
+      type: "ClusterIP"
+  hub:
+    allowNamedServers: ${ hub_allow_named_servers }
+  singleuser:
+    serviceAccountName: "daskhub-sa"
+    profileList:
+%{for profile in singleuser_profile_list ~}
+    - display_name: ${ profile.display_name }
+      description: "${ profile.description }"
+      default: ${ profile.default }
+      kubespawner_override:
+        image: ${ profile.kubespawner_override.image }
+%{ endfor ~}
+    memory:
+      guarantee: ${ singleuser_memory_guarantee }
+    storage:
+      capacity: ${ singleuser_storage_capacity }
+      homeMountPath: ${ singleuser_storage_mount_path }
+    extraEnv:
+      TZ: "Europe/Berlin"
+
+dask-gateway:
+  enabled: false
+  gateway:
+    auth:
+      type: null
+
+dask-kubernetes:
+  enabled: true

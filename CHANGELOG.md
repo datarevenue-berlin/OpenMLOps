@@ -4,6 +4,7 @@
 
 ### Features
 - Support password recovery using SMTP
+- Support Dask from Jupyter notebook
 
 ### Bug fixes
 - Use specific chart versions and image tags for MLFlow, Ambassador, and PostgresQL
