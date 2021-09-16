@@ -23,4 +23,5 @@ module "ory-kratos" {
   smtp_from_address = var.smtp_from_address
 
   app_url = "${var.protocol}://${var.hostname}"
+  kratos_chart_values_path = var.kratos_chart_values_path
 }
