@@ -51,7 +51,7 @@ resource "helm_release" "ory-kratos" {
   repository = "https://k8s.ory.sh/helm/charts"
   chart = "kratos"
 
-  values = [data.template_file.kratos-chart-values]
+  values = [data.template_file.kratos-chart-values.rendered]
 }
 
 resource "kubernetes_deployment" "ory-kratos-ui" {

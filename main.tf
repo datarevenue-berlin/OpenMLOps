@@ -196,7 +196,6 @@ module "ambassador" {
   tls = var.protocol == "https" ? true : false
   enable_ory_authentication = var.enable_ory_authentication
   ambassador_chart_values_path = var.ambassador_chart_values_path
-  kratos_chart_values_path = var.kratos_chart_values_path
 }
 
 
@@ -225,6 +224,7 @@ module "ory" {
   smtp_from_address = var.smtp_from_address
 
   access_rules_path = var.access_rules_path
+  kratos_chart_values_path = var.kratos_chart_values_path
 }
 
 module "k8s_tools" {

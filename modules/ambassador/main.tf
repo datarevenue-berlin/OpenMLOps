@@ -17,7 +17,7 @@ resource "helm_release" "ambassador" {
   version = "6.7.13"
   namespace = var.namespace
 
-  values = [data.template_file.ambassador-chart-values]
+  values = [data.template_file.ambassador-chart-values.rendered]
   set {
     name = "image.repository"
     value = "docker.io/datawire/ambassador"
