@@ -1,5 +1,4 @@
 resource "kubernetes_namespace" "daskhub_namespace" {
-  count = var.install_jupyterhub ? 1 : 0
   metadata {
     name = "daskhub"
   }
