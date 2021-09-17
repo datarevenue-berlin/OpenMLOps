@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+### Enhancements
+- Allow changing values.yaml for Kratos, Oauthkeeper, and Ambassador using Terraform variables
+- Upgrade Kratos to 0.7
+
 ## 0.2.0
 
 ### Features
