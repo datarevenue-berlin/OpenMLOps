@@ -78,7 +78,7 @@ resource "kubernetes_deployment" "ory-kratos-ui" {
       spec {
         container {
           name = "ory-kratos-ui"
-          image = "oryd/kratos-selfservice-ui-node:v0.6.0-alpha.2"
+          image = "oryd/kratos-selfservice-ui-node:v0.7.6-alpha.1"
           env {
             name = "KRATOS_PUBLIC_URL"
             value = "http://${helm_release.ory-kratos.name}-public.${var.namespace}.svc.cluster.local:80"
