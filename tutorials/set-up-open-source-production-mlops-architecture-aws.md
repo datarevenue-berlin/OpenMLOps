@@ -103,7 +103,7 @@ Before you continue with the next steps of Terraform, you need to generate some 
 
 ```
 cd ../OpenMLOps
-sh generate-secrets.sh
+sh generate_secrets.sh
 cd ../OpenMLOps-AWS
 ```
 
