@@ -1,3 +1,23 @@
+data "template_file" "kratos-chart-values"{
+  template = file("%{if var.kratos_chart_values_path == null}${path.module}/values.yaml%{else}${var.kratos_chart_values_path}%{ endif }")
+  vars = {
+    dsn = "postgres://${var.db_username}:${urlencode(var.db_password)}@${module.kratos-postgres.db_host}:5432/${var.database_name}",
+    app_url = var.app_url,
+    ui_path = local.ui_url,
+    smtp_connection_uri = var.smtp_connection_uri,
+    smtp_from_address = var.smtp_from_address,
+    enable_password_recovery = var.enable_password_recovery,
+    enable_verification = var.enable_verification,
+    oidc_providers_config = templatefile("${path.module}/oidc_providers.yaml.tmpl", {
+      oauth2_providers = var.oauth2_providers
+      provider_paths = local.provider_paths
+      scopes = local.scopes
+    })
+    cookie_secret = var.cookie_secret,
+    cookie_domain = var.cookie_domain
+  }
+}
+
 locals {
   ui_deployment_name = "ory-kratos-ui"
   ui_url = "${var.app_url}/profile"
@@ -31,24 +51,7 @@ resource "helm_release" "ory-kratos" {
   repository = "https://k8s.ory.sh/helm/charts"
   chart = "kratos"
 
-  values = [
-    templatefile("${path.module}/values.yaml", {
-      dsn = "postgres://${var.db_username}:${urlencode(var.db_password)}@${module.kratos-postgres.db_host}:5432/${var.database_name}",
-      app_url = var.app_url,
-      ui_path = local.ui_url,
-      smtp_connection_uri = var.smtp_connection_uri,
-      smtp_from_address = var.smtp_from_address,
-      enable_password_recovery = var.enable_password_recovery,
-      enable_verification = var.enable_verification,
-      oidc_providers_config = templatefile("${path.module}/oidc_providers.yaml.tmpl", {
-        oauth2_providers = var.oauth2_providers
-        provider_paths = local.provider_paths
-        scopes = local.scopes
-      })
-      cookie_secret = var.cookie_secret,
-      cookie_domain = var.cookie_domain
-    })
-  ]
+  values = [data.template_file.kratos-chart-values.rendered]
 }
 
 resource "kubernetes_deployment" "ory-kratos-ui" {
@@ -75,7 +78,7 @@ resource "kubernetes_deployment" "ory-kratos-ui" {
       spec {
         container {
           name = "ory-kratos-ui"
-          image = "oryd/kratos-selfservice-ui-node:v0.6.0-alpha.2"
+          image = "oryd/kratos-selfservice-ui-node:v0.7.6-alpha.1"
           env {
             name = "KRATOS_PUBLIC_URL"
             value = "http://${helm_release.ory-kratos.name}-public.${var.namespace}.svc.cluster.local:80"

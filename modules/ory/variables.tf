@@ -70,3 +70,9 @@ variable "access_rules_path" {
   type = string
   default = null
 }
+
+variable "kratos_chart_values_path" {
+  description = "Path to custom values.yaml for Kratos"
+  type = string
+  default = null
+}

@@ -197,6 +197,7 @@ variable "seldon_namespace" {
 }
 
 ## Ambassador
+
 variable "ambassador_namespace" {
   default = "ambassador"
 }
@@ -213,6 +214,13 @@ variable "tls_certificate_arn" {
   description = "TLS Certificate ARN"
   default = ""
 }
+
+variable "ambassador_chart_values_path" {
+  description = "Path to custom values.yaml for Ambassador"
+  type = string
+  default = null
+}
+
 ## ORY (authentication module)
 
 variable "enable_ory_authentication" {
@@ -273,6 +281,12 @@ variable "enable_verification" {
   description = "Bool to set to enable account registration confirmation using emails"
   type = bool
   default = false
+}
+
+variable "kratos_chart_values_path" {
+  description = "Path to custom values.yaml for Kratos"
+  type = string
+  default = null
 }
 
 ## Other K8S tools

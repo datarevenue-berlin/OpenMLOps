@@ -29,3 +29,9 @@ variable "hostname" {
 variable "enable_ory_authentication" {
   description = "Whether to enable ory_authentication"
 }
+
+variable "ambassador_chart_values_path" {
+  description = "Path to custom values.yaml for Ambassador"
+  type = string
+  default = null
+}

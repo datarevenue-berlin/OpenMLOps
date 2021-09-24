@@ -5,8 +5,9 @@ resource "kubernetes_namespace" "daskhub_namespace" {
 }
 
 module "dask-jupyterhub" {
-    source    = "./modules/dask-jupyterhub"
-    namespace = kubernetes_namespace.daskhub_namespace.metadata[0].name
+  count = var.install_jupyterhub ? 1 : 0
+  source    = "./modules/dask-jupyterhub"
+  namespace = kubernetes_namespace.daskhub_namespace.metadata[0].name
 }
 
 resource "kubernetes_service_account" "daskhub-sa" {
@@ -195,6 +196,7 @@ module "ambassador" {
   hostname = var.hostname
   tls = var.protocol == "https" ? true : false
   enable_ory_authentication = var.enable_ory_authentication
+  ambassador_chart_values_path = var.ambassador_chart_values_path
 }
 
 
@@ -223,6 +225,7 @@ module "ory" {
   smtp_from_address = var.smtp_from_address
 
   access_rules_path = var.access_rules_path
+  kratos_chart_values_path = var.kratos_chart_values_path
 }
 
 module "k8s_tools" {

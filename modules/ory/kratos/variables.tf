@@ -76,3 +76,9 @@ variable "enable_verification" {
   description = "Bool to set to enable account registration confirmation using emails"
   type = bool
 }
+
+variable "kratos_chart_values_path" {
+  description = "Path to custom values.yaml for Kratos"
+  type = string
+  default = null
+}
