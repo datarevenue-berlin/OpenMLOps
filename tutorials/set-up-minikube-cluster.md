@@ -49,7 +49,7 @@ mlflow_artifact_root = "/tmp"
 Run the following in your shell to set your Kubectl config.
 
 ```
-export KUBE_CONFIG_PATH=~./kube/config
+export KUBE_CONFIG_PATH=~/.kube/config
 ```
 
 Now change into the `OpenMLOps` directory and run `terraform init`, which will pull down the terraform dependencies that you need.
@@ -60,7 +60,7 @@ You should see "Terraform has been successfully initialized!" towards the end of
 Before you continue with the next steps of Terraform, you need to generate some secrets for Kubernetes by using the following commands:
 
 ```
-sh generate-secrets.sh
+sh generate_secrets.sh
 ```
 
 ## Step 5: Creating the infrastructure
@@ -140,5 +140,5 @@ This may be caused by External IPs not being assigned to the services that expec
 
 You may have allocated too little resources for the minikube cluster. Try starting the cluster with:
 ```commandline
-minikube start --kubernetes-version=v1.17.17 --memory 8192 --cpus 2 start
+minikube start --kubernetes-version=v1.17.17 --memory 8192 --cpus 2
 ```
