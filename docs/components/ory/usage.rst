@@ -53,7 +53,7 @@ Note that the Oathkeeper doesn't care about the authentication method that was u
 ORY Kratos, as long as it provides a valid Session Cookie.
 
 Identities and Providers
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kratos allows setting up different Identities in which each one can have multiple authentication providers.
 
