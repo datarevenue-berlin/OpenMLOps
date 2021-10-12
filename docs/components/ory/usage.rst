@@ -11,7 +11,7 @@ In order to configure access for an specific service, we need to specify Access 
 All the Access Rules are defined in the file `access-rule-oathkeeper.yaml`
 (for convenience and maintainability)
 
-** Allow all access **::
+**Allow all access**::
 
     - id: oathkeeper-access-rule
       match:
@@ -30,7 +30,7 @@ All the Access Rules are defined in the file `access-rule-oathkeeper.yaml`
 This configuration will register all the incoming requests as a `guest` user, thus, not
 performing any credentials validation.
 
-** Authenticate User **::
+**Authenticate User**::
 
     - id: protected-service
       match:
