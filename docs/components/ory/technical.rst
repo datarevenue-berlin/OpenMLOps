@@ -19,8 +19,8 @@ From the ORY Ecosystem we use two services:
     - ORY Oathkeeper
     - ORY Kratos
 
-* Although they were designed to work together, all ORY services are completely independent
-from each other *
+**Although they were designed to work together, all ORY services are completely independent
+from each other**
 
 ORY Oathkeeper
 --------------
