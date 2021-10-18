@@ -15,6 +15,8 @@ data "template_file" "kratos-chart-values"{
     })
     cookie_secret = var.cookie_secret,
     cookie_domain = var.cookie_domain
+
+    cors_enabled_url = var.kratos_cors_enabled_url == null ? var.app_url : var.kratos_cors_enabled_url
   }
 }
 

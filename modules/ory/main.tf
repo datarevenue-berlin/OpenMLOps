@@ -24,4 +24,6 @@ module "ory-kratos" {
 
   app_url = "${var.protocol}://${var.hostname}"
   kratos_chart_values_path = var.kratos_chart_values_path
+
+  kratos_cors_enabled_url = var.kratos_cors_enabled_url
 }
