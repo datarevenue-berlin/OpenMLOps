@@ -226,6 +226,7 @@ module "ory" {
 
   access_rules_path = var.access_rules_path
   kratos_chart_values_path = var.kratos_chart_values_path
+  kratos_cors_enabled_url = var.kratos_cors_enabled_url
 }
 
 module "k8s_tools" {

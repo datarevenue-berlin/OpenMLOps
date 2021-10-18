@@ -305,3 +305,9 @@ variable "access_rules_path" {
   type = string
   default = null
 }
+
+variable "kratos_cors_enabled_url" {
+  description = "The URL that needs to be set as origin for CORS to work between UI/Frontend and Kratos backend."
+  type = string
+  default = null
+}
