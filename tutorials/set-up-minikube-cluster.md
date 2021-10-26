@@ -29,11 +29,11 @@ Next you'll need to personalise the secrets and other values in the tfvars file.
 
 ```
 aws = false
-db_username = "mlflow-db-user"
-db_password = "mlflow-db-pasword"
-hostname = "myambassador.com"
-ory_kratos_cookie_secret = "secret"
-ory_kratos_db_password = "password"
+db_username = "mlflow-db-user"              # you can use what you want here
+db_password = "mlflow-db-pasword"           # you can use what you want here
+hostname = "myambassador.com"               # you can use what you want here. 
+ory_kratos_cookie_secret = "secret"         # you can use what you want here
+ory_kratos_db_password = "password"         # you can use what you want here
 install_metrics_server = false
 install_feast = false
 install_seldon = false
