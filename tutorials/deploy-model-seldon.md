@@ -105,10 +105,10 @@ This is very similar to the code we used to train the model in the previous tuto
 In a third cell, add the following code, substituting the domain and credential variables for your own.
 
 ```python
-domain = "mlops.example.com"  # the domain where you are hosting Open MLOps
-username = "user@example.com"  # the username you used to register on Open MLOps
-password = "yourstrongpassword"  # the password you used to register on Open MLOps
-s3_bucket = "your-s3-bucket"  # the S3 bucket you specified when setting up Open MLOps
+domain = "mlops.example.com"  # the domain where you are hosting OpenMLOps
+username = "user@example.com"  # the username you used to register on OpenMLOps
+password = "yourstrongpassword"  # the password you used to register on OpenMLOps
+s3_bucket = "your-s3-bucket"  # the S3 bucket you specified when setting up OpenMLOps
 
 prefect_project_name = "wine-quality-project"  # you can use what you want here
 docker_image = "drtools/prefect:wine-classifier-3"  # any docker image that has the required Python dependencies

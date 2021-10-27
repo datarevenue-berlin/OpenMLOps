@@ -10,7 +10,7 @@ We had the same problem. We spent a lot of time and solved it. Instead of solvin
 
 This tutorial guides you through all the scripts that will automatically set up the fully equipped MLOps infrastructure for you.
 
-You can clone our repositories, change a few lines of configuration, run the scripts in your own AWS account, and have a replica of our **Open MLOps Architecture** running in a couple of hours.
+You can clone our repositories, change a few lines of configuration, run the scripts in your own AWS account, and have a replica of our **OpenMLOps Architecture** running in a couple of hours.
 
 ## The result of following this guide
 
@@ -37,7 +37,7 @@ And a little bit of patience for everything to spin up.
 
 ## Step 1: Cloning the repositories
 
-On your local machine, create a directory called `openmlops` and clone the following three Open MLOps repositories into that directory.
+On your local machine, create a directory called `openmlops` and clone the following three OpenMLOps repositories into that directory.
 
 ```
 git clone git@github.com:datarevenue-berlin/OpenMLOps.git
@@ -181,5 +181,5 @@ The first step is to visit `https://mlops.example.com/profile/auth/registration`
 * `https://prefect.mlops.example.com` to configure workflow and dataflows
 * `https://mlflow.mlops.example.com` to see and track your experiments
 
-Next, take a look at [our tutorial](./basic-usage-of-jupyter-mlflow-and-prefect.md) on creating a basic production machine learning system using the Open MLOps architecture.
+Next, take a look at [our tutorial](./basic-usage-of-jupyter-mlflow-and-prefect.md) on creating a basic production machine learning system using the OpenMLOps architecture.
 

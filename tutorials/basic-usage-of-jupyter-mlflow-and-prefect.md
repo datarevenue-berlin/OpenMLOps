@@ -1,12 +1,12 @@
-# Creating a basic machine learning system on Open MLOps
+# Creating a basic machine learning system on OpenMLOps
 
-Now that you've [set up your Open MLOps](https://github.com/datarevenue-berlin/OpenMLOps/blob/master/tutorials/set-up-open-source-production-mlops-architecture-aws.md) architecture, you'll want to build something with it to see how all the pieces fit together. Let's start with a simple machine learning model to predict wine quality ratings, based on the properties of the wine. Specifically, we will
+Now that you've [set up your OpenMLOps](https://github.com/datarevenue-berlin/OpenMLOps/blob/master/tutorials/set-up-open-source-production-mlops-architecture-aws.md) architecture, you'll want to build something with it to see how all the pieces fit together. Let's start with a simple machine learning model to predict wine quality ratings, based on the properties of the wine. Specifically, we will
 
 * Use JupyterHub to write code to fetch the data, process it, and train a model
 * Create an experiment on MLFlow so that we can keep track of different models and parameters
 * Set up Prefect tasks to fetch the data periodically, retrain the model, and register the results with MLFlow
 
-In a later tutorial, we will extend this project to use some of the other services that make up Open MLOps.
+In a later tutorial, we will extend this project to use some of the other services that make up OpenMLOps.
 
 ## Accessing the services
 
@@ -207,10 +207,10 @@ def train_model(data, mlflow_experiment_id, alpha=0.5, l1_ratio=0.5):
 Next, in a new cell, set up some variables so we can talk to Prefect more easily. You'll need to enter the domain and S3 bucket name that you used when setting up the infrastruture, as well as the username and password that you used in the registration step at the start of this article.
 
 ```python
-domain = "mlops.ritza-route53.com"  # the domain where you are hosting Open MLOps
-username = "gareth@ritza.co"        # the username you used to register on Open MLOps
-password = "DkguP5GsB9yiPk8"        # the password you used to register on Open MLOps
-s3_bucket = "another-mlops-bucket"  # the S3 bucket you specified when setting up Open MLOps
+domain = "mlops.ritza-route53.com"  # the domain where you are hosting OpenMLOps
+username = "gareth@ritza.co"        # the username you used to register on OpenMLOps
+password = "DkguP5GsB9yiPk8"        # the password you used to register on OpenMLOps
+s3_bucket = "another-mlops-bucket"  # the S3 bucket you specified when setting up OpenMLOps
 
 prefect_project_name = "wine-quality-project"         # you can use what you want here
 docker_image = "drtools/prefect:wine-classifier-3"    # any docker image that has the required Python dependencies

@@ -2,7 +2,7 @@
 
 ## Step 1: Cloning the repositories
 
-On your local machine, create a directory called `openmlops` and clone the following three Open MLOps repositories into that directory.
+On your local machine, create a directory called `openmlops` and clone the following three OpenMLOps repositories into that directory.
 
 ```
 git clone git@github.com:datarevenue-berlin/OpenMLOps.git
@@ -111,7 +111,7 @@ You should look for the `EXTERNAL_IP` and `PORT` of the `LoadBalancer` services 
 * `http://[EXTERNAL_IP_OF_PREFECT_UI]:8080` to configure workflow and dataflows
 * `http://[EXTERNAL_IP_OF_MLFLOW]:5000` to see and track your experiments
 
-Next, take a look at [our tutorial](./basic-usage-of-jupyter-mlflow-and-prefect.md) on creating a basic production machine learning system using the Open MLOps architecture.
+Next, take a look at [our tutorial](./basic-usage-of-jupyter-mlflow-and-prefect.md) on creating a basic production machine learning system using the OpenMLOps architecture.
 
 ## Tearing down the cluster
 
