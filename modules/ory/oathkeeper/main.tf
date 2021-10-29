@@ -2,6 +2,34 @@ locals {
   config_mount_path = "/etc/config"
   secrets_mount_path = "/etc/secrets"
   access_rules_path = "${path.module}/access-rule-oathkeeper.yaml"
+  configuration_defaults = yamldecode(file("config-oathkeeper.yaml"))
+  configuration_default_overrides = {
+    errors={
+      handlers={
+        redirect={
+          config={
+            to="${var.protocol}://${var.hostname}/profile/auth/login"
+          }
+        }
+      }
+    }
+    mutators={
+      id_token={
+        config={
+          issuer_url="${var.protocol}://${var.hostname}"
+          jwk_urls="file://${local.secrets_mount_path}/id_token.jwks.json"
+        }
+      }
+    }
+  }
+}
+
+locals {
+  configuration = merge(
+    local.configuration_defaults,  # lowest precedence
+    var.configuration_overrides,
+    local.configuration_default_overrides  # highest precedence
+  )
 }
 
 data "template_file" "oathkeeper-access-rules"{
@@ -12,15 +40,6 @@ data "template_file" "oathkeeper-access-rules"{
   }
 }
 
-data "template_file" "oathkeeper-config"{
-  template = file("${path.module}/config-oathkeeper.yaml")
-  vars = {
-    hostname = var.hostname
-    protocol = var.protocol
-    config_path = local.config_mount_path
-    secret_path = local.secrets_mount_path
-  }
-}
 
 resource "kubernetes_config_map" "oathkeeper-configs" {
   metadata {
@@ -29,7 +48,7 @@ resource "kubernetes_config_map" "oathkeeper-configs" {
   }
   data = {
     "access-rule-oathkeeper.yaml" = data.template_file.oathkeeper-access-rules.rendered
-    "config-oathkeeper.yaml" = data.template_file.oathkeeper-config.rendered
+    "config-oathkeeper.yaml" = yamlencode(local.configuration)
   }
 }
 
