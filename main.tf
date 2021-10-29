@@ -205,6 +205,10 @@ resource "kubernetes_namespace" "ory_namespace" {
   }
 }
 
+locals {
+  default_access_rules = yamldecode("default-access-rules")
+}
+
 module "ory" {
   count = var.enable_ory_authentication ? 1 : 0
   source = "./modules/ory"
@@ -223,6 +227,8 @@ module "ory" {
   smtp_from_address = var.smtp_from_address
 
   access_rules_path = var.access_rules_path
+  access_rules = concat(local.default_access_rules, var.ory_additional_access_rules)
+  configuration_overrides = var.ory_configuration_overrides
 }
 
 module "k8s_tools" {

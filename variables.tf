@@ -231,6 +231,34 @@ variable "ory_kratos_cookie_secret" {
   sensitive = true
 }
 
+variable "ory_configuration_overrides" {
+  description="Additional overrides should follow the config structure as specified here: https://www.ory.sh/oathkeeper/docs/reference/configuration/"
+  default={}
+}
+
+variable "ory_additional_access_rules" {
+  description = "Additional access rules. Will be merged with access rules for OML services."
+  type=list(object({
+    id=string
+    match=object({
+      url = string
+      methods = list(string)
+    })
+    authenticators = list(object({
+      handler = string
+    }))
+    authorizer=object({
+      handler=string
+    })
+    mutators = list(object({
+      handler = string
+    }))
+    credential_issuer=object({
+      handler=string
+    })
+  }))
+}
+
 variable "oauth2_providers" {
   //  Configure multiple Oauth2 providers.
   //  example:
