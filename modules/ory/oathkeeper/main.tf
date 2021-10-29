@@ -32,14 +32,6 @@ locals {
   )
 }
 
-data "template_file" "oathkeeper-access-rules"{
-  template = file("%{if var.access_rules_path == null}${path.module}/access-rule-oathkeeper.yaml%{else}${var.access_rules_path}%{ endif }")
-  vars = {
-    hostname = var.hostname
-    enable_registration = var.enable_registration
-  }
-}
-
 
 resource "kubernetes_config_map" "oathkeeper-configs" {
   metadata {
@@ -47,7 +39,7 @@ resource "kubernetes_config_map" "oathkeeper-configs" {
     namespace = var.namespace
   }
   data = {
-    "access-rule-oathkeeper.yaml" = data.template_file.oathkeeper-access-rules.rendered
+    "access-rule-oathkeeper.yaml" = yamlencode(var.access_rules)
     "config-oathkeeper.yaml" = yamlencode(local.configuration)
   }
 }
