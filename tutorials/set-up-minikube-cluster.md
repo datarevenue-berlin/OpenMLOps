@@ -42,6 +42,7 @@ jhub_proxy_secret_token = "IfYouDecideToUseJhubProxyYouShouldChangeThisValueToAR
 enable_ory_authentication = false
 oauth2_providers = []
 mlflow_artifact_root = "/tmp"
+install_locally = true
 ```
 
 ## Step 4: Initialising Terraform
@@ -49,7 +50,7 @@ mlflow_artifact_root = "/tmp"
 Run the following in your shell to set your Kubectl config.
 
 ```
-export KUBE_CONFIG_PATH=~./kube/config
+export KUBE_CONFIG_PATH=~/.kube/config
 ```
 
 Now change into the `OpenMLOps` directory and run `terraform init`, which will pull down the terraform dependencies that you need.
@@ -99,7 +100,13 @@ prefect backend server && prefect server create-tenant --name default --slug def
 
 ## Trying out the services
 
-The first step is to look at the service addresses and ports available. Run the command
+You can keep the port forward from the previous step running. Or run:
+
+```
+kubectl port-forward -n prefect svc/prefect-server-apollo 4200
+```
+
+Then, look at the service addresses and ports available. Run the command:
 
 ```
 kubectl get services --all-namespaces

@@ -84,7 +84,7 @@ resource "helm_release" "prefect-server" {
 
   set {
     name = "ui.apolloApiUrl"
-    value = "${var.protocol}://prefect.${var.hostname}/graphql/"
+    value = var.graphql_url
   }
 
   set {
