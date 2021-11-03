@@ -26,6 +26,7 @@ minikube tunnel
 
 Next you'll need to personalise the secrets and other values in the tfvars file. You can create  a file in `openmlops/OpenMLOps/my_vars.tfvars` and use the example settings below.
 
+Make sure that `install_locally = true` and `aws = false` 
 
 ```
 aws = false
