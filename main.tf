@@ -106,14 +106,13 @@ module "prefect-server" {
   namespace = kubernetes_namespace.prefect_namespace.metadata[0].name
 
   parent_module_name = basename(abspath(path.module))
-  hostname = var.hostname
-  protocol = var.protocol
   service_type = var.prefect_service_type
   agent_prefect_labels = var.prefect_agent_labels
   service_account_name = var.prefect_service_account_name
   seldon_manager_cluster_role_name = var.install_seldon ? "seldon-manager-role-${var.seldon_namespace}" : ""
   feast_spark_operator_cluster_role_name = var.install_feast ? var.feast_spark_operator_cluster_role_name : ""
   create_tenant_enabled = var.prefect_create_tenant_enabled
+  graphql_url = var.install_locally ? "http://localhost:4200/graphql" : "${var.protocol}://prefect.${var.hostname}/graphql/"
 }
 
 
