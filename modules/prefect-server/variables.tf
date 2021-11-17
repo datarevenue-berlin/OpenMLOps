@@ -1,9 +1,5 @@
-variable "hostname" {
-  description = "Application hostname ex.: mlops.mywebsite.com"
-}
-
-variable "protocol" {
-  description = "Preferred connection protocol"
+variable "graphql_url" {
+  description = "URL to Apollo GraphQL"
 }
 
 variable "parent_module_name" {

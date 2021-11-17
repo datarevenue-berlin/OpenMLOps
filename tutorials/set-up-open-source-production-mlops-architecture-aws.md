@@ -94,7 +94,25 @@ Next you'll need to personalise the secrets and other values in the `openmlops/O
 
 ## Initialising Terraform
 
-Now change into the `OpenMLOps-AWS` directory and run `terraform init`, which will pull down the terraform dependencies that you need.
+### Creating an S3 bucket to store Terraform state
+
+If you don't have an S3 bucket to store Terraform state files, you can create a new one by running:
+
+```
+aws s3api create-bucket --bucket YOUR_BUCKET_NAME --region YOUR_REGION
+```
+
+### Initialising Terraform with the s3 backend
+
+Now change into the `OpenMLOps-AWS` directory and create `backend-config.txt` file with the bucket name:
+
+```
+bucket = "YOUR_BUCKET_NAME"
+key = "open-mlops.tfstate"
+region = "YOUR_REGION"
+```
+
+Then, run `terraform init -backend-config=backend-config.txt`, which will pull down the terraform dependencies that you need.
 
 You should see "Terraform has been successfully initialized!" towards the end of the output.
 

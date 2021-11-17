@@ -26,6 +26,7 @@ minikube tunnel
 
 Next you'll need to personalise the secrets and other values in the tfvars file. You can create  a file in `openmlops/OpenMLOps/my_vars.tfvars` and use the example settings below.
 
+Make sure that `install_locally = true` and `aws = false` 
 
 ```
 aws = false
@@ -42,6 +43,7 @@ jhub_proxy_secret_token = "IfYouDecideToUseJhubProxyYouShouldChangeThisValueToAR
 enable_ory_authentication = false
 oauth2_providers = []
 mlflow_artifact_root = "/tmp"
+install_locally = true
 ```
 
 ## Step 4: Initialising Terraform
@@ -99,7 +101,13 @@ prefect backend server && prefect server create-tenant --name default --slug def
 
 ## Trying out the services
 
-The first step is to look at the service addresses and ports available. Run the command
+You can keep the port forward from the previous step running. Or run:
+
+```
+kubectl port-forward -n prefect svc/prefect-server-apollo 4200
+```
+
+Then, look at the service addresses and ports available. Run the command:
 
 ```
 kubectl get services --all-namespaces
