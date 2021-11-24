@@ -1,3 +1,5 @@
+<img src="./logo.png" width="50%">
+
 # Open MLOps - A Production-focused Open-Source Machine Learning Framework
 
 Open MLOps is a set of open-source tools carefully
@@ -41,7 +43,7 @@ work on different environments being able to install any library
 necessary to meet their needs.
 
 We provide a default Jupyter server image that comes with most of
-the data science packages installed. Users can use their own Jupyter 
+the data science packages installed. Users can use their own Jupyter
 server images as well.
 
 
@@ -248,7 +250,7 @@ allocates resources for them on their respective deployment platforms.
 | `docker_auth_key`       | Base64 Enconded combination of {registry_username}:{registry_password}. Can be found in ~/.docker/config.json                                  | ``               |
 | `docker_private_repo`   | Whether the MLFlow's image comes from a private repository or not. If `true`, `docker_registry_server` and `docker_auth_key` will be required  | `false`               |
 
-Note: The variables `docker_registry_server` and `docker_auth_key` are optional and 
+Note: The variables `docker_registry_server` and `docker_auth_key` are optional and
 should only be used when pulling MLFlow's image from a private repository.
 
 ## Seldon
@@ -262,23 +264,23 @@ should only be used when pulling MLFlow's image from a private repository.
 
 ## Exposing Services
 In order to access the services from outside the cluster, we need to expose them.
-Usually, this is done through Kubernetes Ingress resources. In this project, since we 
-rely on Seldon to expose our prediction endpoints, we use Ambassador API Gateway as our 
-ingress controller. 
-Seldon Core works well with Ambassador, allowing a single ingress to be used to expose 
-ambassador and running machine learning deployments can then be dynamically exposed 
+Usually, this is done through Kubernetes Ingress resources. In this project, since we
+rely on Seldon to expose our prediction endpoints, we use Ambassador API Gateway as our
+ingress controller.
+Seldon Core works well with Ambassador, allowing a single ingress to be used to expose
+ambassador and running machine learning deployments can then be dynamically exposed
 through seldon-created ambassador configurations.
 ### Ambassador
 Ambassador is a Kubernetes-native API Gateway built on the Envoy Proxy. In addition to
 the classical routing capabilities of an ingress, it can perform sophisticated traffic
 management functions, such as load balancing, circuit breakers, rate limits, and automatic retries.
-Also, it has support for independent authentication systems, such as the ORY ecosystem. 
+Also, it has support for independent authentication systems, such as the ORY ecosystem.
 #### Exposing a service in Ambassador
-Ambassador is designed around a declarative, self-service management model. 
-The core resource used to support application development teams who need to manage the 
+Ambassador is designed around a declarative, self-service management model.
+The core resource used to support application development teams who need to manage the
 edge with Ambassador is the Mapping resource. This resource allows us to define custom
 routing rules to our services.
-This routing configuration can achieved by applying a custom Kubernetes Resource like 
+This routing configuration can achieved by applying a custom Kubernetes Resource like
 the following
 ```yaml
 # mapping.yaml
@@ -294,9 +296,9 @@ spec:
 By applying this configuration with `kubectl apply -f httpbin-mapping.yaml`.
 ### Terraform
 Since this project uses Terraform to manage resources and, with the current version, it's
-still not possible to apply custom Kubernetes resource definitions, we need to add this 
+still not possible to apply custom Kubernetes resource definitions, we need to add this
 YAML file inside the services annotation.
-One way to do this is by using Service's Metadata field 
+One way to do this is by using Service's Metadata field
 ```terraform
 resource "kubernetes_service" "httpbin" {
   metadata {
@@ -316,18 +318,18 @@ YAML
 ```
 This will produce the same behaviour as applying the custom yaml file described above.
 ## Authentication
-Since we're exposing our services in the Internet, we need an Authentication and 
+Since we're exposing our services in the Internet, we need an Authentication and
 Authorization system to prevent unwanted users to accessing our services.
-Ambassador API Gateway can control the access by using an External Authentication Service 
+Ambassador API Gateway can control the access by using an External Authentication Service
 resource (AuthService).
-An AuthService is an API that has a verification endpoint, which determines if the user 
+An AuthService is an API that has a verification endpoint, which determines if the user
 can access this resource (returning `200` or not, `401`).
 In this project, we rely on ORY ecosystem to enable authentication.
-ORY is an open-source ecosystem of services with clear boundaries that solve 
+ORY is an open-source ecosystem of services with clear boundaries that solve
 authentication and authorization.
 ### Session Lifespan
-The session lifespan of authenticated users can be managed through the 
-`/ory/kratos/values.yaml` file. By default, the session lifespan is 24h, 
+The session lifespan of authenticated users can be managed through the
+`/ory/kratos/values.yaml` file. By default, the session lifespan is 24h,
 but it is currently set to 30 days.
 ```yaml
 kratos:
@@ -339,14 +341,14 @@ kratos:
       lifespan: 720h
 ```
 ### ORY Oathkeeper
-ORY Oathkeeper is an Identity and Access Proxy. It functions as a centralized way to 
+ORY Oathkeeper is an Identity and Access Proxy. It functions as a centralized way to
 manage different Authentication and Authorization methods, and inform the gateway, whether
-the HTTP request is allowed or not. 
-The Oathkeeper serves perfectly as an Ambassador's External AuthService. 
+the HTTP request is allowed or not.
+The Oathkeeper serves perfectly as an Ambassador's External AuthService.
 ### Zero-Trust and Unauthorized Resources
 Oathkeeper is rooted in the principle of "never trust, always verify,". This means that
 if no additional configuration is provided, the Oathkeeper will always block the incoming
-request. In practice, all endpoints exposed in Ambassador will be blocked by external 
+request. In practice, all endpoints exposed in Ambassador will be blocked by external
 requests, until further configuration is made.
 ### Access Rules
 To configure an access rule to ORY Oathkeeper, the file `access-rule-oathkeeper.yaml` is
@@ -368,7 +370,7 @@ used. Example:
     handler: noop
 ```
 This configuration will register all the incoming requests as a `guest` user, thus, not
-performing any credentials validation. 
+performing any credentials validation.
 #### Authorize on KRATOS
 ```yaml
 - id: httpbin-access-rule
