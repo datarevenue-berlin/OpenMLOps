@@ -11,23 +11,27 @@ data "template_file" "ambassador-chart-values"{
 
 resource "helm_release" "ambassador" {
   count = var.ambassador_enabled ? 1 : 0
-  repository = "https://www.getambassador.io"
-  chart = "ambassador"
-  name = "ambassador"
-  version = "6.7.13"
+  repository = "https://app.getambassador.io"
+  chart = "emissary-ingress"
+  name = "emissary-ingress"
+  version = "7.1.10"
   namespace = var.namespace
 
   values = [data.template_file.ambassador-chart-values.rendered]
   set {
     name = "image.repository"
-    value = "docker.io/datawire/ambassador"
+    value = "docker.io/emissaryingress/emissary"
   }
   set {
     name = "image.tag"
-    value = "1.11.0"
+    value = "2.0.5"
   }
   set {
     name = "enableAES"
     value = "false"
+  }
+  set {
+    name = "createDefaultListeners"
+    value = "true"
   }
 }
