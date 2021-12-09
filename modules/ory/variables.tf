@@ -11,6 +11,34 @@ variable "protocol" {
   default = "http"
 }
 
+variable "configuration_overrides" {
+  description="Additional overrides should follow the config structure as specified here: https://www.ory.sh/oathkeeper/docs/reference/configuration/"
+  default={}
+}
+
+variable "access_rules" {
+  description = "Access rules"
+  type=list(object({
+    id=string
+    match=object({
+      url = string
+      methods = list(string)
+    })
+    authenticators = list(object({
+      handler = string
+    }))
+    authorizer=object({
+      handler=string
+    })
+    mutators = list(object({
+      handler = string
+    }))
+    credential_issuer=object({
+      handler=string
+    })
+  }))
+}
+
 // KRATOS
 variable "kratos_db_password"{
   description = "PostgreSQL Database Password"
