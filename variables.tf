@@ -82,6 +82,11 @@ variable "prefect_create_tenant_enabled" {
   default     = true
 }
 
+variable "prefect_graphql_url" {
+  description = "the URL to prefect's graphql server. It will be used like <protocol>://<prefect_graphql_url> and only if <install_locally> is False"
+  type = string
+}
+
 ## Jupyter Hub
 
 variable "jupyter_dummy_password" {
