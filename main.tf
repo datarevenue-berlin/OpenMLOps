@@ -113,7 +113,7 @@ module "prefect-server" {
   seldon_manager_cluster_role_name = var.install_seldon ? "seldon-manager-role-${var.seldon_namespace}" : ""
   feast_spark_operator_cluster_role_name = var.install_feast ? var.feast_spark_operator_cluster_role_name : ""
   create_tenant_enabled = var.prefect_create_tenant_enabled
-  graphql_url = var.install_locally ? "http://localhost:4200/graphql" : "${var.protocol}://prefect.${var.hostname}/graphql/"
+  graphql_url = var.install_locally ? "http://localhost:4200/graphql" : "${var.protocol}://${var.prefect_graphql_url}"
 }
 
 

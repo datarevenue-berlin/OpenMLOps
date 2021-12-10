@@ -85,6 +85,7 @@ Next you'll need to personalise the secrets and other values in the `openmlops/O
 * `aws_region` - e.g. `eu-west-2`, set this to an AWS region close to you for low latency access to the various dashboards.
 * `bucket_name` - this is an S3 bucket that will be created. You need to use a name that is globally unique across all AWS users so be created (e.g. `your-company-openmlops-bucket`)
 * `hostname` - the domain name you purchased in step 1, without any prefixes (e.g. `example.com`, not `https://example.com` or `www.example.com`).
+* `prefect_graphql_url` - use the "prefect." prefix with your hostname plus slash graphql (e.g. `prefect.example.com/graphql`)
 * `additional_aws_users` A list of other IAM users in your AWS account that should have access. You should specify the ARN and username for each one, but you can leave the `system:masters` in the group field.
 * `oauth2_providers` - this specifies how users will authenticate with the various services. The template shows how to configure GitHub. You can get the required token by navigating to [https://github.com/settings/developers](https://github.com/settings/developers) and creating a new OAuth app.
 * `db_username` you can leave as is.
