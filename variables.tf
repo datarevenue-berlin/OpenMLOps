@@ -87,6 +87,11 @@ variable "prefect_graphql_url" {
   type = string
 }
 
+variable "prefect_pull_image_auth" {
+  description = "Hashed credentials from docker to use for pulling images for agent and job (flow) pods"
+  type = string
+}
+
 ## Jupyter Hub
 
 variable "jupyter_dummy_password" {

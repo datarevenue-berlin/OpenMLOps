@@ -17,6 +17,11 @@ variable "prefect_version_tag" {
   default     = "latest"
 }
 
+variable "prefect_pull_image_auth" {
+  description = "Hashed credentials from docker to use for pulling images for agent and job (flow) pods"
+  type = string
+}
+
 variable "annotations" {
   description = "Annotations to merge into all object configurations"
   default     = {}
