@@ -112,14 +112,6 @@ resource "helm_release" "prefect-server" {
         "prefectLabels" = var.agent_prefect_labels
       }
     }),
-
-     yamlencode({
-      "imagePullSecrets" = [
-        {
-          name = "regcred"
-        }
-      ]
-    }),
   ]
 }
 
