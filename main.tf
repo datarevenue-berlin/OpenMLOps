@@ -114,6 +114,7 @@ module "prefect-server" {
   feast_spark_operator_cluster_role_name = var.install_feast ? var.feast_spark_operator_cluster_role_name : ""
   create_tenant_enabled = var.prefect_create_tenant_enabled
   graphql_url = var.install_locally ? "http://localhost:4200/graphql" : "${var.protocol}://${var.prefect_graphql_url}"
+  prefect_pull_image_auth = var.prefect_pull_image_auth
 }
 
 

@@ -150,3 +150,24 @@ resource "kubernetes_cluster_role_binding" "feast_spark_operator_prefect_crb" {
     namespace = var.namespace
   }
 }
+
+resource "kubernetes_secret" "omi_prefect_image_pull_secret" {
+  metadata {
+    name = "regcred"
+    namespace = var.namespace
+  }
+
+   data = {
+    ".dockerconfigjson" = <<-DOCKER
+          {
+            "auths": {
+              "https://index.docker.io/v1/": {
+                "auth": "${var.prefect_pull_image_auth}"
+              }
+            }
+          }
+          DOCKER
+  }
+
+  type = "kubernetes.io/dockerconfigjson"
+}
