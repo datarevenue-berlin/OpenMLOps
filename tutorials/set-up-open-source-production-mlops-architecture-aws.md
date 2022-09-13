@@ -89,7 +89,7 @@ Next you'll need to personalise the secrets and other values in the `openmlops/O
 * `oauth2_providers` - this specifies how users will authenticate with the various services. The template shows how to configure GitHub. You can get the required token by navigating to [https://github.com/settings/developers](https://github.com/settings/developers) and creating a new OAuth app.
 * `db_username` you can leave as is.
 * `db_password` you should set a long random string, e.g. the output of `openssl rand -hex 30`
-* `ory_kratos_cookie_secret` and `ory_kratos_cookie_secret` should similarly be set to (different) long random strings.
+* `ory_kratos_cookie_secret` and `ory_kratos_db_password` should similarly be set to (different) long random strings.
 * `cluster_name`, `protocol` and `install_feast` can all be left with their default values.
 
 ## Initialising Terraform
